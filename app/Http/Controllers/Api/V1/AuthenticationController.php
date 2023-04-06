@@ -4,11 +4,17 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 
 class AuthenticationController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:api', ['except' => ['login']]);
+    }
+
     // login
     public function login(Request $request)
     {
@@ -19,27 +25,17 @@ class AuthenticationController extends Controller
                 'password' => 'required'
             ]);
 
-            // get the user
+            // check if the user exists
             $user = User::where('email', $request->email)->first();
 
-            // check if the user exists
+            // if the user does not exist
             if (!$user || !Hash::check($request->password, $user->password)) {
                 return response()->json([
-                    'message' => 'The provided credentials are incorrect.'
+                    'message' => 'Invalid credentials'
                 ], 401);
             }
 
-            // generate a token
-            $token = $user->createToken('token')->plainTextToken;
-
-            // return the token
-            return response()->json([
-                'token' => $token,
-                'full_name' => $user->full_name,
-                'email' => $user->email,
-                'is_admin' => $user->is_admin,
-                'created_at' => $user->created_at,
-            ], 201);
+            return $this->respondWithToken($token);
         } catch (\Throwable $th) {
             return response()->json([
                 'message' => $th->getMessage()
@@ -81,5 +77,30 @@ class AuthenticationController extends Controller
                 'message' => $th->getMessage()
             ], 500);
         }
+    }
+
+    public function logout()
+    {
+        auth()->logout();
+
+        return response()->json([
+            'message' => 'Logged out successfully'
+        ]);
+    }
+
+    // Refresh the token
+    public function refresh()
+    {
+        return $this->respondWithToken(auth()->refresh());
+    }
+
+    // Get the token array structure
+    protected function respondWithToken($token)
+    {
+        return response()->json([
+            'access_token' => $token,
+            'token_type' => 'bearer',
+            'expires_in' => auth()->factory()->getTTL() * 60
+        ]);
     }
 }

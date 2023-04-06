@@ -15,10 +15,12 @@ use App\Http\Controllers\Api\V1\AuthenticationController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
-// routes for authentication controller
 Route::post('/login', [AuthenticationController::class, 'login']);
 Route::post('/register', [AuthenticationController::class, 'register']);
+
+Route::group([
+    'prefix' => 'v1',
+    'namespace' => 'Api\V1',
+], function () {
+
+});
