@@ -42,4 +42,10 @@ class Product extends Model
     {
         return $this->belongsTo(Category::class);
     }
+
+    // One product can have many product images
+    public function productImage(): HasMany
+    {
+        return $this->hasMany(ProductImage::class);
+    }
 }

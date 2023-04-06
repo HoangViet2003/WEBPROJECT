@@ -18,7 +18,7 @@ class CartItemFactory extends Factory
     {
         return [
             'cart_id' => $this->faker->numberBetween(1, 10),
-            'product_id' => $this->faker->numberBetween(1, 20),
+            'product_id' => $this->faker->numberBetween(2, 26),
             'quantity' => $this->faker->numberBetween(10, 100),
         ];
     }

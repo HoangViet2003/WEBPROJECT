@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('product', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id()->autoIncrement();
             $table->string('name')->nullable(false);
             $table->integer('price')->nullable(false);
             $table->text('description');
@@ -25,6 +25,7 @@ return new class extends Migration
                 "in_stock",
                 "running_low"
             ]);
+
             $table->timestamps();
         });
     }

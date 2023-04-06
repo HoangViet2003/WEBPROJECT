@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('cart', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id()->autoIncrement();
             $table->unsignedBigInteger('user_id')->nullable(false);
             $table->foreign('user_id')->references('id')->on('cart')->onDelete('cascade');
             $table->decimal('total')->default(0);
