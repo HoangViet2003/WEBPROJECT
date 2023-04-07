@@ -11,19 +11,16 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+
+    public function __construct()
     {
-        // get all users from db
-        $users = User::all();
-        return response()->json($users);
+        $this->middleware('auth:api');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function index()
     {
-        //
+        $users = User::all();
+        return response()->json($users);
     }
 
     /**
@@ -31,16 +28,34 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Create a new user
+        try {
+            // validate the request
+            $request->validate([
+                'full_name' => 'required',
+                'email' => 'required|email|unique:users',
+                'password' => 'required'
+            ]);
+
+            // create a new user
+            $user = User::create([
+                'full_name' => $request->full_name,
+                'email' => $request->email,
+                'password' => bcrypt($request->password),
+                'role' => $request->role
+            ]);
+
+            return response()->json([
+                'message' => 'User created successfully',
+                'user' => $user
+            ], 201);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'message' => $th->getMessage()
+            ], 500);
+        }
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
