@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\V1\AuthenticationController;
+use App\Http\Controllers\Api\V1\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,12 +16,15 @@ use App\Http\Controllers\Api\V1\AuthenticationController;
 |
 */
 
+
 Route::post('/login', [AuthenticationController::class, 'login']);
 Route::post('/register', [AuthenticationController::class, 'register']);
 
+
+// user routes
 Route::group([
-    'prefix' => 'v1',
-    'namespace' => 'Api\V1',
+    'middleware' => ['jwt.verify', 'admin'],
 ], function () {
 
+    Route::get('/users', [UserController::class, 'index']);
 });

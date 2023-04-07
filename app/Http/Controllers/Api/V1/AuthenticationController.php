@@ -4,17 +4,12 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
+use JWTAuth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 
 class AuthenticationController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth:api', ['except' => ['login']]);
-    }
-
     // login
     public function login(Request $request)
     {
@@ -34,6 +29,11 @@ class AuthenticationController extends Controller
                     'message' => 'Invalid credentials'
                 ], 401);
             }
+
+            $token = auth()->attempt([
+                'email' => $request->email,
+                'password' => $request->password
+            ]);
 
             return $this->respondWithToken($token);
         } catch (\Throwable $th) {
@@ -61,12 +61,8 @@ class AuthenticationController extends Controller
                 'password' => Hash::make($request->password)
             ]);
 
-            // generate a token
-            $token = $user->createToken('token')->plainTextToken;
-
             // return the token
             return response()->json([
-                'token' => $token,
                 'full_name' => $user->full_name,
                 'email' => $user->email,
                 'is_admin' => $user->is_admin,
