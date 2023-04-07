@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Models\OrderItem;
 use Illuminate\Http\Request;
 
 class OrderItemController extends Controller
@@ -12,7 +13,8 @@ class OrderItemController extends Controller
      */
     public function index()
     {
-        //
+        $orderItem = OrderItem::all();
+        return response()->json($orderItem);
     }
 
     /**
@@ -28,7 +30,8 @@ class OrderItemController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $orderItem = OrderItem::create($request->all());
+        return response()->json($orderItem);
     }
 
     /**
@@ -36,7 +39,8 @@ class OrderItemController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $orderItem = OrderItem::find($id);
+        return response()->json($orderItem);
     }
 
     /**
@@ -52,7 +56,10 @@ class OrderItemController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $orderItem = OrderItem::find($id);
+        $orderItem->quantity = $request->quantity;
+        
+        return response()->json($orderItem);
     }
 
     /**
@@ -60,6 +67,8 @@ class OrderItemController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $orderItem = OrderItem::find($id);
+        $orderItem->delete();
+        return response()->json('delete');
     }
 }

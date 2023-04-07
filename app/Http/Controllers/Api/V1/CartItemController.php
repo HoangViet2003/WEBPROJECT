@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Models\CartItem;
 use Illuminate\Http\Request;
 
 class CartItemController extends Controller
@@ -12,7 +13,8 @@ class CartItemController extends Controller
      */
     public function index()
     {
-        //
+        $cartItem = CartItem::all();
+        return response()->json($cartItem);
     }
 
     /**
@@ -20,7 +22,8 @@ class CartItemController extends Controller
      */
     public function create()
     {
-        //
+        
+
     }
 
     /**
@@ -28,7 +31,8 @@ class CartItemController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $cartItem = CartItem::create($request->all());
+        return response()->json($cartItem);
     }
 
     /**
@@ -36,7 +40,8 @@ class CartItemController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $cartItem = CartItem::find($id);
+        return response()->json($cartItem);
     }
 
     /**
@@ -60,6 +65,8 @@ class CartItemController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $cartItem = CartItem::find($id);
+        $cartItem->delete();
+        return response()->json("delete");
     }
 }
