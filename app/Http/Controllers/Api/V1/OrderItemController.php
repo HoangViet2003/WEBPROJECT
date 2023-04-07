@@ -13,16 +13,12 @@ class OrderItemController extends Controller
      */
     public function index()
     {
-        $orderItem = OrderItem::all();
-        return response()->json($orderItem);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        try {
+            $orderItem = OrderItem::all();
+            return response()->json($orderItem);
+        } catch (\Exception $e) {
+            return response()->json($e->getMessage());
+        }
     }
 
     /**
@@ -30,8 +26,19 @@ class OrderItemController extends Controller
      */
     public function store(Request $request)
     {
-        $orderItem = OrderItem::create($request->all());
-        return response()->json($orderItem);
+        try {
+            // Validate the request...
+            $request->validate([
+                'user_id' => 'required',
+                'product_id' => 'required',
+                'quantity' => 'required',
+            ]);
+
+            $orderItem = OrderItem::create($request->all());
+            return response()->json($orderItem);
+        } catch (\Exception $e) {
+            return response()->json($e->getMessage());
+        }
     }
 
     /**
@@ -39,27 +46,31 @@ class OrderItemController extends Controller
      */
     public function show(string $id)
     {
-        $orderItem = OrderItem::find($id);
-        return response()->json($orderItem);
+        try {
+            $orderItem = OrderItem::findorfail($id);
+
+            return response()->json($orderItem);
+        } catch (\Exception $e) {
+            return response()->json($e->getMessage());
+        }
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
     {
-        $orderItem = OrderItem::find($id);
-        $orderItem->quantity = $request->quantity;
-        
-        return response()->json($orderItem);
+        try {
+            $orderItem = OrderItem::findorfail($id);
+
+            // only update the fields that are actually passed
+            $orderItem->fill($request->all())->save();
+
+            return response()->json($orderItem);
+        } catch (\Exception $e) {
+            return response()->json($e->getMessage());
+        }
     }
 
     /**
@@ -67,8 +78,12 @@ class OrderItemController extends Controller
      */
     public function destroy(string $id)
     {
-        $orderItem = OrderItem::find($id);
-        $orderItem->delete();
-        return response()->json('delete');
+        try {
+            $orderItem = OrderItem::find($id);
+            $orderItem->delete();
+            return response()->json('delete');
+        } catch (\Exception $e) {
+            return response()->json($e->getMessage());
+        }
     }
 }

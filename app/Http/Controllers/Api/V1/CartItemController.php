@@ -13,17 +13,12 @@ class CartItemController extends Controller
      */
     public function index()
     {
-        $cartItem = CartItem::all();
-        return response()->json($cartItem);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        
-
+        try {
+            $cartItem = CartItem::all();
+            return response()->json($cartItem);
+        } catch (\Exception $e) {
+            return response()->json($e->getMessage());
+        }
     }
 
     /**
@@ -31,8 +26,12 @@ class CartItemController extends Controller
      */
     public function store(Request $request)
     {
-        $cartItem = CartItem::create($request->all());
-        return response()->json($cartItem);
+        try {
+            $cartItem = CartItem::create($request->all());
+            return response()->json($cartItem);
+        } catch (\Exception $e) {
+            return response()->json($e->getMessage());
+        }
     }
 
     /**
@@ -40,24 +39,28 @@ class CartItemController extends Controller
      */
     public function show(string $id)
     {
-        $cartItem = CartItem::find($id);
-        return response()->json($cartItem);
+        try {
+            $cartItem = CartItem::find($id);
+            return response()->json($cartItem);
+        } catch (\Exception $e) {
+            return response()->json($e->getMessage());
+        }
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
     {
-        //
+        try {
+            $cartItem = CartItem::findorfail($id);
+            $cartItem->fill($request->all());
+            $cartItem->save();
+            return response()->json($cartItem);
+        } catch (\Exception $e) {
+            return response()->json($e->getMessage());
+        }
     }
 
     /**
@@ -65,8 +68,12 @@ class CartItemController extends Controller
      */
     public function destroy(string $id)
     {
-        $cartItem = CartItem::find($id);
-        $cartItem->delete();
-        return response()->json("delete");
+        try {
+            $cartItem = CartItem::find($id);
+            $cartItem->delete();
+            return response()->json("The cart item has been deleted");
+        } catch (\Exception $e) {
+            return response()->json($e->getMessage());
+        }
     }
 }

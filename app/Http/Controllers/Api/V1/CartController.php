@@ -13,25 +13,32 @@ class CartController extends Controller
      */
     public function index()
     {
-        $cart = Cart::all();
-        return response()->json($cart);
+        try {
+            $cart = Cart::all();
+            return response()->json($cart);
+        } catch (\Exception $e) {
+            return response()->json($e->getMessage());
+        }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-        $cart = Cart::create($request->all());
-        return response()->json($cart);
+        try {
+            // Validate the request...
+            $request->validate([
+                'user_id' => 'required',
+                'total' => 'required',
+            ]);
+
+            $cart = Cart::create($request->all());
+            return response()->json($cart);
+        } catch (\Exception $e) {
+            return response()->json($e->getMessage());
+        }
     }
 
     /**
@@ -39,16 +46,12 @@ class CartController extends Controller
      */
     public function show(string $id)
     {
-        $cart = Cart::all();
-        return response()->json($cart);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
+        try {
+            $cart = Cart::find($id);
+            return response()->json($cart);
+        } catch (\Exception $e) {
+            return response()->json($e->getMessage());
+        }
     }
 
     /**
@@ -56,11 +59,17 @@ class CartController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $cart = Cart::find($id);
-        $cart->name = $request->total;
-       
-        $cart->save();
-        return response()->json($cart);
+        try {
+            $cart = Cart::findorfail($id);
+
+            // only update the fields that are actually passed
+
+            $cart->fill($request->all());
+
+            return response()->json($cart);
+        } catch (\Exception $e) {
+            return response()->json($e->getMessage());
+        }
     }
 
     /**
@@ -68,8 +77,12 @@ class CartController extends Controller
      */
     public function destroy(string $id)
     {
-        $cart = Cart::find($id);
-        $cart->delete();
-        return response()->json('deleted');
+        try {
+            $cart = Cart::findorfail($id);
+            $cart->delete();
+            return response()->json('deleted');
+        } catch (\Exception $e) {
+            return response()->json($e->getMessage());
+        }
     }
 }

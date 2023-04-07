@@ -14,8 +14,12 @@ class ProductController extends Controller
     public function index()
     {
         // get all of the products
-        $products = Product::all();
-        return response()->json($products);
+        try {
+            $product = Product::all();
+            return response()->json($product);
+        } catch (\Exception $e) {
+            return response()->json($e->getMessage());
+        }
     }
 
     /**
@@ -24,8 +28,21 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         // create a new product
-        $product = Product::create($request->all());
-        return response()->json($product);
+        try {
+            $request->validate([
+                'name' => 'required',
+                'price' => 'required',
+                'description' => 'required',
+                'category_id' => 'required',
+                'rating' => 'required',
+                'quantity' => 'required',
+                'status' => 'required',
+            ]);
+            $product = Product::create($request->all());
+            return response()->json($product);
+        } catch (\Exception $e) {
+            return  response()->json($e->getMessage());
+        }
     }
 
     /**
@@ -33,8 +50,12 @@ class ProductController extends Controller
      */
     public function show(string $id)
     {
-        $product = Product::find($id);
-        return response()->json($product);
+        try {
+            $product = Product::find($id);
+            return response()->json($product);
+        } catch (\Exception $e) {
+            return response()->json($e->getMessage());
+        }
     }
 
     /**
@@ -42,8 +63,12 @@ class ProductController extends Controller
      */
     public function edit(string $id)
     {
-        $product = Product::find($id);
-        return response()->json($product);
+        try {
+            $product = Product::find($id);
+            return response()->json($product);
+        } catch (\Exception $e) {
+            return response()->json($e->getMessage());
+        }
     }
 
     /**
@@ -51,14 +76,33 @@ class ProductController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $product = Product::find($id);
-        $product->name = $request->name;
-        $product->description = $request->description;
-        $product->price = $request->price;
-        $product->rating =$request->rating;
-        $product->quanity = $request->quanity;
-        $product->save();
-        return response()->json($product);
+        try {
+              $request->validate([
+                'name' => 'required',
+                'price' => 'required',
+                'description' => 'required',
+                'category_id' => 'required',
+                'rating' => 'required',
+                'quantity' => 'required',
+                'status' => 'required',
+            ]);
+            $product = Product::findorfail($id);
+
+            // only update the fields that are actually passed
+            $product->fill($request->all())->save();
+
+            return response()->json($product);
+        } catch (\Exception $e) {
+            return response()->json($e->getMessage());
+        }
+        // $product = Product::find($id);
+        // $product->name = $request->name;
+        // $product->description = $request->description;
+        // $product->price = $request->price;
+        // $product->rating = $request->rating;
+        // $product->quanity = $request->quanity;
+        // $product->save();
+
     }
 
     /**
@@ -66,8 +110,12 @@ class ProductController extends Controller
      */
     public function destroy(string $id)
     {
-        $product = Product::find($id);
-        $product->delete();
-        return response()->json('deleted');
+        try {
+            $product = Product::find($id);
+            $product->delete();
+            return response()->json('deleted');
+        } catch (\Exception $e) {
+            return response()->json($e->getMessage());
+        }
     }
 }

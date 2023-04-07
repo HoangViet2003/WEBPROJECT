@@ -30,8 +30,17 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        $category = Category::create($request->all());
-        return response()->json($category);
+        try {
+            // Validate the request...
+            $request->validate([
+                'name' => 'required',
+            ]);
+
+            $category = Category::create($request->all());
+            return response()->json($category);
+        } catch (\Exception $e) {
+            return response()->json($e->getMessage());
+        }
     }
 
     /**
@@ -39,8 +48,12 @@ class CategoryController extends Controller
      */
     public function show(string $id)
     {
+        try{
         $category = Category::find($id);
         return response()->json($category);
+        } catch (\Exception $e) {
+        return response()->json($e->getMessage());
+    }
     }
 
     /**
@@ -55,11 +68,13 @@ class CategoryController extends Controller
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
-    {
+    {   
+        try{
         $category = Category::find($id);
-        $category->name = $request->name;
-        $category->save();
-        return response()->json($category);
+        $category->fill($request->all())->save();;
+        } catch(\Exception $e){
+            return response()->json($e->getMessage());
+        }
     }
 
     /**

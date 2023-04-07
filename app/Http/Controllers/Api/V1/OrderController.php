@@ -13,8 +13,12 @@ class OrderController extends Controller
      */
     public function index()
     {
+        try{
         $order = Order::all();
         return response()->json($order);
+        } catch(\Exception $e){
+            return response()->json($e->getMessage());
+        }
     }
 
     /**
@@ -30,8 +34,18 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        $order = Order::create($request->all());
-        return response()->json($order);
+        try {
+            // Validate the request...
+            $request->validate([
+                'user_id' => 'required',
+                'total' => 'required',
+            ]);
+
+            $order = Order::create($request->all());
+            return response()->json($order);
+        } catch (\Exception $e) {
+            return response()->json($e->getMessage());
+        }
     }
 
     /**
@@ -39,8 +53,12 @@ class OrderController extends Controller
      */
     public function show(string $id)
     {
-        $order = Order::find($id);
-        return response()->json($order);
+        try {
+            $order = Order::find($id);
+            return response()->json($order);
+        } catch (\Exception $e) {
+            return response()->json($e->getMessage());
+        }
     }
 
     /**
@@ -56,12 +74,17 @@ class OrderController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $order = Order::find($id);
-        $order->is_confirmed = $request->is_confirmed;
-        $order->total = $request->total;
-       
+        try{
+        $order = Order::findorfail($id);
+        // only update the fields that are actually passed
+        
+        $order->fill($request->all());
         $order->save();
+
         return response()->json($order);
+        } catch (\Exception $e) {
+        return response()->json($e->getMessage());
+    }
     }
 
     /**
