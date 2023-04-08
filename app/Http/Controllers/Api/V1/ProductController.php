@@ -15,7 +15,9 @@ class ProductController extends Controller
     {
         // get all of the products
         try {
-            $product = Product::all();
+            // $page = $request->query('page');
+            // $product = Product::paginate(10, ['*'], 'page', 2);
+            $product = Product::paginate(10,['*'], 'page', 2);
             return response()->json($product);
         } catch (\Exception $e) {
             return response()->json($e->getMessage());
@@ -29,16 +31,25 @@ class ProductController extends Controller
     {
         // create a new product
         try {
-            $request->validate([
-                'name' => 'required',
-                'price' => 'required',
-                'description' => 'required',
-                'category_id' => 'required',
-                'rating' => 'required',
-                'quantity' => 'required',
-                'status' => 'required',
+            // $request->validate([
+            //     'name' => 'required',
+            //     'price' => 'required',
+            //     'description' => 'required',
+            //     'category_id' => 'required',
+            //     'rating' => 'required',
+            //     'quantity' => 'required',
+            //     'status' => 'required',
+            // ]);
+            // $product = Product::create($request->all());
+            $product = Product::create([
+                'name' => $request->name,
+                'price' => $request->price,
+                'description' => $request->description,
+                'category_id' => $request->category_id,
+                'rating' => $request->rating,
+                'quantity' => $request->quantity,
+                'status' => $request->status,
             ]);
-            $product = Product::create($request->all());
             return response()->json($product);
         } catch (\Exception $e) {
             return  response()->json($e->getMessage());
