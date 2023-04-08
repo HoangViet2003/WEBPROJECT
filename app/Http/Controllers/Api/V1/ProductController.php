@@ -17,7 +17,7 @@ class ProductController extends Controller
         try {
             // $page = $request->query('page');
             // $product = Product::paginate(10, ['*'], 'page', 2);
-            $product = Product::paginate(10,['*'], 'page', 2);
+            $product = Product::paginate(10, ['*'], 'page', 2);
             return response()->json($product);
         } catch (\Exception $e) {
             return response()->json($e->getMessage());
@@ -102,18 +102,11 @@ class ProductController extends Controller
             // only update the fields that are actually passed
             $product->fill($request->all())->save();
 
+
             return response()->json($product);
         } catch (\Exception $e) {
             return response()->json($e->getMessage());
         }
-        // $product = Product::find($id);
-        // $product->name = $request->name;
-        // $product->description = $request->description;
-        // $product->price = $request->price;
-        // $product->rating = $request->rating;
-        // $product->quanity = $request->quanity;
-        // $product->save();
-
     }
 
     /**
@@ -128,5 +121,10 @@ class ProductController extends Controller
         } catch (\Exception $e) {
             return response()->json($e->getMessage());
         }
+    }
+
+    public function searchProduct(Request $request){
+        $product = Product::where('name', '=', $request->name)->whereBetween('price',[10,1000])->get();
+        return response()->json($product);
     }
 }

@@ -28,8 +28,8 @@ Route::resource('products', ProductController::class);
 Route::resource('carts', CartController::class);
 Route::resource('orders', OrderController::class);
 Route::resource('cartItem', CartItemController::class);
-
 Route::resource('orderItem', OrderItemController::class);
+Route::get('productSearch', [ProductController::class,'searchProduct']);
 
 
 // user routes
