@@ -62,6 +62,11 @@ class OrderItemController extends Controller
     public function update(Request $request, string $id)
     {
         try {
+            $request->validate([
+                'user_id' => 'required',
+                'product_id' => 'required',
+                'quantity' => 'required',
+            ]);
             $orderItem = OrderItem::findorfail($id);
 
             // only update the fields that are actually passed

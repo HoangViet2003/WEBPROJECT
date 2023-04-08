@@ -70,6 +70,9 @@ class CategoryController extends Controller
     public function update(Request $request, string $id)
     {   
         try{
+        $request->validate([
+          'name' => 'required',
+        ]);
         $category = Category::find($id);
         $category->fill($request->all())->save();;
         } catch(\Exception $e){
