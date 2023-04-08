@@ -75,6 +75,10 @@ class OrderController extends Controller
     public function update(Request $request, string $id)
     {
         try{
+         $request->validate([
+            'user_id' => 'required',
+            'total' => 'required',
+         ]);
         $order = Order::findorfail($id);
         // only update the fields that are actually passed
         

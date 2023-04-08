@@ -57,20 +57,32 @@ class UserController extends Controller
     }
 
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
 
+    public function show(string $id)
+    {
+        try {
+            $user = User::find($id);
+            return response()->json($user);
+        } catch (\Exception $e) {
+            return response()->json($e->getMessage());
+        }
+    }
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
     {
-        //
+        try {
+            $user = User::findorfail($id);
+
+            // only update the fields that are actually passed
+
+            $user->fill($request->all());
+
+            return response()->json($user);
+        } catch (\Exception $e) {
+            return response()->json($e->getMessage());
+        }
     }
 
     /**
@@ -78,6 +90,12 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try {
+            $user = User::findorfail($id);
+            $user->delete();
+            return response()->json('deleted');
+        } catch (\Exception $e) {
+            return response()->json($e->getMessage());
+        }
     }
 }

@@ -77,6 +77,7 @@ class ProductController extends Controller
     public function update(Request $request, string $id)
     {
         try {
+            
               $request->validate([
                 'name' => 'required',
                 'price' => 'required',
