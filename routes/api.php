@@ -30,17 +30,15 @@ Route::resource('orders', OrderController::class);
 Route::resource('cartItem', CartItemController::class);
 Route::resource('orderItem', OrderItemController::class);
 Route::get('productSearch', [ProductController::class, 'searchProduct']);
-Route::get('/users/:email', [UserController::class, 'getUserByEmail']);
+Route::get('/users/searchByEmail', [UserController::class, 'getUserByEmail']);
 
 
 // user routes
 Route::group([
     'middleware' => ['jwt.verify', 'admin'],
 ], function () {
-
-    Route::get('/users', [UserController::class, 'index']);
+    Route::resource('/users', UserController::class);
     Route::post('products', [ProductController::class, 'store']);
     Route::put('/products/:id', [ProductController::class, 'update']);
-    Route::delete('/products/:id', [ProductController::class,'destroy']);
-    
+    Route::delete('/products/:id', [ProductController::class, 'destroy']);
 });

@@ -24,10 +24,10 @@ class AdminMiddleware
             if ($is_admin) {
                 return $next($request);
             }
+
+            return response()->json(['message' => 'You are not authorized to access this resource']);
         }
 
-        return response()->json([
-            'message' => 'You are not authorized to access this resource'
-        ], 401);
+        return response()->json(['message' => 'You are not authorized to access this resource']);
     }
 }
