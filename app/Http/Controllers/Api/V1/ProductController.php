@@ -11,13 +11,13 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         // get all of the products
         try {
-            // $page = $request->query('page');
+            $page = $request->query('page');
+            $product = Product::paginate(10, ['*'], 'page', $page);
             // $product = Product::paginate(10, ['*'], 'page', 2);
-            $product = Product::paginate(10, ['*'], 'page', 2);
             return response()->json($product);
         } catch (\Exception $e) {
             return response()->json($e->getMessage());
@@ -125,7 +125,12 @@ class ProductController extends Controller
     }
 
     public function searchProduct(Request $request){
-        $product = Product::where('name', '=', $request->name)->whereBetween('price',[10,1000])->get();
-        return response()->json($product);
+        try{
+            $product = Product::where('name', '=', $request->name)->whereBetween('price', [10, 1000])->get();
+            return response()->json($product);
+        }catch(\Exception $e){
+            return response()->json($e->getMessage());
+        }
+       
     }
 }
