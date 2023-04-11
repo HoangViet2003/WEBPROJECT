@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Models\OrderItem;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class OrderItemController extends Controller
 {
@@ -29,15 +32,15 @@ class OrderItemController extends Controller
         try {
             // Validate the request...
             $request->validate([
-                'user_id' => 'required',
-                'product_id' => 'required',
-                'quantity' => 'required',
+                'order_id' => 'required||integer',
+                'product_id' => 'required|integer',
+                'quantity' => 'required||integer',
             ]);
 
             $orderItem = OrderItem::create($request->all());
             return response()->json($orderItem);
-        } catch (\Exception $e) {
-            return response()->json($e->getMessage());
+        } catch (ValidationException $e) {
+            throw new HttpResponseException(response()->json(['errors' => $e->errors()], 400));
         }
     }
 
@@ -63,9 +66,9 @@ class OrderItemController extends Controller
     {
         try {
             $request->validate([
-                'user_id' => 'required',
-                'product_id' => 'required',
-                'quantity' => 'required',
+                'order_id' => 'required||integer',
+                'product_id' => 'required|integer',
+                'quantity' => 'required||integer',
             ]);
             $orderItem = OrderItem::findorfail($id);
 
@@ -73,6 +76,10 @@ class OrderItemController extends Controller
             $orderItem->fill($request->all())->save();
 
             return response()->json($orderItem);
+        } catch (ModelNotFoundException $e) {
+            throw new HttpResponseException(response()->json(['error' => 'Order item not found'], 404));
+        } catch (ValidationException $e) {
+            throw new HttpResponseException(response()->json(['errors' => $e->errors()], 400));
         } catch (\Exception $e) {
             return response()->json($e->getMessage());
         }
@@ -87,6 +94,8 @@ class OrderItemController extends Controller
             $orderItem = OrderItem::find($id);
             $orderItem->delete();
             return response()->json('delete');
+        } catch (ModelNotFoundException $e) {
+            throw new HttpResponseException(response()->json(['error' => 'Order item not found'], 404));
         } catch (\Exception $e) {
             return response()->json($e->getMessage());
         }

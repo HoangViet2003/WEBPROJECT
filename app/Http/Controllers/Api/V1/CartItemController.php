@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Models\CartItem;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class CartItemController extends Controller
 {
@@ -27,10 +30,15 @@ class CartItemController extends Controller
     public function store(Request $request)
     {
         try {
+            $request->validate([
+                'cart_id' => 'required||integer',
+                'product_id' => 'required|integer',
+                'quantity' => 'required||integer',
+            ]);
             $cartItem = CartItem::create($request->all());
             return response()->json($cartItem);
-        } catch (\Exception $e) {
-            return response()->json($e->getMessage());
+        } catch (ValidationException $e) {
+            throw new HttpResponseException(response()->json(['errors' => $e->errors()], 400));
         }
     }
 
@@ -40,7 +48,7 @@ class CartItemController extends Controller
     public function show(string $id)
     {
         try {
-            $cartItem = CartItem::find($id);
+            $cartItem = CartItem::findorfail($id);
             return response()->json($cartItem);
         } catch (\Exception $e) {
             return response()->json($e->getMessage());
@@ -54,12 +62,17 @@ class CartItemController extends Controller
     public function update(Request $request, string $id)
     {
         try {
+            $request->validate([
+                'cart_id' => 'required||integer',
+                'product_id' => 'required|integer',
+                'quantity' => 'required||integer',
+            ]);
             $cartItem = CartItem::findorfail($id);
             $cartItem->fill($request->all());
             $cartItem->save();
             return response()->json($cartItem);
-        } catch (\Exception $e) {
-            return response()->json($e->getMessage());
+        } catch (ValidationException $e) {
+            throw new HttpResponseException(response()->json(['errors' => $e->errors()], 400));
         }
     }
 
@@ -72,6 +85,8 @@ class CartItemController extends Controller
             $cartItem = CartItem::find($id);
             $cartItem->delete();
             return response()->json("The cart item has been deleted");
+        } catch (ModelNotFoundException $e) {
+            throw new HttpResponseException(response()->json(['error' => 'Cart item not found'], 404));
         } catch (\Exception $e) {
             return response()->json($e->getMessage());
         }
