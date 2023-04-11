@@ -6,6 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
+use Illuminate\Validation\ValidationException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Http\Exceptions\HttpResponseException;
+
 class ProductController extends Controller
 {
     /**
@@ -13,12 +17,23 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
-        // get all of the products
         try {
+            // Get the page from the query
             $page = $request->query('page');
+
+            // Paginate the results
             $product = Product::paginate(10, ['*'], 'page', $page);
-            // $product = Product::paginate(10, ['*'], 'page', 2);
-            return response()->json($product);
+
+            // Customize the response to include the total number of pages
+            $response = [
+                'totalLength' => $product->total(),
+                'totalPage' => $product->lastPage(),
+                'currentPage' => $product->currentPage(),
+                'data' => $product->items(),
+            ];
+
+            // Return the response to the client
+            return response()->json($response);
         } catch (\Exception $e) {
             return response()->json($e->getMessage());
         }
@@ -29,30 +44,33 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        // create a new product
         try {
-            // $request->validate([
-            //     'name' => 'required',
-            //     'price' => 'required',
-            //     'description' => 'required',
-            //     'category_id' => 'required',
-            //     'rating' => 'required',
-            //     'quantity' => 'required',
-            //     'status' => 'required',
-            // ]);
-            // $product = Product::create($request->all());
-            $product = Product::create([
-                'name' => $request->name,
-                'price' => $request->price,
-                'description' => $request->description,
-                'category_id' => $request->category_id,
-                'rating' => $request->rating,
-                'quantity' => $request->quantity,
-                'status' => $request->status,
+            // Validate the request (validate the required fields and the data types)
+            $request->validate([
+                'name' => 'required|string|max:255',
+                'price' => 'required|numeric|min:0',
+                'description' => 'required|string',
+                'rating' => 'required|integer|min:1|max:5',
+                'category_id' => 'required|integer|min:1',
+                'quantity' => 'required|integer|min:0',
             ]);
+
+            // Change the product status based on the quantity
+            if ($request->quantity >= 10) {
+                $request->merge(['status' => 'in_stock']);
+            } else if ($request->quantity > 0 && $request->quantity < 10) {
+                $request->merge(['status' => 'running_low']);
+            } else {
+                $request->merge(['status' => 'out_of_stock']);
+            }
+
+            // Create the product
+            $product = Product::create($request->all());
+
+            // Return the product to the client
             return response()->json($product);
-        } catch (\Exception $e) {
-            return  response()->json($e->getMessage());
+        } catch (ValidationException $e) {
+            throw new HttpResponseException(response()->json(['errors' => $e->errors()], 400));
         }
     }
 
@@ -62,25 +80,18 @@ class ProductController extends Controller
     public function show(string $id)
     {
         try {
-            $product = Product::find($id);
+            // Find the product by id
+            $product = Product::findorfail($id);
+
+            // Return the product to the client
             return response()->json($product);
+        } catch (ModelNotFoundException $e) {
+            throw new HttpResponseException(response()->json(['error' => 'Product not found'], 404));
         } catch (\Exception $e) {
             return response()->json($e->getMessage());
         }
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        try {
-            $product = Product::find($id);
-            return response()->json($product);
-        } catch (\Exception $e) {
-            return response()->json($e->getMessage());
-        }
-    }
 
     /**
      * Update the specified resource in storage.
@@ -88,23 +99,36 @@ class ProductController extends Controller
     public function update(Request $request, string $id)
     {
         try {
-            
-              $request->validate([
-                'name' => 'required',
-                'price' => 'required',
-                'description' => 'required',
-                'category_id' => 'required',
-                'rating' => 'required',
-                'quantity' => 'required',
-                'status' => 'required',
+
+            // Validate the request (validate the required fields and the data types)
+            $request->validate([
+                'name' => 'string|max:255',
+                'price' => 'numeric|min:0',
+                'description' => 'string',
+                'rating' => 'integer|min:1|max:5',
+                'category_id' => 'integer|min:1',
+                'quantity' => 'integer|min:0',
             ]);
+
+            // Change the product status based on the quantity
+            if ($request->quantity >= 10) {
+                $request->merge(['status' => 'in_stock']);
+            } else if ($request->quantity > 0 && $request->quantity < 10) {
+                $request->merge(['status' => 'running_low']);
+            } else {
+                $request->merge(['status' => 'out_of_stock']);
+            }
+
             $product = Product::findorfail($id);
 
-            // only update the fields that are actually passed
+            // Only update the fields that are actually passed
             $product->fill($request->all())->save();
 
-
             return response()->json($product);
+        } catch (ModelNotFoundException $e) {
+            throw new HttpResponseException(response()->json(['error' => 'Product not found'], 404));
+        } catch (ValidationException $e) {
+            throw new HttpResponseException(response()->json(['errors' => $e->errors()], 400));
         } catch (\Exception $e) {
             return response()->json($e->getMessage());
         }
@@ -116,21 +140,47 @@ class ProductController extends Controller
     public function destroy(string $id)
     {
         try {
-            $product = Product::find($id);
+            $product = Product::findorfail($id);
+
             $product->delete();
+
             return response()->json('deleted');
+        } catch (ModelNotFoundException $e) {
+            throw new HttpResponseException(response()->json(['error' => 'Product not found'], 404));
         } catch (\Exception $e) {
             return response()->json($e->getMessage());
         }
     }
 
-    public function searchProduct(Request $request){
-        try{
-            $product = Product::where('name', '=', $request->name)->whereBetween('price', [10, 1000])->get();
-            return response()->json($product);
-        }catch(\Exception $e){
+    public function searchProduct(Request $request)
+    {
+        try {
+            // Get the page from the query
+            $page = $request->query('page');
+            $name = $request->query('name');
+            $priceMin = $request->query('price_min');
+            $priceMax = $request->query('price_max');
+            $category_id = $request->query('category_id');
+
+            // Search the product by name and price and category
+            $product = Product::where('name', 'like', '%' . $name . '%')
+                ->where('price', '>=', $priceMin ?? 0)
+                ->where('price', '<=', $priceMax ?? 999999999)
+                ->where('category_id', 'like', '%' . $category_id . '%')
+                ->paginate(10, ['*'], 'page', $page);
+
+            // Customize the response to include the total number of pages
+            $response = [
+                'totalLength' => $product->total(),
+                'totalPage' => $product->lastPage(),
+                'currentPage' => $product->currentPage(),
+                'data' => $product->items(),
+            ];
+
+            // Return the response to the client
+            return response()->json($response);
+        } catch (\Exception $e) {
             return response()->json($e->getMessage());
         }
-       
     }
 }
