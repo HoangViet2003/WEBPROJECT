@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class OrderController extends Controller
 {
@@ -13,10 +16,12 @@ class OrderController extends Controller
      */
     public function index()
     {
-        try{
-        $order = Order::all();
-        return response()->json($order);
-        } catch(\Exception $e){
+        // Get the all the order   
+        try {
+            $order = Order::all();
+            return response()->json($order);
+        } // catch exception and return error message
+        catch (\Exception $e) {
             return response()->json($e->getMessage());
         }
     }
@@ -37,14 +42,16 @@ class OrderController extends Controller
         try {
             // Validate the request...
             $request->validate([
-                'user_id' => 'required',
-                'total' => 'required',
+
+                'user_id' => 'required||integer',
+                'total' => 'required||numeric',
             ]);
 
             $order = Order::create($request->all());
             return response()->json($order);
-        } catch (\Exception $e) {
-            return response()->json($e->getMessage());
+            //catch the exception
+        }  catch (ValidationException $e) {
+            throw new HttpResponseException(response()->json(['errors' => $e->errors()], 400));
         }
     }
 
@@ -53,9 +60,11 @@ class OrderController extends Controller
      */
     public function show(string $id)
     {
+        // find the order by id
         try {
-            $order = Order::find($id);
+            $order = Order::findorfail($id);
             return response()->json($order);
+            //catch the exception
         } catch (\Exception $e) {
             return response()->json($e->getMessage());
         }
@@ -74,21 +83,27 @@ class OrderController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        try{
-         $request->validate([
-            'user_id' => 'required',
-            'total' => 'required',
-         ]);
-        $order = Order::findorfail($id);
-        // only update the fields that are actually passed
-        
-        $order->fill($request->all());
-        $order->save();
+        try {
+            //validate the request
+            $request->validate([
+                'user_id' => 'required||integer',
+                'total' => 'required||numeric',
+            ]);
+            $order = Order::findorfail($id);
+            // only update the fields that are actually passed
 
-        return response()->json($order);
+            $order->fill($request->all());
+            $order->save();
+
+            return response()->json($order);
+            // catch model and validate exception   
+        } catch (ModelNotFoundException $e) {
+            throw new HttpResponseException(response()->json(['error' => 'Order not found'], 404));
+        } catch (ValidationException $e) {
+            throw new HttpResponseException(response()->json(['errors' => $e->errors()], 400));
         } catch (\Exception $e) {
-        return response()->json($e->getMessage());
-    }
+            return response()->json($e->getMessage());
+        }
     }
 
     /**
@@ -96,8 +111,14 @@ class OrderController extends Controller
      */
     public function destroy(string $id)
     {
-        $order = Order::find($id);
-        $order->delete();
-        return response()->json('deleted');
+        try {
+            $order = Order::findorfail($id);
+            $order->delete();
+            return response()->json('deleted');
+        } catch (ModelNotFoundException $e) {
+            throw new HttpResponseException(response()->json(['error' => 'Order not found'], 404));
+        } catch (\Exception $e) {
+            return response()->json($e->getMessage());
+        }
     }
 }
