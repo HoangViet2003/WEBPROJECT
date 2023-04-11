@@ -7,7 +7,7 @@
         <div class="single_widget_area">
           <!-- Logo -->
           <div class="footer-logo mr-50">
-            <a href="index.php"><img src="img/core-img/logo2.png" alt="" /></a>
+            <a href="index.php"><img src="{{ asset('assets/img/core-img/logo2.png') }}" alt="" /></a>
           </div>
           <p class="copywrite">
             Copyright &copy;
@@ -56,21 +56,21 @@
 <!-- ##### Footer Area End ##### -->
 
 <!-- ##### jQuery (Necessary for All JavaScript Plugins) ##### -->
-<script src="js/jquery/jquery-2.2.4.min.js"></script>
+<script src="{{ asset('assets/js/jquery/jquery-2.2.4.min.js') }}"></script>
 <!-- Popper js -->
-<script src="js/popper.min.js"></script>
+<script src="{{ asset('assets/js/jquery/popper.min.js') }}"></script>
 <!-- Bootstrap js -->
-<script src="js/bootstrap.min.js"></script>
+<script src="{{ asset('assets/js/jquery/bootstrap.min.js') }}"></script>
 <!-- Plugins js -->
-<script src="js/plugins.js"></script>
+<script src="{{ asset('assets/js/jquery/plugins.js') }}"></script>
 <!-- Active js -->
-<script src="js/active.js"></script>
+<script src="{{ asset('assets/js/jquery/active.js') }}"></script>
 
-<script src='DataTables/datatables.min.js'></script>
+<script src="{{ asset('assets/js/jquery/datatables.min.js') }}"></script>
 
-<script src="js/product-details.js"></script>
+<script src="{{ asset('assets/js/product-details.js') }}"></script>
 
-<script src="js/user.js"></script>
+<script src="{{ asset('assets/js/user.js') }}"></script>
 
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 
@@ -112,7 +112,6 @@
       }, ],
       fixedColumns: true
     });
-
 
 
     $('#myTable tbody').on('dblclick', 'tr', function() {
