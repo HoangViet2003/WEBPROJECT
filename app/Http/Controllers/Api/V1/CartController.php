@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class CartController extends Controller
 {
@@ -30,14 +33,14 @@ class CartController extends Controller
         try {
             // Validate the request...
             $request->validate([
-                'user_id' => 'required',
-                'total' => 'required',
+                'user_id' => 'required||integer',
+                'total' => 'required||numeric',
             ]);
 
             $cart = Cart::create($request->all());
             return response()->json($cart);
-        } catch (\Exception $e) {
-            return response()->json($e->getMessage());
+        } catch (ValidationException $e) {
+            throw new HttpResponseException(response()->json(['errors' => $e->errors()], 400));
         }
     }
 
@@ -67,10 +70,13 @@ class CartController extends Controller
             $cart = Cart::findorfail($id);
 
             // only update the fields that are actually passed
-
             $cart->fill($request->all());
 
             return response()->json($cart);
+        } catch (ModelNotFoundException $e) {
+            throw new HttpResponseException(response()->json(['error' => 'Cart not found'], 404));
+        } catch (ValidationException $e) {
+            throw new HttpResponseException(response()->json(['errors' => $e->errors()], 400));
         } catch (\Exception $e) {
             return response()->json($e->getMessage());
         }
@@ -85,6 +91,8 @@ class CartController extends Controller
             $cart = Cart::findorfail($id);
             $cart->delete();
             return response()->json('deleted');
+        } catch (ModelNotFoundException $e) {
+            throw new HttpResponseException(response()->json(['error' => 'Order not found'], 404));
         } catch (\Exception $e) {
             return response()->json($e->getMessage());
         }
