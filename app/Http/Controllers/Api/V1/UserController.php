@@ -23,6 +23,11 @@ class UserController extends Controller
         return response()->json($users);
     }
 
+    public function getUserbyEmail($email){
+        $user = User::findOneByEmail($email);
+        return response()->json($user);
+    }
+
     /**
      * Store a newly created resource in storage.
      */
