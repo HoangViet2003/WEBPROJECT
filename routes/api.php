@@ -31,6 +31,7 @@ Route::resource('cartItem', CartItemController::class);
 Route::resource('orderItem', OrderItemController::class);
 Route::get('productSearch', [ProductController::class, 'searchProduct']);
 Route::get('/users/searchByEmail', [UserController::class, 'getUserByEmail']);
+Route::post('storeImage', [ProductController::class, 'storeImage']);
 
 
 // user routes

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
+use App\Models\ProductImage;
 use Illuminate\Http\Request;
 
 use Illuminate\Validation\ValidationException;
@@ -182,5 +183,20 @@ class ProductController extends Controller
         } catch (\Exception $e) {
             return response()->json($e->getMessage());
         }
+    }
+
+    public function storeImage(Request $request)
+    {   
+
+        $newImageName =  '-' . $request->name ;
+      $productImage =  ProductImage::create([
+            'product_id' => $request->product_id,
+            'image_url' => $newImageName
+        ]);
+        // return $request->image->move(public_path('images'), $newImageName);
+        // return  $newImageName;
+        return
+        response()->json($productImage);
+
     }
 }
