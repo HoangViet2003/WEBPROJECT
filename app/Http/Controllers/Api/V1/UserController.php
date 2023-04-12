@@ -23,10 +23,27 @@ class UserController extends Controller
         $this->middleware('auth:api');
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::all();
-        return response()->json($users);
+        try {
+            // Get the page from the query
+            $page = $request->query('page');
+
+            // paginate the results (sort the result by created at)
+            $users = User::orderBy('created_at', 'desc')->paginate(10, ['*'], 'page', $page);
+
+            // Customize the response to include the total number of pages
+            $response = [
+                'totalLength' => $users->total(),
+                'totalPage' => $users->lastPage(),
+                'currentPage' => $users->currentPage(),
+                'data' => $users->items(),
+            ];
+
+            return response()->json($response);
+        } catch (\Exception $e) {
+            return response()->json($e->getMessage());
+        }
     }
 
     public function getUserbyEmail(Request $request)
@@ -74,27 +91,23 @@ class UserController extends Controller
             // create a new user
             $user = User::create($request->all());
 
-            return response()->json([
-                'message' => 'User created successfully',
-                'user' => $user
-            ], 201);
+            return response()->json($user);
         } catch (ValidationException $e) {
-            return response()->json([
-                'message' => $e->getMessage(),
-                'errors' => $e->errors()
-            ], 422);
+            throw new HttpResponseException(response()->json(['errors' => $e->errors()], 400));
         } catch (\Exception $e) {
-            return response()->json([
-                'message' => $e->getMessage()
-            ], 500);
+            return response()->json($e->getMessage());
         }
     }
 
-
+    /**
+     * Display the specified resource.
+     */
     public function show(string $id)
     {
         try {
+            // get the user
             $user = User::findorfail($id);
+
             return response()->json($user);
         } catch (ModelNotFoundException $e) {
             return response()->json([
@@ -104,18 +117,33 @@ class UserController extends Controller
             return response()->json($e->getMessage());
         }
     }
+
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
     {
         try {
+            // Only admin or the user itself can update the user
+            if (auth()->user()->id != $id && !auth()->user()->is_admin) {
+                return response()->json([
+                    'message' => 'You are not authorized to update this user'
+                ], 403);
+            }
+
+            // validate the request
             $request->validate([
-                'full_name' => 'required',
                 'email' => 'required|email|unique:users',
-                'password' => 'required',
-                'is_admin' => 'required|boolean'
             ]);
+
+            // hash the password if it is passed
+            if ($request->password) {
+                $request->merge([
+                    'password' => Hash::make($request->password)
+                ]);
+            }
+
+            // get the user
             $user = User::findorfail($id);
 
             // Only update the fields that are actually passed
@@ -123,14 +151,11 @@ class UserController extends Controller
 
             return response()->json($user);
         } catch (ValidationException $e) {
-            return response()->json([
-                'message' => $e->getMessage(),
-                'errors' => $e->errors()
-            ], 422);
+            throw new HttpResponseException(response()->json(['errors' => $e->errors()], 400));
+        } catch (ModelNotFoundException $e) {
+            throw new HttpResponseException(response()->json(['error' => 'User not found'], 404));
         } catch (\Exception $e) {
-            return response()->json([
-                'message' => $e->getMessage()
-            ], 500);
+            return response()->json($e->getMessage());
         }
     }
 
@@ -140,8 +165,9 @@ class UserController extends Controller
     public function destroy(string $id)
     {
         try {
-            $user = User::findorfail($id);
-            $user->delete();
+            // delete the user from database
+            User::findorfail($id)->delete();
+
             return response()->json('deleted');
         } catch (ModelNotFoundException $e) {
             throw new HttpResponseException(response()->json(['error' => 'User not found'], 404));

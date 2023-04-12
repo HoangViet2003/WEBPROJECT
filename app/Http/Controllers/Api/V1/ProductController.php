@@ -84,6 +84,8 @@ class ProductController extends Controller
             return response()->json($product);
         } catch (ValidationException $e) {
             throw new HttpResponseException(response()->json(['errors' => $e->errors()], 400));
+        } catch (\Exception $e) {
+            return response()->json($e->getMessage());
         }
     }
 

@@ -66,5 +66,6 @@ class Kernel extends HttpKernel
         'jwt.verify' => \Tymon\JWTAuth\Http\Middleware\Authenticate::class,
         'admin' => \App\Http\Middleware\AdminMiddleware::class,
         'upload.multiple.images' => \App\Http\Middleware\UploadMultipleImages::class,
+        'auth.resource' => \App\Http\Middleware\AuthorizeResourceAccess::class,
     ];
 }

@@ -22,24 +22,39 @@ use App\Http\Controllers\Api\V1\UserController;
 */
 
 
-Route::post('/login', [AuthenticationController::class, 'login']);
-Route::post('/register', [AuthenticationController::class, 'register']);
+Route::post('login', [AuthenticationController::class, 'login']);
+Route::post('register', [AuthenticationController::class, 'register']);
 Route::resource('products', ProductController::class);
-Route::resource('carts', CartController::class);
-Route::resource('orders', OrderController::class);
-Route::resource('cartItem', CartItemController::class);
-Route::resource('orderItem', OrderItemController::class);
+
 Route::get('productSearch', [ProductController::class, 'searchProduct']);
-Route::get('/users/searchByEmail', [UserController::class, 'getUserByEmail']);
-Route::post('storeImage', [ProductController::class, 'storeImage']);
 
 
-// user routes
+// Route for authorized user
+Route::group([
+    'middleware' => ['jwt.verify', 'auth.resource']
+], function () {
+    Route::get('users/{id}', [UserController::class, 'show']);
+    Route::put('users/{id}', [UserController::class, 'update']);
+
+    Route::resource('carts', CartController::class);
+    Route::resource('cartItem', CartItemController::class);
+
+    Route::resource('orders', OrderController::class);
+    Route::resource('orderItem', OrderItemController::class);
+});
+
+
+// Route for admin
 Route::group([
     'middleware' => ['jwt.verify', 'admin'],
 ], function () {
-    Route::resource('/users', UserController::class);
+    Route::get('users', [UserController::class, 'index']);
+    Route::post('users', [UserController::class, 'store']);
+    Route::delete('users/{id}', [UserController::class, 'destroy']);
+
     Route::post('products', [ProductController::class, 'store'])->middleware('upload.multiple.images');
-    Route::put('/products/:id', [ProductController::class, 'update'])->middleware('upload.multiple.images');
-    Route::delete('/products/:id', [ProductController::class, 'destroy']);
+    Route::put('products/{id}', [ProductController::class, 'update'])->middleware('upload.multiple.images');
+    Route::delete('products/{id}', [ProductController::class, 'destroy']);
+
+    Route::get("carts", [CartController::class, 'index']);
 });
