@@ -40,6 +40,6 @@ Route::group([
 ], function () {
     Route::resource('/users', UserController::class);
     Route::post('products', [ProductController::class, 'store'])->middleware('upload.multiple.images');
-    Route::put('/products/:id', [ProductController::class, 'update']);
+    Route::put('/products/:id', [ProductController::class, 'update'])->middleware('upload.multiple.images');
     Route::delete('/products/:id', [ProductController::class, 'destroy']);
 });

@@ -5,8 +5,9 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\ProductImage;
-use Illuminate\Http\Request;
 
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Exceptions\HttpResponseException;
@@ -22,14 +23,14 @@ class ProductController extends Controller
             // Get the page from the query
             $page = $request->query('page');
 
-            // Paginate the results
-            $product = Product::paginate(10, ['*'], 'page', $page);
+            // Paginate the results (sort the result by created at)
+            $product = Product::orderBy('created_at', 'desc')->paginate(10, ['*'], 'page', $page);
 
             // Customize the response to include the total number of pages
             $response = [
-                'totalLength' => $product->total(),
-                'totalPage' => $product->lastPage(),
-                'currentPage' => $product->currentPage(),
+                // 'totalLength' => $product->total(),
+                // 'totalPage' => $product->lastPage(),
+                // 'currentPage' => $product->currentPage(),
                 'data' => $product->items(),
             ];
 
@@ -46,8 +47,6 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         try {
-
-
             // Validate the request (validate the required fields and the data types)
             $request->validate([
                 'name' => 'required|string|max:255',
@@ -139,7 +138,30 @@ class ProductController extends Controller
             $product = Product::findorfail($id);
 
             // Only update the fields that are actually passed
-            $product->fill($request->all())->save();
+            $product->fill($request->except('images'))->save();
+
+            // If the request has images, save them to the database
+            if ($request->images) {
+                $productImages = ProductImage::where('product_id', $id);
+
+                foreach ($productImages->get() as $image) {
+                    $image_path = public_path() . $image->image_url;
+
+                    // Remove the old images from the directory
+                    File::delete($image_path);
+                }
+
+                // Delete the old images in the database
+                $productImages->delete();
+
+                // Loop through the images and save them to the database
+                foreach ($request->images_names as $image_name) {
+                    ProductImage::create([
+                        'product_id' => $product->id,
+                        'image_url' => '/images/' . $image_name,
+                    ]);
+                }
+            }
 
             return response()->json($product);
         } catch (ModelNotFoundException $e) {
@@ -157,9 +179,17 @@ class ProductController extends Controller
     public function destroy(string $id)
     {
         try {
-            $product = Product::findorfail($id);
+            $productImages = ProductImage::where('product_id', $id);
 
-            $product->delete();
+            foreach ($productImages->get() as $image) {
+                $image_path = public_path() . $image->image_url;
+
+                // Remove the old images from the directory
+                File::delete($image_path);
+            }
+
+            // Delete the product
+            Product::findorfail($id)->delete();
 
             return response()->json('deleted');
         } catch (ModelNotFoundException $e) {
@@ -169,6 +199,9 @@ class ProductController extends Controller
         }
     }
 
+    /**
+     * Search the product by name and price and category.
+     */
     public function searchProduct(Request $request)
     {
         try {
@@ -186,6 +219,11 @@ class ProductController extends Controller
                 ->where('category_id', 'like', '%' . $category_id . '%')
                 ->paginate(10, ['*'], 'page', $page);
 
+            // Get the images of the product from table image
+            foreach ($product as $item) {
+                $item->images = ProductImage::where('product_id', $item->id)->get();
+            }
+
             // Customize the response to include the total number of pages
             $response = [
                 'totalLength' => $product->total(),
@@ -199,19 +237,5 @@ class ProductController extends Controller
         } catch (\Exception $e) {
             return response()->json($e->getMessage());
         }
-    }
-
-    public function storeImage(Request $request)
-    {
-
-        $newImageName =  '-' . $request->name;
-        $productImage =  ProductImage::create([
-            'product_id' => $request->product_id,
-            'image_url' => $newImageName
-        ]);
-        // return $request->image->move(public_path('images'), $newImageName);
-        // return  $newImageName;
-        return
-            response()->json($productImage);
     }
 }
