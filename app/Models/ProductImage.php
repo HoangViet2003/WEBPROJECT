@@ -15,7 +15,7 @@ class ProductImage extends Model
 
  protected $fillable = [
   'product_id',
-  'img_url'
+  'image_url'
  ];
 
  // Many products belong to one category

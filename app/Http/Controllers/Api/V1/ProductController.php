@@ -46,6 +46,8 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         try {
+
+
             // Validate the request (validate the required fields and the data types)
             $request->validate([
                 'name' => 'required|string|max:255',
@@ -65,8 +67,19 @@ class ProductController extends Controller
                 $request->merge(['status' => 'out_of_stock']);
             }
 
-            // Create the product
-            $product = Product::create($request->all());
+            // Create the product from the request exclude the images
+            $product = Product::create($request->except('images'));
+
+            // If the request has images, save them to the database
+            if ($request->images) {
+                // Loop through the images and save them to the database
+                foreach ($request->images_names as $image_name) {
+                    ProductImage::create([
+                        'product_id' => $product->id,
+                        'image_url' => '/images/' . $image_name,
+                    ]);
+                }
+            }
 
             // Return the product to the client
             return response()->json($product);
@@ -83,6 +96,9 @@ class ProductController extends Controller
         try {
             // Find the product by id
             $product = Product::findorfail($id);
+
+            // Get the images of the product from table image
+            $product->images = ProductImage::where('product_id', $id)->get();
 
             // Return the product to the client
             return response()->json($product);
@@ -186,17 +202,16 @@ class ProductController extends Controller
     }
 
     public function storeImage(Request $request)
-    {   
+    {
 
-        $newImageName =  '-' . $request->name ;
-      $productImage =  ProductImage::create([
+        $newImageName =  '-' . $request->name;
+        $productImage =  ProductImage::create([
             'product_id' => $request->product_id,
             'image_url' => $newImageName
         ]);
         // return $request->image->move(public_path('images'), $newImageName);
         // return  $newImageName;
         return
-        response()->json($productImage);
-
+            response()->json($productImage);
     }
 }

@@ -39,7 +39,7 @@ Route::group([
     'middleware' => ['jwt.verify', 'admin'],
 ], function () {
     Route::resource('/users', UserController::class);
-    Route::post('products', [ProductController::class, 'store']);
+    Route::post('products', [ProductController::class, 'store'])->middleware('upload.multiple.images');
     Route::put('/products/:id', [ProductController::class, 'update']);
     Route::delete('/products/:id', [ProductController::class, 'destroy']);
 });
