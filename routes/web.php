@@ -59,7 +59,7 @@ Route::get('/product-detail-admin', function () {
 });
 
 Route::get('/order-detail-admin', function () {
-    return view('admin.product-detail-admin');
+    return view('admin.product-details-admin');
 });
 
 Route::get('/user-detail-admin', function () {

@@ -24,7 +24,7 @@
       <figure>
        <img src="{{asset('assets/img/signin-image.jpg')}}" alt="sign in image" />
       </figure>
-      <a href="./signup.php" class="signup-image-link">Create an account</a>
+      <a href="./signup" class="signup-image-link">Create an account</a>
      </div>
 
      <div class="signin-form">
