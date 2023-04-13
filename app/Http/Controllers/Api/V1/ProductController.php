@@ -46,6 +46,12 @@ class ProductController extends Controller
         }
     }
 
+    public function getAllProductsWithoutLimit(){
+        $product = Product::all();
+        return response()->json($product);
+
+    }
+
     /**
      * Store a newly created resource in storage.
      */

@@ -107,8 +107,8 @@
                         <div class="row">
                             <div class="row mt-5">
                                 <div class="col">
-                                    <button type="submit" class="btn amado-btn">
-                                      Save change : create
+                                    <button type="submit" class="btn amado-btn" id='create-product'>
+                                      Save change : create p
                                     </button>
                                 </div>
                                 {{-- <?php
@@ -126,11 +126,13 @@
                     </form>
                 </div>
 
-
+  <button id="create-product">test</button>
             </div>
         </div>
+      
 
     </div>
+   
 
 </div>
 </div>
@@ -176,3 +178,4 @@
 </script>
 <!-- ##### Main Content Wrapper End ##### -->
 @stop
+<script src="{{asset('assets/js/api/Admin/productsAdmin.js')}}"></script>

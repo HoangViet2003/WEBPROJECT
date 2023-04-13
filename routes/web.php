@@ -44,8 +44,6 @@ Route::get('/checkout', function () {
 });
 
 
-//bayern routes
-// 0-3 father haland
 
 // Admin routes
 Route::get('/admin', function () {
