@@ -26,11 +26,16 @@ class ProductController extends Controller
             // Paginate the results (sort the result by created at)
             $product = Product::orderBy('created_at', 'desc')->paginate(10, ['*'], 'page', $page);
 
+            // Get the images of the products from table image
+            foreach ($product as $item) {
+                $item->images = ProductImage::where('product_id', $item->id)->get();
+            }
+
             // Customize the response to include the total number of pages
             $response = [
-                // 'totalLength' => $product->total(),
-                // 'totalPage' => $product->lastPage(),
-                // 'currentPage' => $product->currentPage(),
+                'totalLength' => $product->total(),
+                'totalPage' => $product->lastPage(),
+                'currentPage' => $product->currentPage(),
                 'data' => $product->items(),
             ];
 
