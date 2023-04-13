@@ -1,11 +1,9 @@
-@extends('layouts.mainAdmin')
-@section('main-content')
 <!-- Product Catagories Area Start -->
-{{--<?php
+<?php
 // get all orders
 $products = $product->getDataWithoutLimit();
 
-?>--}}
+?>
 <div class="dashboard-table-area section-padding-100">
   <div>
     <div>
@@ -30,7 +28,7 @@ $products = $product->getDataWithoutLimit();
             </tr>
           </thead>
           <tbody>
-            {{--<?php
+            <?php
             if ($products) {
               foreach ($products as $product) {
             ?>
@@ -44,7 +42,7 @@ $products = $product->getDataWithoutLimit();
             <?php
               }
             }
-            ?>--}}
+            ?>
           </tbody>
         </table>
         <!-- </div> -->
@@ -58,4 +56,3 @@ $products = $product->getDataWithoutLimit();
 <!-- Product Catagories Area End -->
 
 <script src='http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js'></script>;
-@stop

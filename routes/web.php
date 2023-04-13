@@ -39,6 +39,9 @@ Route::get('/signup', function(){
 Route::get('/login', function(){
     return view('user.login');
 });
+Route::get('/checkout', function(){
+    return view('user.checkout');
+});
 
 
 //bayern routes
@@ -47,6 +50,9 @@ Route::get('/login', function(){
 // Admin routes
 Route::get('/admin', function(){
     return view('admin.indexAdmin');
+});
+Route::get('/product-admin', function(){
+    return view('admin.productsAdmin');
 });
 Route::get('/product-detail-admin', function () {
     return view('admin.product-details-admin');
@@ -59,6 +65,9 @@ Route::get('/order-detail-admin', function () {
 Route::get('/user-detail-admin', function () {
     return view('admin.user-detail-admin');
 });
+Route::get('/users-admin', function () {
+    return view('admin.usersAdmin');
+});
 Route::get('/test', function () {
-    return view('admin.index');
+    return view('admin.profileAdmin');
 });

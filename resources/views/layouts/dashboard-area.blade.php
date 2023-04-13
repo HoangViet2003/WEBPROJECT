@@ -1,5 +1,3 @@
-@extends('layouts.main')
-@section('main-content')
 <!-- Product Catagories Area Start -->
 {{-- <?php
 // get all orders
@@ -49,4 +47,3 @@ $orders = $order->getAllOrders();
 <!-- Product Catagories Area End -->
 
 <script src='http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js'></script>;
-@stop

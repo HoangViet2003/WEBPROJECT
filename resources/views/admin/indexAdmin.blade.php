@@ -1,9 +1,9 @@
-@extends('layouts.mainAdmin') 
+@extends('layouts.mainAdmin')
 @section('main-content')
 <!-- Product Catagories Area Start -->
 {{-- <?php
 // get all orders
-$users = $user->getAllUsers();
+$orders = $order->getAllOrders();
 
 ?> --}}
 <div class="dashboard-table-area section-padding-100">
@@ -11,40 +11,37 @@ $users = $user->getAllUsers();
     <div>
       <div>
         <div class="cart-title mt-50">
-          <h2>Users Dashboard</h2>
+          <h2>Orders Dashboard</h2>
         </div>
 
-        <!-- <div class="row"> -->
-        <table class="stripe row-border order-column" id="myTable" style="width: 100%">
+        <table class="stripe row-border order-column display nowrap" id="myTable" style="width: 100%">
           <thead>
             <tr>
-              <th>User id</th>
-              <th>Fullname</th>
-              <th>Email</th>
+              <th>Order id</th>
+              <!-- <th>Cart id</th> -->
+              <th>Total ($)</th>
+              <th>Status</th>
               <th>Created at</th>
             </tr>
           </thead>
           <tbody>
-            {{-- <?php
-            if ($users) {
-              foreach ($users as $user) {
-            ?> --}}
+            {{-- <!-- <?php
+            if ($orders) {
+              foreach ($orders as $order) {
+            ?> --> --}}
                 <tr>
-                  <td>id</td>
-                  <td>fullname</td>
-                  <td>email</td>
+                  <td>card_id</td>
+                  <td>total</td>
+                  <td>comfirmed</td>
                   <td>create at</td>
                 </tr>
-            {{-- <?php
+            {{-- <!-- <?php
               }
             }
-            ?> --}}
+            ?> --> --}}
           </tbody>
         </table>
-        <!-- </div> -->
-
       </div>
-
     </div>
   </div>
 </div>

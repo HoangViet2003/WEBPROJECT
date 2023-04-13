@@ -1,6 +1,3 @@
-@extends('layouts.main')
-
-@section('main-content')
 <link rel="stylesheet" href="{{asset('assets/css/core-style.css')}}" />
 {{-- <?php
 // Get user's details
@@ -80,7 +77,3 @@ if ($_GET['total']) {
 </div>
 </div>
 <!-- ##### Main Content Wrapper End ##### -->
-@stop
-
-
-<script src="{{asset('assets/js/checkout.js')}}"></script>

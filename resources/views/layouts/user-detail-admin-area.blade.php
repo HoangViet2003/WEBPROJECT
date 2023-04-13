@@ -1,5 +1,3 @@
-@extends('layouts.mainAdmin') 
-@section('main-content')
 {{-- <!-- <?php
 // User need to log in to view this page
 if (!isset($_SESSION['useremail']) || !isset($_SESSION['is_admin'])) {
@@ -115,4 +113,3 @@ if ($_POST["id"]) {
 </div>
 
 <!-- ##### Main Content Wrapper End ##### -->
-@stop
