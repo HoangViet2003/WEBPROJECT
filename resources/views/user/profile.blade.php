@@ -39,7 +39,6 @@
                     <h2>Profile</h2>
                 </div>
 
-
                 <div class="row" style="height: 100%">
                     <div class="col-md-3">
                         <div href="#" class="d-inline">

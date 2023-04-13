@@ -6,7 +6,7 @@
 
   <!-- Single Catagory -->
   <div class="single-products-catagory clearfix">
-   <a href="">
+   <a href="./shop">
     <img src="{{asset('assets/img/product-img/product1.jpg')}}" alt="" />
     <!-- Hover Content -->
     <div class="hover-content">
@@ -19,7 +19,7 @@
 
   <!-- Single Catagory -->
   <div class="single-products-catagory clearfix">
-   <a href="">
+   <a href="./shop">
     <img src="{{asset('assets/img/product-img/product2.jpg')}}" alt="" />
     <!-- Hover Content -->
     <div class="hover-content">
@@ -32,7 +32,7 @@
 
   <!-- Single Catagory -->
   <div class="single-products-catagory clearfix">
-   <a href="">
+   <a href="./shop">
     <img src="{{asset('assets/img/product-img/product3.jpg')}}" alt="" />
     <!-- Hover Content -->
     <div class="hover-content">

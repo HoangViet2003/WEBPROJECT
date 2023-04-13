@@ -57,7 +57,7 @@
             <figure>
               <img src="{{asset('assets/img/signup-image.jpg')}}" alt="sign up image" />
             </figure>
-            <a href="./login.php" class="signup-image-link">I am already member</a>
+            <a href="./login" class="signup-image-link">I am already member</a>
           </div>
         </div>
       </div>

@@ -64,7 +64,7 @@
                         <div class="product-meta-data">
                             <div class="line"></div>
                             <p class="product-price">$500</p>
-                            <a href="">
+                            <a href="./product-detail">
                                 <h6>Product 1</h6>
                             </a>
                         </div>
