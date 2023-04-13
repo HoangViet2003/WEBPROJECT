@@ -21,25 +21,25 @@ Route::get('/', function () {
 Route::get('/product-detail', function () {
     return view('user.product-detail');
 });
-Route::get('/cart', function(){
+Route::get('/cart', function () {
     return view('user.cart');
 });
-Route::get('/profile', function(){
+Route::get('/profile', function () {
     return view('user.profile');
 });
-Route::get('/order', function(){
+Route::get('/order', function () {
     return view('user.orderTracking');
 });
-Route::get('/shop', function(){
+Route::get('/shop', function () {
     return view('user.shop');
 });
-Route::get('/signup', function(){
+Route::get('/signup', function () {
     return view('user.signup');
 });
-Route::get('/login', function(){
+Route::get('/login', function () {
     return view('user.login');
 });
-Route::get('/checkout', function(){
+Route::get('/checkout', function () {
     return view('user.checkout');
 });
 
@@ -48,10 +48,10 @@ Route::get('/checkout', function(){
 // 0-3 father haland
 
 // Admin routes
-Route::get('/admin', function(){
+Route::get('/admin', function () {
     return view('admin.indexAdmin');
 });
-Route::get('/product-admin', function(){
+Route::get('/product-admin', function () {
     return view('admin.productsAdmin');
 });
 Route::get('/product-detail-admin', function () {

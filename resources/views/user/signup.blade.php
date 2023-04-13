@@ -8,13 +8,13 @@
   <title>Sign Up</title>
 
   <!-- Font Icon -->
-  <link rel="stylesheet" href="fonts/material-icon/css/material-design-iconic-font.min.css" />
+  <link rel="stylesheet" href="{{asset('assets/fonts/material-icon/css/material-design-iconic-font.min.css')}}" />
 
   <!-- Main css -->
   <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}" />
   <link rel="stylesheet" href="{{ asset('assets/css/images-upload.css') }}" />
 
-  <script src="./js/validateForm.js" defer></script>
+  <script src="{{asset('assets/js/validateForm.js')}}" defer></script>
 </head>
 
 <body></body>
@@ -25,7 +25,8 @@
         <div class="signup-content">
           <div class="signup-form">
             <h2 class="form-title">Sign up</h2>
-            <form method="POST" name="register-form" class="register-form" id="register-form">
+            <form name="register-form" class="register-form" id="register-form">
+              @csrf
               <div class="form-group">
                 <label for="name"><i class="zmdi zmdi-account material-icons-name"></i></label>
                 <input type="text" name="name" id="name" placeholder="Your Name" required />
@@ -65,7 +66,7 @@
 
   <!-- JS -->
   <!-- <script src="vendor/jquery/jquery.min.js"></script> -->
-  <script src="js/main.js"></script>
+  <script src="{{asset('assets/js/main.js')}}"></script>
 </body>
 <!-- This templates was made by Colorlib (https://colorlib.com) -->
 

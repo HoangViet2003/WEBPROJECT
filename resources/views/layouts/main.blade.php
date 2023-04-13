@@ -138,7 +138,7 @@
     <div class="single_widget_area">
      <!-- Logo -->
      <div class="footer-logo mr-50">
-      <a href="index.php"><img src="{{ asset('assets/img/core-img/logo2.png') }}" alt="" /></a>
+      <a href="index.php"><img src="{{ asset('assets/img/core-img/logo.png') }}" alt="" /></a>
      </div>
      <p class="copywrite">
       Copyright &copy;
