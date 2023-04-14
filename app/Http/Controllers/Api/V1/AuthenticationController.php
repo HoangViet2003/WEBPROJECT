@@ -10,7 +10,6 @@ use Illuminate\Http\Request;
 
 class AuthenticationController extends Controller
 {
-    // login
     public function login(Request $request)
     {
         try {
@@ -30,12 +29,13 @@ class AuthenticationController extends Controller
                 ], 401);
             }
 
+            // generate the token
             $token = auth()->attempt([
                 'email' => $request->email,
                 'password' => $request->password
             ]);
 
-            return $this->respondWithToken($token);
+            return $this->respondWithToken($user, $token);
         } catch (\Throwable $th) {
             return response()->json([
                 'message' => $th->getMessage()
@@ -58,15 +58,22 @@ class AuthenticationController extends Controller
             $user = User::create([
                 'full_name' => $request->full_name,
                 'email' => $request->email,
-                'password' => Hash::make($request->password)
+                'password' => Hash::make($request->password),
+                'is_admin' => 0,
             ]);
 
-            // return the token
+            // get the token
+            $token = auth()->login($user);
+
             return response()->json([
                 'full_name' => $user->full_name,
                 'email' => $user->email,
                 'is_admin' => $user->is_admin,
                 'created_at' => $user->created_at,
+                'updated_at' => $user->updated_at,
+                'access_token' => $token,
+                'token_type' => 'bearer',
+                'expires_in' => auth()->factory()->getTTL() * 3600
             ], 201);
         } catch (\Throwable $th) {
             return response()->json([
@@ -91,12 +98,15 @@ class AuthenticationController extends Controller
     }
 
     // Get the token array structure
-    protected function respondWithToken($token)
+    protected function respondWithToken($user, $token)
     {
         return response()->json([
+            'name' => $user->full_name,
+            'email' => $user->email,
+            'is_admin' => $user->is_admin,
             'access_token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => auth()->factory()->getTTL() * 60
+            'expires_in' => auth()->factory()->getTTL() * 3600
         ]);
     }
 }

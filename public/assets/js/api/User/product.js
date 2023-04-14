@@ -9,7 +9,7 @@ function start() {
 window.onload = start();
 
 async function getProduct(callback) {
-    await fetch("http://localhost:8000/api/products?page=1")
+    await fetch("http://localhost:8000/api/products?page=5")
         .then(function (response) {
             return response.json();
         })
@@ -23,14 +23,14 @@ function renderProduct(products) {
         var product = products[i];
 
         var html = `
-            <div class="single-products-catagory clearfix" ></div>
-                <a href="#">
-                    <img src="../../../assets/img/product-img/product1.jpg" alt="">
+            <div class="single-products-catagory clearfix" >
+                <a href="/products/${product.id}">
+                    <img src=${product?.images.length > 0 ? product?.images[0].image_url : "../../../assets/img/product-img/product1.jpg"} alt="">
 
                     <div class="hover-content">
                         <div class="line"></div>
-                        <p>From $180</p>
-                        <h4>Women’s T-Shirt</h4>
+                        <p>From $ ${product?.price}</p>
+                        <h4>${product?.name}</h4>
                     </div>
                 </a>
            </div>

@@ -46,10 +46,10 @@ class ProductController extends Controller
         }
     }
 
-    public function getAllProductsWithoutLimit(){
+    public function getAllProductsWithoutLimit()
+    {
         $product = Product::all();
         return response()->json($product);
-
     }
 
     /**
