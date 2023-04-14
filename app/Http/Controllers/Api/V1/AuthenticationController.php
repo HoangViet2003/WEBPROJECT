@@ -7,6 +7,8 @@ use App\Models\User;
 use JWTAuth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class AuthenticationController extends Controller
 {
@@ -75,10 +77,10 @@ class AuthenticationController extends Controller
                 'token_type' => 'bearer',
                 'expires_in' => auth()->factory()->getTTL() * 3600
             ], 201);
-        } catch (\Throwable $th) {
-            return response()->json([
-                'message' => $th->getMessage()
-            ], 500);
+        } catch (ValidationException $e) {
+            throw new HttpResponseException(response()->json(['errors' => $e->errors()], 400));
+        } catch (\Exception $e) {
+            return response()->json($e->getMessage());
         }
     }
 

@@ -1,7 +1,7 @@
 // Redirect to home page if the user is not admin, otherwise redirect to admin page if the access token already exists
 window.onload = function () {
   if (localStorage.getItem('access_token')) {
-    if (localStorage.getItem('is_admin')) {
+    if (localStorage.getItem('is_admin') == 1) {
       window.location.href = 'http://localhost:8000/admin';
     } else {
       window.location.href = 'http://localhost:8000';
