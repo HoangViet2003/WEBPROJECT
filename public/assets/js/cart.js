@@ -68,7 +68,7 @@ function updateCartDB(cartItemId, updatedQuantity, scope) {
   };
 
   $.ajax({
-    url: "cart-update.php",
+    url: "http://localhost:8000/api/carts",
     type: "POST",
     data: updateItemJson,
     success: function (response) {
