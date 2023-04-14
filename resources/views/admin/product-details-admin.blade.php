@@ -1,18 +1,5 @@
 @extends('layouts.mainAdmin') 
 @section('main-content')
-{{-- <?php
-// User need to log in to view this page
-// if (!isset($_SESSION['useremail']) || !isset($_SESSION['is_admin'])) {
-//     header('Location: login.php');
-//     exit();
-// }
-
-// // Get user details from db
-// if ($_GET['id']) {
-//     $product_details = $product->getProduct($_GET['id']);
-// }
-?> --}}
-
 <div class="cart-table-area section-padding-100">
     <div class="container-fluid">
         <div class="row">
@@ -55,17 +42,13 @@
                         <div class="form-group">
                             <label for="category">Category</label>
                             <select class="" id="category" name="product_category" style="float: none !important">
-                                {{-- <?php
-                                // $array_options = ["Chair", "Bed", "Accessories", "Furniture", "Home Deco"];
-
-                                // foreach ($array_options as $option) {
-                                //     if ($option == $product_details["category"]) {
-                                //         echo "<option value='$option' selected>$option</option>";
-                                //     } else {
-                                //         echo "<option value='$option'>$option</option>";
-                                //     }
-                                // }
-                                ?> --}}
+                                @php
+                                $array_options = ["Chair", "Bed", "Accessories", "Furniture", "Home Deco"];
+                          
+                                foreach ($array_options as $option) {
+                                  echo "<option value='$option'>$option</option>";
+                                }
+                              @endphp
                             </select>
                         </div>
 
@@ -126,7 +109,6 @@
                     </form>
                 </div>
 
-  <button id="create-product" >test</button>
             </div>
         </div>
       
