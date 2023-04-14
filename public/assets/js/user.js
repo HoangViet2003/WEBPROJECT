@@ -48,7 +48,7 @@ async function getAllUser() {
 
 getAllUser()
 
-async function updateUser(id = 1){
+async function updateUser(id = 3){
     let name = $("user_name").val();
     let email = $("email").val();
     let role = $("role").val();
@@ -56,19 +56,18 @@ async function updateUser(id = 1){
     var form_data = new FormData();
     form_data.append("name", name);
     form_data.append("email", email);
-    form_data.append("role", 1);
+    form_data.append("is_admin", 1);
     axios({
-        url: `http://localhost:8000/api/users/${id}`,
+        url: `http://localhost:8000/api/users/3`,
         method: "PUT",
         data:  JSON.stringify({
             full_name: "test",
             email: "test@example.com",
-            password: "test",
             is_admin: true,
         }),
         headers: {
             "Authorization ":
-                "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2xvZ2luIiwiaWF0IjoxNjgxNDkwMDYyLCJleHAiOjE2ODE0OTM2NjIsIm5iZiI6MTY4MTQ5MDA2MiwianRpIjoibTFMWjNIRkZRYWpNZTVMSiIsInN1YiI6IjMiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.JVXrLn8kwxf9EUXe1vXPcNICIIWQsZNOo_G1TMZbOTs",
+                "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2xvZ2luIiwiaWF0IjoxNjgxNDk2MzEyLCJleHAiOjE2ODE0OTk5MTIsIm5iZiI6MTY4MTQ5NjMxMiwianRpIjoiRHJPbE9tVG9FcGM5WTFYSSIsInN1YiI6IjIiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.pvFSwVDUzGIttCphvLVdurBR9KBU5U2Wvat_YVymaxo",
         },
         success: function (response) {
             console.log(response);
@@ -77,7 +76,7 @@ async function updateUser(id = 1){
     });
 }
 
-$(document).ready(function (e,id=1) {
+$(document).ready(function (e,id=4) {
     $("#userform").on("submit", async function (e) {
         e.preventDefault();
         $("body").toggleClass("loading");
@@ -94,21 +93,22 @@ $(document).ready(function (e,id=1) {
             form_data.append("full_name", name);
             form_data.append("email", email);
             form_data.append("role", 1);
-            await axios.put({ 
-                url: `http://localhost:8000/api/users/${id}`,
-                method: "put",
-                data: JSON.stringify({
-                    full_name: "test",
-                    email: "test@example.com",
-                  
-                    is_admin: true,
-                }),
+            await axios({
+                    url: `http://localhost:8000/api/users/${id}`,
+                    method: "put",
+                    data: JSON.stringify({
+                        full_name: "test",
+                        email: "test@example.com",
 
-                headers: {
-                    "Authorization ":
-                        "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2xvZ2luIiwiaWF0IjoxNjgxNDk0NDg4LCJleHAiOjE2ODE0OTgwODgsIm5iZiI6MTY4MTQ5NDQ4OCwianRpIjoianJQTnpURkFwbXljNklWdyIsInN1YiI6IjIiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.z_DC3gP4_gsZA3Re6rq5RhCiw5xLHBAvOD6yPx_iJdQ",
-                },
-            })
+                        is_admin: true,
+                    }),
+
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization ":
+                            "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2xvZ2luIiwiaWF0IjoxNjgxNDk2MzEyLCJleHAiOjE2ODE0OTk5MTIsIm5iZiI6MTY4MTQ5NjMxMiwianRpIjoiRHJPbE9tVG9FcGM5WTFYSSIsInN1YiI6IjIiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.pvFSwVDUzGIttCphvLVdurBR9KBU5U2Wvat_YVymaxo",
+                    },
+                })
                 .then(function (response) {
                     $("body").toggleClass("loading");
                     console.log(response);

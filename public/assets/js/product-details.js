@@ -85,7 +85,7 @@ $(document).ready(function (e,id=2) {
             }
 
             await axios({
-                url: `http://localhost:8000/api/products`,
+                url: `http://localhost:8000/api/users/3`,
                 method: "post",
                 data: form_data,
                 headers: {
