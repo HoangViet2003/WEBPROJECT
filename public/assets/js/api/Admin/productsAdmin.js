@@ -4,21 +4,17 @@ function start() {
     getProduct(function (products) {
         console.log(products)
         renderProduct(products);
-        handleCreateProduct();
     });
 }
 
 start();
 
- function getProduct() {
-   fetch({
-        url: "http://localhost:8000/api/getAllProducts",
-        method: "get",
-       
-    }).then(function (response) {
-        // return "success"
-        console.log(response)
-    });
+ function getProduct(callback) {
+   fetch("http://localhost:8000/api/getAllProducts")
+       .then(function (response) {
+           return response.json();
+       })
+       .then(callback);
 }
 
 function renderProduct(products) {
@@ -35,9 +31,4 @@ function renderProduct(products) {
     listProductBlock.innerHTML = htmls.join("");
 }
 
-function handleCreateProduct() {
-    var createBtn = document.getElementById("#create-product");
-    createBtn.onclick = function () {
-        console.log("test");
-    };
-}
+

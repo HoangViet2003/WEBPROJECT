@@ -39,7 +39,7 @@ if ($_POST["id"]) {
 
     <div class="col-md-12">
 
-     <form action="" method="post">
+     <form action="" method="post" id="userform">
       <div class="form-group">
        {{-- <!-- <?php
        if ($user_details["id"]) {
@@ -62,7 +62,7 @@ if ($_POST["id"]) {
        <div class="col">
         <div class="form-group">
          <label for="isAdmin">Role</label>
-         <select class="" id="admin" name="isAdmin" style="float: none !important">
+         <input class="form-control" id="admin" name="isAdmin" type="number" value="">
           {{-- <!-- <?php
           $array_options = ["Admin", "User"];
 
@@ -75,7 +75,7 @@ if ($_POST["id"]) {
           }
 
           ?> --> --}}
-         </select>
+         </input>
         </div>
        </div>
       </div>

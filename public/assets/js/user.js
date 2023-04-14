@@ -3,11 +3,11 @@ async function deleteUser(id) {
         "Are you sure you want to delete the user from the database? This will delete all the user's data."
     );
 
-    const data = { id, method: "delete" };
-
     if (confirmDelete) {
+        const data = { id, method: "delete" };
         await axios({
             url: `http://localhost:8000/api/users/${id}`,
+            data: data,
             method: "DELETE",
 
             success: function (result) {
@@ -34,7 +34,7 @@ async function getAllUser() {
         method: "GET",
         headers: {
             "Authorization ":
-                "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2xvZ2luIiwiaWF0IjoxNjgxNDgzOTc5LCJleHAiOjE2ODE0ODc1NzksIm5iZiI6MTY4MTQ4Mzk3OSwianRpIjoibGcyYlZyWlNpUkVxR2dwSSIsInN1YiI6IjIiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.R56hUQfFPvPE9E9O1pdMufpBBK_ZnFoGC9YnuClBDAc",
+                "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2xvZ2luIiwiaWF0IjoxNjgxNDk0NDg4LCJleHAiOjE2ODE0OTgwODgsIm5iZiI6MTY4MTQ5NDQ4OCwianRpIjoianJQTnpURkFwbXljNklWdyIsInN1YiI6IjIiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.z_DC3gP4_gsZA3Re6rq5RhCiw5xLHBAvOD6yPx_iJdQ",
         },
     })
         .then(function (response) {
@@ -43,5 +43,86 @@ async function getAllUser() {
         .catch(function (error) {
             console.log(error);
         });
+        
 }
 
+getAllUser()
+
+async function updateUser(id = 1){
+    let name = $("user_name").val();
+    let email = $("email").val();
+    let role = $("role").val();
+
+    var form_data = new FormData();
+    form_data.append("name", name);
+    form_data.append("email", email);
+    form_data.append("role", 1);
+    axios({
+        url: `http://localhost:8000/api/users/${id}`,
+        method: "PUT",
+        data:  JSON.stringify({
+            full_name: "test",
+            email: "test@example.com",
+            password: "test",
+            is_admin: true,
+        }),
+        headers: {
+            "Authorization ":
+                "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2xvZ2luIiwiaWF0IjoxNjgxNDkwMDYyLCJleHAiOjE2ODE0OTM2NjIsIm5iZiI6MTY4MTQ5MDA2MiwianRpIjoibTFMWjNIRkZRYWpNZTVMSiIsInN1YiI6IjMiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.JVXrLn8kwxf9EUXe1vXPcNICIIWQsZNOo_G1TMZbOTs",
+        },
+        success: function (response) {
+            console.log(response);
+            alert("User updated successfully");
+        },
+    });
+}
+
+$(document).ready(function (e,id=1) {
+    $("#userform").on("submit", async function (e) {
+        e.preventDefault();
+        $("body").toggleClass("loading");
+
+        // Get form inputs
+        let name = $("#user_name").val();
+        let email = $("#email").val();
+        let role = $("#role").val();
+    
+        // Check if the form is for updating or creating a new product
+        if (!document.getElementById("id")) {
+
+            var form_data = new FormData();
+            form_data.append("full_name", name);
+            form_data.append("email", email);
+            form_data.append("role", 1);
+            await axios.put({ 
+                url: `http://localhost:8000/api/users/${id}`,
+                method: "put",
+                data: JSON.stringify({
+                    full_name: "test",
+                    email: "test@example.com",
+                  
+                    is_admin: true,
+                }),
+
+                headers: {
+                    "Authorization ":
+                        "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2xvZ2luIiwiaWF0IjoxNjgxNDk0NDg4LCJleHAiOjE2ODE0OTgwODgsIm5iZiI6MTY4MTQ5NDQ4OCwianRpIjoianJQTnpURkFwbXljNklWdyIsInN1YiI6IjIiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.z_DC3gP4_gsZA3Re6rq5RhCiw5xLHBAvOD6yPx_iJdQ",
+                },
+            })
+                .then(function (response) {
+                    $("body").toggleClass("loading");
+                    console.log(response);
+                    // redirect to products page
+                    // window.location.href = "productsAdmin.php";
+                })
+                .catch(function (error) {
+                    console.log(error);
+
+                    $("body").toggleClass("loading");
+                });
+        } else {
+            let id = document.getElementById("id").value;
+            updateProduct(id);
+        }
+    });
+});

@@ -160,4 +160,3 @@
 </script>
 <!-- ##### Main Content Wrapper End ##### -->
 @stop
-<script src="{{asset('assets/js/api/Admin/productsAdmin.js')}}"></script>
