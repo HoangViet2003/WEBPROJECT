@@ -52,5 +52,7 @@ $products = $product->getDataWithoutLimit();
 <!-- Product Catagories Area End -->
 
 <script src='http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js'></script>;
+
 @stop
 <script src="{{asset('assets/js/api/Admin/productsAdmin.js')}}"></script>
+

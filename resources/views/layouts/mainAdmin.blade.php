@@ -200,6 +200,9 @@
 </div>
 <!-- ##### Footer Area End ##### -->
 
+<!-- axios js -->
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
 <!-- ##### jQuery (Necessary for All JavaScript Plugins) ##### -->
 <script src="{{ asset('assets/js/jquery/jquery-2.2.4.min.js') }}"></script>
 <!-- Popper js -->
@@ -217,9 +220,9 @@
 
 <script src="{{ asset('assets/js/user.js') }}"></script>
 
-<!-- axios js -->
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="{{asset('assets/js/api/Admin/productsAdmin.js')}}"></script>
 
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 
 <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
