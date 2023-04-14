@@ -4,10 +4,9 @@
 //             "http://localhost:8000/api/products?page=1"
 //         );
 
-//         let productsSection = document.getElementsByClassName(
-//             "products-catagories-area clearfix"
+//         let productsSection = document.querySelector(
+//             ".products-catagories-area"
 //             // "amado-pro-catagory clearfix"
-          
 //         )[0];
 
 //         const products = await response.json();
@@ -15,7 +14,7 @@
 
 //         products?.data.forEach((product) => {
 //             productsSection.innerHTML += `
-            
+
 //                 <div class="single-products-catagory clearfix">
 //                 <a href="./shop">
 //                 <img src='${
@@ -23,7 +22,7 @@
 //                         ? product.images[0].image_url
 //                         : null
 //                 }' alt="product_category" />
-    
+
 //                 <div class="hover-content">
 //                 <div class="line"></div>
 //                 <p>From $100 ?? "Unknown" ${product.name} ></p>
@@ -38,44 +37,47 @@
 //     }
 // };
 
-var listProduct = document.querySelector('#single-product-area');
+var listProduct = document.querySelector("#single-product-area");
 
-function start(){
-    getProduct(function(products){
-        console.log(products)
-       renderProduct(products.data);
+function start() {
+    getProduct(function (products) {
+        renderProduct(products.data);
     });
 }
 
-start();
+window.onload = start();
 
-function getProduct(callback){
-    fetch("http://localhost:8000/api/products?page=3").then(function(response){
-        return response.json();
-    }).then(callback);
+async function getProduct(callback) {
+    await fetch("http://localhost:8000/api/products?page=1")
+        .then(function (response) {
+            return response.json();
+        })
+        .then(callback);
 }
 
-function renderProduct(products){
-    var listProductBlock = document.querySelector('#single-product-area');
-    var htmls = products.map(function(product){
-        return ` <a href="./shop">
-                <img src='${
-                    product.images.length > 0
-                        ? product.images[0].image_url
-                        : null
-                }' alt="product_category" />
-    
+function renderProduct(products) {
+    var listProductBlock = document.querySelector(".amado-pro-catagory");
+
+    for (var i = 0; i < products.length; i++) {
+        var product = products[i];
+
+        var html = `
+        <div class="single-products-catagory clearfix">
+            <a href="./shop">
+                <img src="../../../assets/img/product-img/product1.jpg" alt="product_category" />
+
                 <div class="hover-content">
-                <div class="line"></div>
-                <p>From $100 ?? "Unknown" ${product.name} ></p>
-                <h4>${product.price}</h4>
+                    <div class="line"></div>
+                    <p>From $ ${product.price}</p>
+                    <h4>${product.name}</h4>
                 </div>
-                </a>`
-    })
-    listProductBlock.innerHTML =htmls.join('');
+            </a>
+        </div>
+        `;
+
+        listProductBlock.innerHTML += html;
+    }
 }
-
-
 
 // window.onload = async () => {
 //     try {
@@ -83,21 +85,19 @@ function renderProduct(products){
 //             "http://localhost:8000/api/products?page=1"
 //         );
 
-       
-
 //         const products = await response.json();
-  
+
 //         console.log(products.data);
 
 //         var htmls = products.map(function(product)  {
-//             return ` 
+//             return `
 //                 <a href="./shop">
 //                 <img src='${
 //                     product.images.length > 0
 //                         ? product.images[0].image_url
 //                         : null
 //                 }' alt="product_category" />
-    
+
 //                 <div class="hover-content">
 //                 <div class="line"></div>
 //                 <p>From $100 ?? "Unknown" ${product.name} ></p>

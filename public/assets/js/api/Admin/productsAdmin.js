@@ -33,7 +33,7 @@ function renderProduct(products) {
 }
 
 function handleCreateProduct(){
-    var createBtn = document.querySelector('#create-product');
+    var createBtn = document.getElementById('#create-product');
     createBtn.onclick = function () {
         console.log('test')
     }

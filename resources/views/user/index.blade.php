@@ -3,12 +3,12 @@
 @section('main-content')
 <div class="products-catagories-area clearfix">
  <div class="amado-pro-catagory clearfix">
-     <div class="single-products-catagory clearfix" id="single-product-area">
-        </div>
+
  </div>
 </div>
 <!-- Product Catagories Area End -->
+
+<script src="{{asset('assets/js/api/User/product.js')}}" defer></script>
 </div>
 @stop
 
-<script src="{{asset('assets/js/api/User/product.js')}}"></script>
