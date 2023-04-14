@@ -26,6 +26,16 @@
 
 <body>
   <!-- Search Wrapper Area Start -->
+  @php
+  $url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') ? "https://" : "http://";
+  $url .= $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+  $current_page = basename($url);
+
+  $localStorageToken = '<script>localStorage.getItem("access_token");</script>';
+
+  @endphp
+
+
   <div class="search-wrapper section-padding-100">
     <div class="search-close">
       <i class="fa fa-close" aria-hidden="true"></i>
@@ -74,26 +84,44 @@
       <!-- Amado Nav -->
       <nav class="amado-nav">
         <ul>
-          <li>
+          <li  class="@php if ($current_page == 'localhost:8000') : echo 'active';
+          else : echo '';
+          endif; @endphp">
             <a href="/">Home</a>
           </li>
-          <li {{-- class="<?php if ($current_page == 'shop.php') : echo 'active';
+          <li class="@php if ($current_page == 'shop') : echo 'active';
                           else : echo '';
-                          endif; ?>" --}}>
+                          endif; @endphp">
             <a href="./shop">Shop</a>
           </li>
-          <!-- <li><a href="product-details.html">Product</a></li> -->
-          <li {{-- class="<?php if ($current_page == 'cart.php') : echo 'active';
-                          else : echo '';
-                          endif; ?>" --}}>
+
+          <li class="@php if ($current_page == 'cart') : echo 'active';
+                    else : echo '';
+                    endif; @endphp">
             <a href="./cart">Cart</a>
           </li>
 
+          @php
+          if ($localStorageToken != 'null') { @endphp
+            <li class="@php if ($current_page == 'profile') : echo 'active';
+                else : echo '';
+                endif; @endphp">
+              <a href="./profile">My profile</a>
+            </li>
+
+            <li>
+              <a href="./login">Logout</a>
+            </li>
+          @php } else { @endphp
+            <li class="@php if ($current_page == 'login') : echo 'active'; else: echo ''; endif; @endphp">
+              <a href="./login">Login / Signup</a>
+            </li>
+          @php } @endphp        
         </ul>
       </nav>
       <div class="cart-fav-search mb-100">
         <a href="./cart" class="cart-nav"><img src="{{asset('assets/img/core-img/cart.png')}}" alt="" /> Cart
-          <a href="#" class="search-nav"><img src="{{asset('assets/img/core-img/search.png')}}" alt="" /> Search</a>
+        <a href="#" class="search-nav"><img src="{{asset('assets/img/core-img/search.png')}}" alt="" /> Search</a>
       </div>
       <!-- Social Button -->
       <div class="social-info d-flex justify-content-between">
@@ -133,7 +161,6 @@
   </section>
 
   <footer class="footer_area clearfix">
-
     <div class="container">
       <div class="row align-items-center">
         <!-- Single Widget Area -->
@@ -185,7 +212,6 @@
     </div>
   </footer>
 
-  </footer>
   <div class="modal">
     <!-- Place at bottom of page -->
   </div>
@@ -227,53 +253,6 @@
 
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
-  <script>
-    $(document).ready(function() {
-      var table = $('#myTable').removeAttr('width').DataTable({
-        scrollY: "300px",
-        scrollX: true,
-        scrollCollapse: true,
-        // paging: true,
-        dom: 'Bfrtip',
-        buttons: [
-          'excel', 'pdf',
-        ],
-
-        columnDefs: [{
-          width: 80,
-          targets: 0
-        }, {
-          "className": "dt-center",
-          "targets": "_all"
-        }, {
-          className: "dt-head-center",
-          targets: "_all"
-        }, ],
-        fixedColumns: true
-      });
-
-
-      $('#myTable tbody').on('dblclick', 'tr', function() {
-        var data = table.row(this).data();
-
-        // Get the path name of the current page
-        var path = window.location.pathname;
-        // Get the last part of the path name
-        var page = path.split("/").pop();
-
-        // Redirect to details page
-        if (page == "productsAdmin.php") {
-          window.location.href = "product-details-admin.php?id=" + data[0];
-        } else if (page == "ordersAdmin.php") {
-          window.location.href = "orderDetails.php?id=" + data[0];
-        } else if (page == "usersAdmin.php") {
-          window.location.href = "user-detail-admin.php?id=" + data[0];
-        } else if (page == "indexAdmin.php") {
-          window.location.href = "order-detail-admin.php?id=" + data[0];
-        }
-      });
-    });
-  </script>
 </body>
 
 </html>
