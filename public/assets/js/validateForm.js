@@ -1,6 +1,6 @@
 window.onload = function () {
     if (localStorage.getItem('access_token')) {
-        if (localStorage.getItem('is_admin')) {
+        if (localStorage.getItem('is_admin') == 1) {
             window.location.href = 'http://localhost:8000/admin';
         } else {
             window.location.href = 'http://localhost:8000';
@@ -11,14 +11,15 @@ window.onload = function () {
 document
     .getElementById("register-form")
     .addEventListener("submit", function (e) {
+        e.preventDefault();
         const checked = validateForm();
 
         if (checked) {
             // Get the value of name, email and password from the input
             var data = {
-                full_name: document.getElementById("your_name").value,
-                email: document.getElementById("your_email").value,
-                password: document.getElementById("your_pass").value,
+                full_name: document.getElementById("name").value,
+                email: document.getElementById("email").value,
+                password: document.getElementById("pass").value,
             }
 
             // Calling axios to send a POST request to register api
@@ -36,10 +37,12 @@ document
                 }
             ).catch(function (error) {
                 // If the request is failed, show the error message
-                alert(error.data.message);
+                if (error.response.data.errors) {
+                    if (error.response.data.errors.email) {
+                        alert(error.response.data.errors.email[0]);
+                    }
+                }
             });
-        } else {
-            e.preventDefault();
         }
     });
 
@@ -64,10 +67,10 @@ function validateForm() {
         return false;
     }
     // Check if the user agrees to the terms and conditions
-    else if (!checked) {
-        alert("You must agree to the terms and conditions!");
-        return false;
-    }
+    // else if (!checked) {
+    //     alert("You must agree to the terms and conditions!");
+    //     return false;
+    // }
 
     return true;
 }
