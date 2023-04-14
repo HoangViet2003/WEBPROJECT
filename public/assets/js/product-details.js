@@ -81,14 +81,14 @@ $(document).ready(function (e) {
                 data: form_data,
                 headers: {
                     "Authorization ":
-                        "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2xvZ2luIiwiaWF0IjoxNjgxNDQ0MzQ4LCJleHAiOjE2ODE0NDc5NDgsIm5iZiI6MTY4MTQ0NDM0OCwianRpIjoiemRMVnpQQURMWTFCclRTMiIsInN1YiI6IjIiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.vh-A0oujhzdMoun57L_Ni4Or8IXaGzYeP2ZYnolZPsE",
+                        "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2xvZ2luIiwiaWF0IjoxNjgxNDQ3MTcyLCJleHAiOjE2ODE0NTA3NzIsIm5iZiI6MTY4MTQ0NzE3MiwianRpIjoiT09pQ284aW5OcUtYZk1IRCIsInN1YiI6IjMiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.G4N_b2OlhqWJ3kA-ML6tC6XiFLASjQ3U_dv6bFnkiEs",
                 },
             })
                 .then(function (response) {
                     $("body").toggleClass("loading");
-
+                    console.log(response)
                     // redirect to products page
-                    window.location.href = "productsAdmin.php";
+                    // window.location.href = "productsAdmin.php";
                 })
                 .catch(function (error) {
                     console.log(error);
