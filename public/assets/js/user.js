@@ -53,10 +53,7 @@ async function updateUser(id = 3){
     let email = $("email").val();
     let role = $("role").val();
 
-    var form_data = new FormData();
-    form_data.append("name", name);
-    form_data.append("email", email);
-    form_data.append("is_admin", 1);
+ 
     axios({
         url: `http://localhost:8000/api/users/3`,
         method: "PUT",
@@ -85,22 +82,22 @@ $(document).ready(function (e,id=4) {
         let name = $("#user_name").val();
         let email = $("#email").val();
         let role = $("#role").val();
-    
+        
+        if(role == "admin"){
+
+        }
         // Check if the form is for updating or creating a new product
         if (!document.getElementById("id")) {
 
-            var form_data = new FormData();
-            form_data.append("full_name", name);
-            form_data.append("email", email);
-            form_data.append("role", 1);
+        
             await axios({
                     url: `http://localhost:8000/api/users/${id}`,
                     method: "put",
                     data: JSON.stringify({
-                        full_name: "test",
-                        email: "test@example.com",
+                        full_name: name,
+                        email: email,
 
-                        is_admin: true,
+                        is_admin: 1 ,
                     }),
 
                     headers: {
