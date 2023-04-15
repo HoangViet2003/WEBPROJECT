@@ -75,7 +75,7 @@ class AuthenticationController extends Controller
                 'updated_at' => $user->updated_at,
                 'access_token' => $token,
                 'token_type' => 'bearer',
-                'expires_in' => auth()->factory()->getTTL() * 3600
+                'expires_in' => auth()->factory()->getTTL() * 60
             ], 201);
         } catch (ValidationException $e) {
             throw new HttpResponseException(response()->json(['errors' => $e->errors()], 400));
@@ -103,12 +103,13 @@ class AuthenticationController extends Controller
     protected function respondWithToken($user, $token)
     {
         return response()->json([
+            'user_id' => $user->id,
             'name' => $user->full_name,
             'email' => $user->email,
             'is_admin' => $user->is_admin,
             'access_token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => auth()->factory()->getTTL() * 3600
+            'expires_in' => auth()->factory()->getTTL() * 60
         ]);
     }
 }

@@ -23,7 +23,7 @@ function deleteProduct(id) {
     }
 }
 
-function updateProduct(id =3) {
+function updateProduct(id = 3) {
     // Get updated informatin
     let name = $("#product_name").val();
     let description = $("#description").val();
@@ -38,8 +38,6 @@ function updateProduct(id =3) {
     form_data.append("quantity", quantity);
     form_data.append("rating", 5);
     form_data.append("category_id", 1);
-
-
 
     axios({
         url: `http://localhost:8000/api/products/${id}`,
@@ -57,7 +55,7 @@ function updateProduct(id =3) {
     });
 }
 
-$(document).ready(function (e,id=2) {
+$(document).ready(function (e, id = 2) {
     $("#productform").on("submit", async function (e) {
         e.preventDefault();
         $("body").toggleClass("loading");
@@ -85,7 +83,7 @@ $(document).ready(function (e,id=2) {
             }
 
             await axios({
-                url: `http://localhost:8000/api/users/3`,
+                url: `http://localhost:8000/api/products/3`,
                 method: "post",
                 data: form_data,
                 headers: {
@@ -111,7 +109,7 @@ $(document).ready(function (e,id=2) {
     });
 });
 
-async function searchProduct(){
+async function searchProduct() {
     await axios({
         url: "http://localhost:8000/api/productSearch?name=test&page=1",
         method: "search",
