@@ -1,3 +1,74 @@
+const token = localStorage.getItem('access_token');
+
+
+// window.onload =function start(){
+     
+//     getAllUsers(function(users){
+//         console.log(users)
+//         renderUsers(users);
+//     })
+   
+// }
+
+// async function getAllUsers(callback) {
+//     await fetch({
+//         url: "http://localhost:8000/api/users",
+//         method: "GET",
+//         headers: {
+//             "Authorization ":
+//                 `Bearer ${token}`,
+//         },
+//     })
+//         .then(function (response) {
+//             // console.log(response);
+//            return response
+//         })
+//         .then(callback)
+//         .catch(function (error) {
+//             console.log(error);
+//         });   
+// }
+
+//     async function getUser(){
+        
+//     }
+
+//  async function renderUsers(users){
+//     var listUserBlock = document.querySelector("#tables-user");
+//     console.log(users)
+//     var htmls =
+//        ` <tr>
+//                   <td >${user.id}</td>
+//                   <td>${user.name}</td>
+//                   <td>${user.email}</td>
+//                   <td>${user.is_admin}</td>
+//                 </tr>`;
+    
+//     listUserBlock.innerHTML += htmls;
+// }
+
+//  function getAllUsers(callback) {
+//    fetch({url:"http://localhost:8000/api/users",method:"GET",headers:  {"Authorization":
+//                  `Bearer ${token}` }})
+//        .then(function (response) {
+//            return response.json();
+//        })
+//        .then(callback);
+// }
+
+// function renderUsers(users) {
+//     var listUserBlock = document.querySelector("#tables-users");
+//     var htmls = users.map(function (user) {
+//         return  ` <tr>
+//                  <td >${user.id}</td>
+//                    <td>${user.name}</td>
+//                    <td>${user.email}</td>
+//                    <td>${user.is_admin}</td>
+//                  </tr>`;
+//     });
+//     listUserBlock.innerHTML = htmls.join("");
+// }
+
 async function deleteUser(id) {
     let confirmDelete = confirm(
         "Are you sure you want to delete the user from the database? This will delete all the user's data."
@@ -28,25 +99,11 @@ async function deleteUser(id) {
     }
 }
 
-async function getAllUser() {
-    await axios({
-        url: "http://localhost:8000/api/users",
-        method: "GET",
-        headers: {
-            "Authorization ":
-                "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2xvZ2luIiwiaWF0IjoxNjgxNDk0NDg4LCJleHAiOjE2ODE0OTgwODgsIm5iZiI6MTY4MTQ5NDQ4OCwianRpIjoianJQTnpURkFwbXljNklWdyIsInN1YiI6IjIiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.z_DC3gP4_gsZA3Re6rq5RhCiw5xLHBAvOD6yPx_iJdQ",
-        },
-    })
-        .then(function (response) {
-            console.log(response);
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
-        
-}
 
-getAllUser()
+
+
+
+
 
 async function updateUser(id = 3){
     let name = $("user_name").val();

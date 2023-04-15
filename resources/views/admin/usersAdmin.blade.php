@@ -24,17 +24,17 @@ $users = $user->getAllUsers();
               <th>Created at</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody id="tables-user">
             {{-- <?php
             if ($users) {
               foreach ($users as $user) {
             ?> --}}
-                <tr>
+                {{-- <tr>
                   <td>id</td>
                   <td>fullname</td>
                   <td>email</td>
                   <td>create at</td>
-                </tr>
+                </tr> --}}
             {{-- <?php
               }
             }
@@ -49,7 +49,7 @@ $users = $user->getAllUsers();
   </div>
 </div>
 </div>
-<!-- Product Catagories Area End -->
+<!-- User Catagories Area End -->
 
 <script src='http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js'></script>;
 @stop
