@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col-12 col-lg-8">
                 <div class="cart-title mt-50">
-                    <h2> "Details" : "New product" </h2>
+                    <h2> Create New Product </h2>
                 </div>
 
                 <div class="col-md-12">
@@ -91,19 +91,19 @@
                             <div class="row mt-5">
                                 <div class="col">
                                     <button type="submit" class="btn amado-btn" id='create-product'>
-                                      Save change : create p
+                                      Save change 
                                     </button>
                                 </div>
                                 {{-- <?php
                                 if ($product_details) {
-                                ?>
+                                ?> --}}
                                     <div class="col">
-                                        <a class="btn amado-btn active" name="delete" onclick="deleteProduct(<?php echo $product_details["id"]; ?>)" style="color: white">
+                                        <a class="btn amado-btn active" name="delete" onclick="deleteProduct()" style="color: white">
                                             Delete
                                         </a>
                                     </div>
 
-                                <?php } ?> --}}
+                                {{-- <?php } ?> --}}
                             </div>
 
                     </form>

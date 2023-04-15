@@ -1,4 +1,57 @@
-async function deleteUser(id) {
+const token = localStorage.getItem("access_token");
+const pathArray = window.location.pathname.split("/");
+const user_id = pathArray[pathArray.length - 1];
+console.log(user_id);
+
+console.log(user_id);
+let users = [];
+
+window.onload = function start() {
+    getAllUsers(function (users) {
+        
+        renderUsers(users);
+    });
+};
+
+async function getAllUsers(callback) {
+    await axios({
+        url: "http://localhost:8000/api/users",
+        method: "GET",
+        headers: {
+            "Authorization ": `Bearer ${token}`,
+        },
+    })
+        .then(function (response) {
+            console.log(response);
+            users = response.data;
+            
+            //    return response
+        })
+        .then(callback)
+        .catch(function (error) {
+            console.log(error);
+        });
+}
+
+async function getUser() {}
+
+async function renderUsers() {
+    var listUserBlock = document.querySelector("#tables-user");
+
+    var htmls = users.data.map(function (user) {
+        return `<tr>
+                  <td>${user.id}</td>
+                  <td>${user.full_name}</td>
+                  <td>${user.email}</td>
+                  <td>${user.is_admin}</td>
+                </tr>`;
+    });
+
+    listUserBlock.innerHTML = htmls.join("");
+}
+
+
+async function deleteUser(id = user_id) {
     let confirmDelete = confirm(
         "Are you sure you want to delete the user from the database? This will delete all the user's data."
     );
@@ -9,6 +62,9 @@ async function deleteUser(id) {
             url: `http://localhost:8000/api/users/${id}`,
             data: data,
             method: "DELETE",
+            headers: {
+                "Authorization ": `Bearer ${token}`,
+            },
 
             success: function (result) {
                 if (result == 1) {
@@ -28,52 +84,8 @@ async function deleteUser(id) {
     }
 }
 
-async function getAllUser() {
-    await axios({
-        url: "http://localhost:8000/api/users",
-        method: "GET",
-        headers: {
-            "Authorization ":
-                "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2xvZ2luIiwiaWF0IjoxNjgxNDk0NDg4LCJleHAiOjE2ODE0OTgwODgsIm5iZiI6MTY4MTQ5NDQ4OCwianRpIjoianJQTnpURkFwbXljNklWdyIsInN1YiI6IjIiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.z_DC3gP4_gsZA3Re6rq5RhCiw5xLHBAvOD6yPx_iJdQ",
-        },
-    })
-        .then(function (response) {
-            console.log(response);
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
-        
-}
 
-getAllUser()
-
-async function updateUser(id = 3){
-    let name = $("user_name").val();
-    let email = $("email").val();
-    let role = $("role").val();
-
- 
-    axios({
-        url: `http://localhost:8000/api/users/3`,
-        method: "PUT",
-        data:  JSON.stringify({
-            full_name: "test",
-            email: "test@example.com",
-            is_admin: true,
-        }),
-        headers: {
-            "Authorization ":
-                "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2xvZ2luIiwiaWF0IjoxNjgxNDk2MzEyLCJleHAiOjE2ODE0OTk5MTIsIm5iZiI6MTY4MTQ5NjMxMiwianRpIjoiRHJPbE9tVG9FcGM5WTFYSSIsInN1YiI6IjIiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.pvFSwVDUzGIttCphvLVdurBR9KBU5U2Wvat_YVymaxo",
-        },
-        success: function (response) {
-            console.log(response);
-            alert("User updated successfully");
-        },
-    });
-}
-
-$(document).ready(function (e,id=4) {
+$(document).ready(function (e, id = user_id) {
     $("#userform").on("submit", async function (e) {
         e.preventDefault();
         $("body").toggleClass("loading");
@@ -82,32 +94,27 @@ $(document).ready(function (e,id=4) {
         let name = $("#user_name").val();
         let email = $("#email").val();
         let role = $("#role").val();
-        
-        if(role == "admin"){
-
-        }
-
-          
+        let is_admin = false;
+        if(role === 1) return is_admin = true;
         // Check if the form is for updating or creating a new product
         if (!document.getElementById("id")) {
-            
-        
+          
             await axios({
-                    url: `http://localhost:8000/api/users/${id}`,
-                    method: "put",
-                    data: JSON.stringify({
-                        full_name: name,
-                        email: email,
+                url: `http://localhost:8000/api/users/${id}`,
+                method: "put",
+                data: JSON.stringify({
+                    full_name: name,
+                    email: email,
 
-                        is_admin: 1 ,
-                    }),
+                    is_admin: is_admin,
+                }),
 
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Authorization ":
-                            "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2xvZ2luIiwiaWF0IjoxNjgxNDk2MzEyLCJleHAiOjE2ODE0OTk5MTIsIm5iZiI6MTY4MTQ5NjMxMiwianRpIjoiRHJPbE9tVG9FcGM5WTFYSSIsInN1YiI6IjIiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.pvFSwVDUzGIttCphvLVdurBR9KBU5U2Wvat_YVymaxo",
-                    },
-                })
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization ":
+                        `Bearer ${token}`,
+                },
+            })
                 .then(function (response) {
                     $("body").toggleClass("loading");
                     console.log(response);

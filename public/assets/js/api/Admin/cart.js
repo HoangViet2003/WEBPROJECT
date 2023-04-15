@@ -34,4 +34,5 @@ function renderProduct(products) {
                   <td>${product.quantity}</td>
                 </tr>`;
     });
+    listProductBlock.innerHTML = htmls.join("");
 }

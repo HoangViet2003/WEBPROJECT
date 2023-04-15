@@ -55,12 +55,18 @@ Route::get('/product-admin', function () {
 Route::get('/product-detail-admin', function () {
     return view('admin.product-details-admin');
 });
+Route::get('/product-detail-admin/{id}', function () {
+    return view('admin.product-details-admin');
+});
 
 Route::get('/order-detail-admin', function () {
     return view('admin.product-details-admin');
 });
 
 Route::get('/user-detail-admin', function () {
+    return view('admin.user-detail-admin');
+});
+Route::get('/user-detail-admin/{id}', function () {
     return view('admin.user-detail-admin');
 });
 Route::get('/users-admin', function () {

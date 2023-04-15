@@ -1,8 +1,11 @@
-// const token = localStorage.getItem('token');
-// console.log(token);
-function deleteProduct(id) {
+const token = localStorage.getItem('access_token');
+console.log(token)
+const pathArray = window.location.pathname.split("/");
+const product_id = pathArray[pathArray.length - 1];
+
+function deleteProduct(id = product_id) {
     let confirmDelete = confirm(
-        "Are you sure you want to delete the item with from the cart?"
+        "Are you sure you want to delete the product?"
     );
 
     if (confirmDelete) {
@@ -12,7 +15,7 @@ function deleteProduct(id) {
             method: "delete",
             data: data,
             headers: {
-                "Authorization ": `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2xvZ2luIiwiaWF0IjoxNjgxNDkwMDYyLCJleHAiOjE2ODE0OTM2NjIsIm5iZiI6MTY4MTQ5MDA2MiwianRpIjoibTFMWjNIRkZRYWpNZTVMSiIsInN1YiI6IjMiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.JVXrLn8kwxf9EUXe1vXPcNICIIWQsZNOo_G1TMZbOTs`,
+                "Authorization ": `Bearer ${token}`,
             },
             success: function (response) {
                 console.log(response);
@@ -23,7 +26,7 @@ function deleteProduct(id) {
     }
 }
 
-function updateProduct(id =3) {
+function updateProduct(id = product_id) {
     // Get updated informatin
     let name = $("#product_name").val();
     let description = $("#description").val();
@@ -39,15 +42,13 @@ function updateProduct(id =3) {
     form_data.append("rating", 5);
     form_data.append("category_id", 1);
 
-
-
     axios({
         url: `http://localhost:8000/api/products/${id}`,
         type: "PUT",
         data: form_data,
         headers: {
             "Authorization ":
-                "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2xvZ2luIiwiaWF0IjoxNjgxNDkwMDYyLCJleHAiOjE2ODE0OTM2NjIsIm5iZiI6MTY4MTQ5MDA2MiwianRpIjoibTFMWjNIRkZRYWpNZTVMSiIsInN1YiI6IjMiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.JVXrLn8kwxf9EUXe1vXPcNICIIWQsZNOo_G1TMZbOTs",
+                `Bearer ${token}`,
         },
         success: function (response) {
             console.log(response);
@@ -57,7 +58,7 @@ function updateProduct(id =3) {
     });
 }
 
-$(document).ready(function (e,id=2) {
+$(document).ready(function (e) {
     $("#productform").on("submit", async function (e) {
         e.preventDefault();
         $("body").toggleClass("loading");
@@ -85,12 +86,12 @@ $(document).ready(function (e,id=2) {
             }
 
             await axios({
-                url: `http://localhost:8000/api/users/3`,
+                url: `http://localhost:8000/api/products`,
                 method: "post",
                 data: form_data,
                 headers: {
                     "Authorization ":
-                        "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2xvZ2luIiwiaWF0IjoxNjgxNDkwMDYyLCJleHAiOjE2ODE0OTM2NjIsIm5iZiI6MTY4MTQ5MDA2MiwianRpIjoibTFMWjNIRkZRYWpNZTVMSiIsInN1YiI6IjMiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.JVXrLn8kwxf9EUXe1vXPcNICIIWQsZNOo_G1TMZbOTs",
+                        `Bearer ${token}`,
                 },
             })
                 .then(function (response) {
@@ -111,8 +112,14 @@ $(document).ready(function (e,id=2) {
     });
 });
 
-async function searchProduct(){
+async function searchProduct() {
     await axios({
         url: "http://localhost:8000/api/productSearch?name=test&page=1",
+        method: "search",
+        headers:{
+            name: "test",
+        }
     });
+    let name = document.getElementById("name").value;
+    searchProduct(name)
 }

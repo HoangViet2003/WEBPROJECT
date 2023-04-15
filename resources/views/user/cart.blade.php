@@ -56,7 +56,7 @@
               </tr>
             </thead>
             <tbody>
-
+            <tbody id="tables-product">
               <tr></tr>
               <td class="cart_product_img">
                 <a href="#"><img src="{{asset('assets/img/product-img/product1.jpg')}}" alt="Product" /></a>

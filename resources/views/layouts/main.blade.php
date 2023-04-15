@@ -31,8 +31,6 @@
   $url .= $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
   $current_page = basename($url);
 
-  $localStorageToken = '<script>localStorage.getItem("access_token");</script>';
-
   @endphp
 
 
@@ -101,22 +99,19 @@
             <a href="./cart">Cart</a>
           </li>
 
-          @php
-          if ($localStorageToken != 'null') { @endphp
             <li class="@php if ($current_page == 'profile') : echo 'active';
                 else : echo '';
-                endif; @endphp">
+                endif; @endphp" id="profile">
               <a href="./profile">My profile</a>
             </li>
 
-            <li>
-              <a href="./login">Logout</a>
+            <li id="logout"> 
+              <a href="./login" onclick="logout();">Logout</a>
             </li>
-          @php } else { @endphp
-            <li class="@php if ($current_page == 'login') : echo 'active'; else: echo ''; endif; @endphp">
+
+            <li class="@php if ($current_page == 'login') : echo 'active'; else: echo ''; endif; @endphp" id="login">
               <a href="./login">Login / Signup</a>
             </li>
-          @php } @endphp        
         </ul>
       </nav>
       <div class="cart-fav-search mb-100">
@@ -234,6 +229,7 @@
 
   <script src="{{ asset('assets/js/user.js') }}"></script>
 
+  <script src="{{ asset('assets/js/access_token.js') }}"></script>
 
   <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 
