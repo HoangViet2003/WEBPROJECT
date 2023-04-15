@@ -131,10 +131,11 @@ class UserController extends Controller
                 ], 403);
             }
 
-            // validate the request
-            $request->validate([
-                'email' => 'required|email|unique:users',
-            ]);
+            if ($request->email != auth()->user()->email) {
+                $request->validate([
+                    'email' => 'required|email|unique:users',
+                ]);
+            }
 
             // hash the password if it is passed
             if ($request->password) {
