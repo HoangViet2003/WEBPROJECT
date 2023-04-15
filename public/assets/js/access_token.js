@@ -12,3 +12,34 @@ function logout() {
 
     window.location.href = "http://localhost:3000/login";
 }
+
+function checkTokenExpiration() {
+    const expiresAt = localStorage.getItem("expires_at");
+
+    if (expiresAt) {
+        const now = Date.now();
+        const expiresIn = expiresAt - now;
+
+        if (expiresIn < 0) {
+            // Token has expired, log the user out
+            alert("Your session has expired! Please login again!");
+            localStorage.clear();
+            window.location.href = "http://localhost:8000/login";
+        } else {
+            // Token is still valid, set the timer to check again in 1 second
+            timerId = setTimeout(checkTokenExpiration, 1000);
+        }
+    }
+}
+
+let timerId = null;
+
+// Call the function when the user logs in or the page loads
+checkTokenExpiration();
+
+// Attach an event listener to the beforeunload event to clear the timer
+window.addEventListener("beforeunload", function () {
+    if (timerId) {
+        clearTimeout(timerId);
+    }
+});

@@ -37,6 +37,11 @@ document.getElementById("login-form").addEventListener("submit", function (e) {
                 Date.now() + response.data.expires_in * 1000
             );
 
+            setTimeout(function () {
+                alert("Your session has expired! Please login again!");
+                localStorage.clear();
+            }, response.data.expires_in * 1000);
+
             alert("Login successfully");
 
             // Redirect to home page if the user is not admin, otherwise redirect to admin page
