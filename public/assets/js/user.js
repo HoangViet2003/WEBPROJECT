@@ -101,10 +101,6 @@ async function deleteUser(id) {
 
 
 
-
-
-
-
 async function updateUser(id = 3){
     let name = $("user_name").val();
     let email = $("email").val();
