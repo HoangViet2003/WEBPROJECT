@@ -86,9 +86,11 @@ $(document).ready(function (e,id=4) {
         if(role == "admin"){
 
         }
+
+          
         // Check if the form is for updating or creating a new product
         if (!document.getElementById("id")) {
-
+            
         
             await axios({
                     url: `http://localhost:8000/api/users/${id}`,
