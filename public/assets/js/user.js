@@ -1,14 +1,11 @@
-const token = localStorage.getItem("access_token");
-const pathArray = window.location.pathname.split("/");
+// const token = localStorage.getItem("access_token");
+// const pathArray = window.location.pathname.split("/");
 const user_id = pathArray[pathArray.length - 1];
-console.log(user_id);
 
-console.log(user_id);
 let users = [];
 
 window.onload = function start() {
     getAllUsers(function (users) {
-        
         renderUsers(users);
     });
 };
@@ -24,7 +21,7 @@ async function getAllUsers(callback) {
         .then(function (response) {
             console.log(response);
             users = response.data;
-            
+
             //    return response
         })
         .then(callback)
@@ -49,7 +46,6 @@ async function renderUsers() {
 
     listUserBlock.innerHTML = htmls.join("");
 }
-
 
 async function deleteUser(id = user_id) {
     let confirmDelete = confirm(
@@ -84,7 +80,6 @@ async function deleteUser(id = user_id) {
     }
 }
 
-
 $(document).ready(function (e, id = user_id) {
     $("#userform").on("submit", async function (e) {
         e.preventDefault();
@@ -95,10 +90,9 @@ $(document).ready(function (e, id = user_id) {
         let email = $("#email").val();
         let role = $("#role").val();
         let is_admin = false;
-        if(role === 1) return is_admin = true;
+        if (role === 1) return (is_admin = true);
         // Check if the form is for updating or creating a new product
         if (!document.getElementById("id")) {
-          
             await axios({
                 url: `http://localhost:8000/api/users/${id}`,
                 method: "put",
@@ -111,8 +105,7 @@ $(document).ready(function (e, id = user_id) {
 
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization ":
-                        `Bearer ${token}`,
+                    "Authorization ": `Bearer ${token}`,
                 },
             })
                 .then(function (response) {

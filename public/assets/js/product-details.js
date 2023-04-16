@@ -1,12 +1,9 @@
-const token = localStorage.getItem('access_token');
-console.log(token)
+const token = localStorage.getItem("access_token");
 const pathArray = window.location.pathname.split("/");
 const product_id = pathArray[pathArray.length - 1];
 
 function deleteProduct(id = product_id) {
-    let confirmDelete = confirm(
-        "Are you sure you want to delete the product?"
-    );
+    let confirmDelete = confirm("Are you sure you want to delete the product?");
 
     if (confirmDelete) {
         const data = { id, method: "delete" };
@@ -47,8 +44,7 @@ function updateProduct(id = product_id) {
         type: "PUT",
         data: form_data,
         headers: {
-            "Authorization ":
-                `Bearer ${token}`,
+            "Authorization ": `Bearer ${token}`,
         },
         success: function (response) {
             console.log(response);
@@ -90,8 +86,7 @@ $(document).ready(function (e) {
                 method: "post",
                 data: form_data,
                 headers: {
-                    "Authorization ":
-                        `Bearer ${token}`,
+                    "Authorization ": `Bearer ${token}`,
                 },
             })
                 .then(function (response) {
@@ -116,10 +111,10 @@ async function searchProduct() {
     await axios({
         url: "http://localhost:8000/api/productSearch?name=test&page=1",
         method: "search",
-        headers:{
+        headers: {
             name: "test",
-        }
+        },
     });
     let name = document.getElementById("name").value;
-    searchProduct(name)
+    searchProduct(name);
 }
