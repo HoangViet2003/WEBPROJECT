@@ -72,6 +72,7 @@ Route::get('/user-detail-admin/{id}', function () {
 Route::get('/users-admin', function () {
     return view('admin.usersAdmin');
 });
+
 Route::get('/test', function () {
     return view('admin.profileAdmin');
 });

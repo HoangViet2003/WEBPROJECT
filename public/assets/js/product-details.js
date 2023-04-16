@@ -1,12 +1,9 @@
-const token = localStorage.getItem('access_token');
-console.log(token)
+const token = localStorage.getItem("access_token");
 const pathArray = window.location.pathname.split("/");
 const product_id = pathArray[pathArray.length - 1];
 
 function deleteProduct(id = product_id) {
-    let confirmDelete = confirm(
-        "Are you sure you want to delete the product?"
-    );
+    let confirmDelete = confirm("Are you sure you want to delete the product?");
 
     if (confirmDelete) {
         const data = { id, method: "delete" };
@@ -26,7 +23,7 @@ function deleteProduct(id = product_id) {
     }
 }
 
-function updateProduct(id = product_id) {
+function updateProduct(id) {
     // Get updated informatin
     let name = $("#product_name").val();
     let description = $("#description").val();
@@ -47,8 +44,7 @@ function updateProduct(id = product_id) {
         type: "PUT",
         data: form_data,
         headers: {
-            "Authorization ":
-                `Bearer ${token}`,
+            "Authorization ": `Bearer ${token}`,
         },
         success: function (response) {
             console.log(response);
@@ -71,9 +67,9 @@ $(document).ready(function (e) {
         let category = $("#category").val();
 
         // Check if the form is for updating or creating a new product
-        if (!document.getElementById("id")) {
+        if (!product_id) {
             let images = document.getElementById("images-input").files;
-
+            console.log("test")
             var form_data = new FormData();
             form_data.append("name", name);
             form_data.append("description", description);
@@ -90,12 +86,11 @@ $(document).ready(function (e) {
                 method: "post",
                 data: form_data,
                 headers: {
-                    "Authorization ":
-                        `Bearer ${token}`,
+                    "Authorization ": `Bearer ${token}`,
                 },
             })
                 .then(function (response) {
-                    $("body").toggleClass("loading");
+                    // $("body").toggleClass("loading");
                     console.log(response);
                     // redirect to products page
                     // window.location.href = "productsAdmin.php";
@@ -103,11 +98,11 @@ $(document).ready(function (e) {
                 .catch(function (error) {
                     console.log(error);
 
-                    $("body").toggleClass("loading");
+                    // $("body").toggleClass("loading");
                 });
         } else {
-            let id = document.getElementById("id").value;
-            updateProduct(id);
+            // let id = document.getElementById("id").value;
+            updateProduct(product_id);
         }
     });
 });
@@ -116,10 +111,10 @@ async function searchProduct() {
     await axios({
         url: "http://localhost:8000/api/productSearch?name=test&page=1",
         method: "search",
-        headers:{
+        headers: {
             name: "test",
-        }
+        },
     });
     let name = document.getElementById("name").value;
-    searchProduct(name)
+    searchProduct(name);
 }

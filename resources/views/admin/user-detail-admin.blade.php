@@ -39,7 +39,7 @@ if ($_POST["id"]) {
 
     <div class="col-md-12">
 
-     <form action="" method="post" id="userform">
+     <form action=""   id="userform">
       <div class="form-group">
        {{-- <!-- <?php
        if ($user_details["id"]) {
@@ -50,7 +50,7 @@ if ($_POST["id"]) {
       </div>
       <div class="form-group">
        <label for="fullName">Fullname</label>
-       <input type="text" class="form-control" name="user_name" id="user_name" value="" required />
+       <input type="text" class="form-control" name="user_name" id="user_name"  required />
       </div>
       <div class="row">
        <div class="col">
@@ -115,4 +115,8 @@ if ($_POST["id"]) {
 </div>
 
 <!-- ##### Main Content Wrapper End ##### -->
+<script
+    src="{{ asset('assets/js/api/Admin/userDetail.js') }}"
+    defer
+></script>
 @stop
