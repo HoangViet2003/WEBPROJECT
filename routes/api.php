@@ -25,7 +25,7 @@ use App\Http\Controllers\Api\V1\UserController;
 Route::post('login', [AuthenticationController::class, 'login']);
 Route::post('register', [AuthenticationController::class, 'register']);
 Route::resource('products', ProductController::class);
-Route::get('getAllProducts',[ ProductController::class,'getAllProductsWithoutLimit']);
+Route::get('getAllProducts', [ProductController::class, 'getAllProductsWithoutLimit']);
 Route::get('productSearch', [ProductController::class, 'searchProduct']);
 
 

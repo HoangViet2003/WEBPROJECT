@@ -54,8 +54,19 @@ class ProductController extends Controller
 
     public function getAllProductsWithoutLimit()
     {
-        $product = Product::all();
-        return response()->json($product);
+        try {
+            // Paginate the results (sort the result by created at)
+            $product = Product::orderBy('created_at', 'desc')->get();
+
+            // Get the category of the product
+            foreach ($product as $item) {
+                $item->category = Category::find($item->category_id)->name;
+            }
+
+            return response()->json($product);
+        } catch (\Exception $e) {
+            return response()->json($e->getMessage());
+        }
     }
 
     /**
@@ -69,8 +80,7 @@ class ProductController extends Controller
                 'name' => 'required|string|max:255',
                 'price' => 'required|numeric|min:0',
                 'description' => 'required|string',
-                'rating' => 'required|integer|min:1|max:5',
-                'category_id' => 'required|integer|min:1',
+                'category' => 'required',
                 'quantity' => 'required|integer|min:0',
             ]);
 
@@ -82,6 +92,10 @@ class ProductController extends Controller
             } else {
                 $request->merge(['status' => 'out_of_stock']);
             }
+
+            // Find the category id based on the category name
+            $category = Category::where('name', $request->category)->first();
+            $request->merge(['category_id' => $category->id]);
 
             // Create the product from the request exclude the images
             $product = Product::create($request->except('images'));
@@ -137,16 +151,18 @@ class ProductController extends Controller
     public function update(Request $request, string $id)
     {
         try {
-
             // Validate the request (validate the required fields and the data types)
             $request->validate([
-                'name' => 'string|max:255',
-                'price' => 'numeric|min:0',
-                'description' => 'string',
-                'rating' => 'integer|min:1|max:5',
-                'category_id' => 'integer|min:1',
-                'quantity' => 'integer|min:0',
+                'name' => 'required|string|max:255',
+                'price' => 'required|numeric|min:0',
+                'description' => 'required|string',
+                'category' => 'required|string',
+                'quantity' => 'required|integer|min:0',
             ]);
+
+            // Find the category id based on the category name
+            $category = Category::where('name', $request->category)->first();
+            $request->merge(['category_id' => $category->id]);
 
             // Change the product status based on the quantity
             if ($request->quantity >= 10) {
