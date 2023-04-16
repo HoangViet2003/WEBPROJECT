@@ -1,3 +1,5 @@
+const { HttpStatusCode } = require("axios");
+
 const token = localStorage.getItem("access_token");
 const pathArray = window.location.pathname.split("/");
 const user_id = pathArray[pathArray.length - 1];
@@ -32,6 +34,7 @@ async function getAllUsers(callback) {
             console.log(error);
         });
 }
+
 
 async function getUser() {}
 

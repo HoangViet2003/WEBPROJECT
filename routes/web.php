@@ -60,7 +60,7 @@ Route::get('/product-detail-admin/{id}', function () {
 });
 
 Route::get('/order-detail-admin', function () {
-    return view('admin.product-details-admin');
+    return view('admin.order-detail-admin');
 });
 
 Route::get('/user-detail-admin', function () {

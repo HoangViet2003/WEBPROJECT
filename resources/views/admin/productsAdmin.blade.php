@@ -15,7 +15,7 @@
         </div>
 
         <div style="display: flex; justify-content: end">
-          <button class="btn" style="background-color: #fbb710; color: white; margin-bottom: 15px" onclick="location.href='/product-detail-admin'   ">Add product</button>
+          <button class="btn" style="background-color: #fbb710; color: white; margin-bottom: 15px" onclick="location.href='/product-detail-admin'">Add product</button>
         </div>
 
         {{-- <div class="row">  --}}

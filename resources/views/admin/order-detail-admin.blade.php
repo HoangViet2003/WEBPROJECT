@@ -24,6 +24,7 @@ $orders = $order->getAllOrders();
               <th>Created at</th>
             </tr>
           </thead>
+          <tbody id="tables-order">
           <tbody>
             {{-- <!-- <?php
             if ($orders) {
