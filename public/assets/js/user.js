@@ -1,18 +1,26 @@
 const token = localStorage.getItem("access_token");
 const pathArray = window.location.pathname.split("/");
 const user_id = pathArray[pathArray.length - 1];
-console.log(user_id);
 
-console.log(user_id);
-let users = [];
+
+
+
 
 window.onload = function start() {
+ 
     getAllUsers(function (users) {
-        
-        renderUsers(users);
+        renderUsers();
+        //  users.data.map(function (user) {
+        //      if (user.id === user_id) {
+        //          // return document.getElementById("user_name").value = user.full_name;
+        //          console.log(user);
+        //      }
+        //  });
+         
     });
+       getUserById();
 };
-
+let users = [];
 async function getAllUsers(callback) {
     await axios({
         url: "http://localhost:8000/api/users",
@@ -22,10 +30,14 @@ async function getAllUsers(callback) {
         },
     })
         .then(function (response) {
-            console.log(response);
             users = response.data;
-            
-            //    return response
+            console.log(users.data);
+            users.data.map(function (user) {
+                if(user.id === user_id){
+                    document.getElementById("user_name").value = user.full_name;
+                }
+            });
+            //    return users
         })
         .then(callback)
         .catch(function (error) {
@@ -33,11 +45,25 @@ async function getAllUsers(callback) {
         });
 }
 
-async function getUser() {}
+async function getUserById(){
+    // users.data.map(function (user) {
+    //     if(user.id === user_id){
+    //         document.getElementById("user_name").value = user.full_name;
+    //     }
+    // });
+   
+}
+
 
 async function renderUsers() {
-    var listUserBlock = document.querySelector("#tables-user");
+    //  users.data.map(function (user) {
+         if (users.data.id === user_id) {
+             // return document.getElementById("user_name").value = user.full_name;
+             console.log(users);
+         }
+    //  });
 
+    var listUserBlock = document.querySelector("#tables-user");
     var htmls = users.data.map(function (user) {
         return `<tr>
                   <td>${user.id}</td>

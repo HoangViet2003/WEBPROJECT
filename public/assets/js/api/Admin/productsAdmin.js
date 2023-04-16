@@ -22,7 +22,7 @@ function renderProduct(products) {
     var htmls = products.map(function (product) {
         return ` <tr>
                   <td style="width: auto">${product.id}</td>
-                  <td>${product.name}</td>
+                  <td href="/product-detail-admin">${product.name}</td>
                   <td>${product.category_id}</td>
                   <td>${product.price}</td>
                   <td>${product.quantity}</td>

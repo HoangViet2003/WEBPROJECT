@@ -272,14 +272,16 @@
       var path = window.location.pathname;
       // Get the last part of the path name
       var page = path.split("/").pop();
-
+      console.log("page: " + page)
+      console.log(data)
       // Redirect to details page
       if (page == "productsAdmin.php") {
         window.location.href = "product-details-admin.php?id=" + data[0];
       } else if (page == "ordersAdmin.php") {
         window.location.href = "orderDetails.php?id=" + data[0];
-      } else if (page == "usersAdmin.php") {
-        window.location.href = "user-detail-admin.php?id=" + data[0];
+      } else if (page == "users-admin") {
+        window.location.href = "user-detail-admin/3"; 
+      
       } else if (page == "indexAdmin.php") {
         window.location.href = "order-detail-admin.php?id=" + data[0];
       }

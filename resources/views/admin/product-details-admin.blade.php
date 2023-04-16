@@ -97,7 +97,7 @@
                                 {{-- <?php
                                 if ($product_details) {
                                 ?> --}}
-                                    <div class="col">
+                                    <div class="col" id="delete-btn">
                                         <a class="btn amado-btn active" name="delete" onclick="deleteProduct()" style="color: white">
                                             Delete
                                         </a>

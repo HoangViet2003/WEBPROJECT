@@ -35,6 +35,8 @@ class UploadMultipleImages
             $request->merge(['images_names' => $uploadedImages]);
         }
 
+        dd($request->all());
+
         return $next($request);
     }
 }
