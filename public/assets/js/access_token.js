@@ -10,7 +10,7 @@ function logout() {
     // Empty the local storage
     localStorage.clear();
 
-    window.location.href = "http://localhost:3000/login";
+    window.location.href = "http://localhost:8000/login";
 }
 
 function checkTokenExpiration() {

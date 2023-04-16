@@ -1,5 +1,3 @@
-// const token = localStorage.getItem("access_token");
-// const pathArray = window.location.pathname.split("/");
 const user_id = pathArray[pathArray.length - 1];
 
 let users = [];
@@ -19,9 +17,7 @@ async function getAllUsers(callback) {
         },
     })
         .then(function (response) {
-            console.log(response);
             users = response.data;
-
             //    return response
         })
         .then(callback)
@@ -110,7 +106,6 @@ $(document).ready(function (e, id = user_id) {
             })
                 .then(function (response) {
                     $("body").toggleClass("loading");
-                    console.log(response);
                     // redirect to products page
                     // window.location.href = "productsAdmin.php";
                 })

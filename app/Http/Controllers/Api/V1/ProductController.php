@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\ProductImage;
+use App\Models\Category;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
@@ -29,6 +30,11 @@ class ProductController extends Controller
             // Get the images of the products from table image
             foreach ($product as $item) {
                 $item->images = ProductImage::where('product_id', $item->id)->get();
+            }
+
+            // Get the product category
+            foreach ($product as $item) {
+                $item->category = Category::find($item->category_id)->name;
             }
 
             // Customize the response to include the total number of pages
@@ -111,6 +117,9 @@ class ProductController extends Controller
 
             // Get the images of the product from table image
             $product->images = ProductImage::where('product_id', $id)->get();
+
+            // Get the product category
+            $product->category = Category::find($product->category_id)->name;
 
             // Return the product to the client
             return response()->json($product);
