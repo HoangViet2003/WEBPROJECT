@@ -173,33 +173,44 @@ class ProductController extends Controller
                 $request->merge(['status' => 'out_of_stock']);
             }
 
-            $product = Product::findorfail($id);
 
-            // Only update the fields that are actually passed
-            $product->fill($request->except('images'))->save();
+            // // Change the product status based on the quantity
+            // if ($request->quantity >= 10) {
+            //     $request->merge(['status' => 'in_stock']);
+            // } else if ($request->quantity > 0 && $request->quantity < 10) {
+            //     $request->merge(['status' => 'running_low']);
+            // } else {
+            //     $request->merge(['status' => 'out_of_stock']);
+            // }
 
-            // If the request has images, save them to the database
-            if ($request->images) {
-                $productImages = ProductImage::where('product_id', $id);
+            // $product = Product::findorfail($id);
 
-                foreach ($productImages->get() as $image) {
-                    $image_path = public_path() . $image->image_url;
 
-                    // Remove the old images from the directory
-                    File::delete($image_path);
-                }
+            // // Only update the fields that are actually passed
+            // $product->update($request->all())->save();
 
-                // Delete the old images in the database
-                $productImages->delete();
+            // // If the request has images, save them to the database
+            // if ($request->images) {
+            //     $productImages = ProductImage::where('product_id', $id);
 
-                // Loop through the images and save them to the database
-                foreach ($request->images_names as $image_name) {
-                    ProductImage::create([
-                        'product_id' => $product->id,
-                        'image_url' => '/images/' . $image_name,
-                    ]);
-                }
-            }
+            //     foreach ($productImages->get() as $image) {
+            //         $image_path = public_path() . $image->image_url;
+
+            //         // Remove the old images from the directory
+            //         File::delete($image_path);
+            //     }
+
+            //     // Delete the old images in the database
+            //     $productImages->delete();
+
+            //     // Loop through the images and save them to the database
+            //     foreach ($request->images_names as $image_name) {
+            //         ProductImage::create([
+            //             'product_id' => $product->id,
+            //             'image_url' => '/images/' . $image_name,
+            //         ]);
+            //     }
+            // }
 
             return response()->json($product);
         } catch (ModelNotFoundException $e) {
