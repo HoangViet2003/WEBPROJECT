@@ -2,19 +2,18 @@ var listProduct = document.querySelector("#tables-product");
 
 function start() {
     getProduct(function (products) {
-        console.log(products)
         renderProduct(products);
     });
 }
 
 start();
 
- function getProduct(callback) {
-   fetch("http://localhost:8000/api/getAllProducts")
-       .then(function (response) {
-           return response.json();
-       })
-       .then(callback);
+function getProduct(callback) {
+    fetch("http://localhost:8000/api/getAllProducts")
+        .then(function (response) {
+            return response.json();
+        })
+        .then(callback);
 }
 
 function renderProduct(products) {
@@ -30,6 +29,3 @@ function renderProduct(products) {
     });
     listProductBlock.innerHTML = htmls.join("");
 }
-
-
-

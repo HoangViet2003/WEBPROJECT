@@ -46,7 +46,7 @@ document.getElementById("login-form").addEventListener("submit", function (e) {
 
             // Redirect to home page if the user is not admin, otherwise redirect to admin page
             if (response.data.is_admin) {
-                window.location.href = "http://localhost:8000/admin";
+                window.location.href = "http://localhost:8000/product-admin";
             } else {
                 window.location.href = "http://localhost:8000";
             }
