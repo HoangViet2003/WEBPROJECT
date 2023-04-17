@@ -212,7 +212,7 @@ class ProductController extends Controller
             //     }
             // }
 
-            return response()->json($product);
+            // return response()->json($product);
         } catch (ModelNotFoundException $e) {
             throw new HttpResponseException(response()->json(['error' => 'Product not found'], 404));
         } catch (ValidationException $e) {
@@ -287,4 +287,8 @@ class ProductController extends Controller
             return response()->json($e->getMessage());
         }
     }
+    public function addToCart(Request $request){
+        return "hello world";
+    }
 }
+

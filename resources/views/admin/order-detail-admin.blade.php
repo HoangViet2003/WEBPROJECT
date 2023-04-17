@@ -1,47 +1,57 @@
-@extends('layouts.main')
-@section('main-content')
+@extends('layouts.mainAdmin') @section('main-content')
+<!-- <link rel="stylesheet" href="./css/order-tracking.css" /> -->
 <!-- Product Catagories Area Start -->
-{{-- <?php
-// get all orders
-$orders = $order->getAllOrders();
 
-?> --}}
+
+
 <div class="dashboard-table-area section-padding-100">
   <div>
     <div>
       <div>
         <div class="cart-title mt-50">
-          <h2>Orders Dashboard</h2>
+          <h2>Order Details</h2>
         </div>
 
-        <table class="stripe row-border order-column display nowrap" id="myTable" style="width: 100%">
-          <thead>
-            <tr>
-              <th>Order id</th>
-              <!-- <th>Cart id</th> -->
-              <th>Total ($)</th>
-              <th>Status</th>
-              <th>Created at</th>
-            </tr>
-          </thead>
-          <tbody id="tables-order">
-          <tbody>
-            {{-- <!-- <?php
-            if ($orders) {
-              foreach ($orders as $order) {
-            ?> --> --}}
-                <tr>
-                  <td>card_id</td>
-                  <td>total</td>
-                  <td>comfirmed</td>
-                  <td>create at</td>
-                </tr>
-            {{-- <!-- <?php
-              }
-            }
-            ?> --> --}}
-          </tbody>
-        </table>
+        <div class="card-body">
+          <h6>Order ID: 1</h6>
+          <article class="card">
+            <div class="card-body row">
+              <div class="col"> <strong>Created at:</strong> <br>
+                2/2/3003
+              </div>
+              <div class="col"> <strong>Shipping TO:</strong> <br> 123 abc| <i class="fa fa-phone"></i> 0333333 </div>
+              <div class="col"> <strong>Total: </strong> <br> $ 100
+              </div>
+              <div class="col"> <strong>Status: </strong> <br>confirmed </div>
+            </div>
+          </article>
+          <hr>
+          <ul class="row">
+            {{-- <?php
+                  foreach ($order_items as $item) {
+                    $images = json_decode($item['images']);
+                  ?> --}}
+            <li class="col-md-4">
+              <figure class="itemside mb-3">
+                <div><img src="" class="img-sm rounded"></div>
+                <figcaption class=" info align-self-center">
+                  <p class="title">chair</p> <span class="text-muted">$ 100 *10 = $ 10000</span> <span> </span>
+                </figcaption>
+              </figure>
+            </li>
+            {{-- <?php } ?> --}}
+
+          </ul>
+          <hr>
+
+          {{-- <?php
+                if ($order_details["is_confirmed"] == 0) {
+                ?> --}}
+          <button class="btn amado-btn" onclick="confirmOrder()">Confirm Order</button>
+          {{-- <?php
+                }
+                ?> --}}
+        </div>
       </div>
     </div>
   </div>
@@ -49,5 +59,9 @@ $orders = $order->getAllOrders();
 </div>
 <!-- Product Catagories Area End -->
 
-<script src='http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js'></script>;
+
+<!-- <script src='./js/confirmOrder.js'></script> -->
+<script src="{{ asset('assets/js/api/Admin/orderDetail.js') }}" defer></script>
+<!-- Product Catagories Area End -->
 @stop
+<script src='http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js'></script>;

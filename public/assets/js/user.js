@@ -1,21 +1,14 @@
 // const pathArray = window.location.pathname.split("/");
-const user_id = pathArray[pathArray.length - 1];
+// const user_id = pathArray[pathArray.length - 1];
 //    const url = window.location.href;
 //    const user_id = url.substring(url.lastIndexOf("/") + 1);
-
-let users = [];
+const token = localStorage.getItem("access_token");
+let users =[];
 
 window.onload = function start() {
     getAllUsers(function (users) {
         renderUsers();
-        //  users.data.map(function (user) {
-        //      if (user.id === user_id) {
-        //          // return document.getElementById("user_name").value = user.full_name;
-        //          console.log(user);
-        //      }
-        //  });
     });
-    getUserById();
 };
 
 async function getAllUsers(callback) {
@@ -29,11 +22,7 @@ async function getAllUsers(callback) {
         .then(function (response) {
             users = response.data;
             console.log(users.data);
-            users.data.map(function (user) {
-                if (user.id === user_id) {
-                    document.getElementById("user_name").value = user.full_name;
-                }
-            });
+          
             //    return users
         })
         .then(callback)
@@ -42,15 +31,10 @@ async function getAllUsers(callback) {
         });
 }
 
-async function getUser() {}
+
 
 async function renderUsers() {
-    //  users.data.map(function (user) {
-    if (users.data.id === user_id) {
-        // return document.getElementById("user_name").value = user.full_name;
-        console.log(users);
-    }
-    //  });
+   
 
     var listUserBlock = document.querySelector("#tables-user");
     var htmls = users.data.map(function (user) {
@@ -64,6 +48,8 @@ async function renderUsers() {
 
     listUserBlock.innerHTML = htmls.join("");
 }
+
+
 
 // async function deleteUser(id = user_id) {
 //     let confirmDelete = confirm(

@@ -55,6 +55,7 @@ Route::group([
     Route::post('products', [ProductController::class, 'store'])->middleware('upload.multiple.images');
     Route::put('products/{id}', [ProductController::class, 'update'])->middleware('upload.multiple.images');
     Route::delete('products/{id}', [ProductController::class, 'destroy']);
+    Route::put('products/{id}', [ProductController::class, 'addToCart']);
 
     Route::get("carts", [CartController::class, 'index']);
 });

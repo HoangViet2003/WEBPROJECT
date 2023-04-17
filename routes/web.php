@@ -59,7 +59,15 @@ Route::get('/product-detail-admin/{id}', function () {
     return view('admin.product-details-admin');
 });
 
+Route::get('/order-admin', function () {
+    return view('admin.orderAdmin');
+});
+
 Route::get('/order-detail-admin', function () {
+    return view('admin.order-detail-admin');
+});
+
+Route::get('/order-detail-admin/{id}', function () {
     return view('admin.order-detail-admin');
 });
 

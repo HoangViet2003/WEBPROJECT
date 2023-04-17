@@ -1,3 +1,5 @@
+const { default: axios } = require("axios");
+
 var listProduct = document.querySelector("#single-product-area");
 
 function start() {
@@ -39,6 +41,23 @@ function renderProduct(products) {
         listProductBlock.innerHTML += html;
     }
 }
+
+function searchProduct(){
+    
+}
+
+// function addToCart(product){
+//     var productItem = $(product).closest('.product')
+//     var price = $(productItem).find('.price').text();
+//     var name = $(productItem).find('.name').text();
+
+//     var cartItem = {
+//         price: price,
+//         name: name,
+//     }
+//     var cartItemJSON = JSON.stringify(cartItem);
+//     cartArray.push(cartItemJSON);
+// }
 
 // window.onload = async () => {
 //     try {
