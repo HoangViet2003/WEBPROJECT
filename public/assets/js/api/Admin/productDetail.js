@@ -271,6 +271,8 @@ function updateProduct() {
     form_data.append("price", price);
     form_data.append("quantity", quantity);
     form_data.append("category", category);
+    
+    // 
     form_data.append("_method", "PUT");
     form_data.append("_token", $('meta[name="csrf-token"]').attr("content"));
 
