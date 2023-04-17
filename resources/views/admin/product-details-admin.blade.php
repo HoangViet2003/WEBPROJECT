@@ -10,7 +10,6 @@
                 <div class="col-md-12">
                     <form
                         action=""
-                        method="post"
                         id="productform"
                         enctype="multipart/form-data"
                     >
