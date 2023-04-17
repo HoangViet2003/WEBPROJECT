@@ -72,17 +72,21 @@ $(document).ready(function (e) {
         let email = $("#email").val();
         let role = $("#admin").val();
         let is_admin = false;
-        if (role === 1) return (is_admin = true);
+        if (role === 1) {
+            is_admin = true;
+        }
         // Check if the form is for updating or creating a new product
 
         await axios({
             url: `http://localhost:8000/api/users/${id}`,
-            method: "put",
+            method: "POST",
             data: JSON.stringify({
-                full_name: "test",
-                email: "test@gmail.com",
+                full_name: name,
+                email: email,
 
-                is_admin: false,
+                is_admin: is_admin,
+                _method: "PUT",
+                _token: $('meta[name="csrf-token"]').attr("content")
             }),
 
             headers: {
@@ -94,7 +98,7 @@ $(document).ready(function (e) {
                 $("body").toggleClass("loading");
                 // redirect to products page
                 console.log(response);
-                window.location.href = "/users-admin";
+                // window.location.href = "/users-admin";
             })
             .catch(function (error) {
                 console.log(error);
