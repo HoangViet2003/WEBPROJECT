@@ -10,11 +10,7 @@
                 </div>
 
                 <!-- <div class="row"> -->
-                <table
-                    class="stripe row-border order-column"
-                    id="myTable"
-                    style="width: 100%"
-                >
+                <table class="stripe row-border order-column" id="myTable" style="width: 100%">
                     <thead>
                         <tr>
                             <th>User id</th>
@@ -32,6 +28,6 @@
 </div>
 
 <!-- User Catagories Area End -->
-
+<script src="{{ asset('assets/js/user.js') }}"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 ; @stop

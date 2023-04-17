@@ -85,10 +85,10 @@ class OrderController extends Controller
     {
         try {
             //validate the request
-            $request->validate([
-                'user_id' => 'required||integer',
-                'total' => 'required||numeric',
-            ]);
+            // $request->validate([
+            //     'user_id' => 'required||integer',
+            //     'total' => 'required||numeric',
+            // ]);
             $order = Order::findorfail($id);
             // only update the fields that are actually passed
 

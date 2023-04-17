@@ -1,4 +1,3 @@
-console.log("test");
 
 $(document).ready(function () {
     // Get the id of the product from the url
@@ -48,17 +47,7 @@ $(document).ready(function () {
                 alert("user not found");
             }
         }
-    } else {
-        // Display none the delete button
-        $("#delete-btn").css("display", "none");
-
-        // Display none the input and label
-        $("#product_id").css("display", "none");
-        $("#product_id_label").css("display", "none");
-
-        // Change the text of the submit button to Create product
-        $("#create-product").text("Create product");
-    }
+    } 
 });
 
 $(document).ready(function (e) {
@@ -92,12 +81,14 @@ $(document).ready(function (e) {
             headers: {
                 "Content-Type": "application/json",
                 "Authorization ": `Bearer ${token}`,
+                 "X-CSRF-TOKEN": "test",
             },
         })
             .then(function (response) {
                 $("body").toggleClass("loading");
                 // redirect to products page
                 console.log(response);
+                // window.location.href = "/users-admin";
                 // window.location.href = "/users-admin";
             })
             .catch(function (error) {

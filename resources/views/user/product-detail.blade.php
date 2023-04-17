@@ -123,7 +123,7 @@
                         {{--<?php
                             if ($result['status'] !== 'out_of_stock') {
                             ?>--}}
-                        <button type="submit" name="addtocart" class="btn amado-btn">
+                        <button src= type="submit" name="addtocart" method="POST" class="btn amado-btn">
                             Add to cart
                         </button>
                         {{--<?php } else { ?>--}}
