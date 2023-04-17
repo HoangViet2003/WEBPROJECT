@@ -27,7 +27,7 @@ $(document).ready(function () {
                     $("body").toggleClass("loading");
 
                     if (error.response?.status === 404) {
-                        alert("user not found");
+                        alert("order not found");
                         window.location.href = "/orders-admin";
                     } else {
                         console.log(error);
@@ -37,7 +37,7 @@ $(document).ready(function () {
             // if error code is 404, alert the user
             $("body").toggleClass("loading");
             if (error.response.status === 404) {
-                alert("user not found");
+                alert("order not found");
             }
         }
     } 

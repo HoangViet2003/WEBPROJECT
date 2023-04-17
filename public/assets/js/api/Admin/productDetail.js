@@ -151,7 +151,9 @@ $("#productform").on("submit", async function (e) {
     e.preventDefault();
     $("body").toggleClass("loading");
 
-    if (validateForm()) {
+    const validation = validateForm();
+
+    if (validation) {
         // Get form inputs
         let name = $("#product_name").val();
         let description = $("#description").val();
@@ -176,7 +178,7 @@ $("#productform").on("submit", async function (e) {
 
             await axios({
                 url: `http://localhost:8000/api/products`,
-                method: "post",
+                method: "POST",
                 data: form_data,
                 headers: {
                     "Content-Type": "multipart/form-data",
@@ -209,6 +211,8 @@ function validateForm() {
     const quantity = $("#quantity").val();
     const category = $("#product_category").val();
 
+    const imagesContainer = document.querySelector("#images-container");
+
     // If any of the input fields is empty, alert the user
     if (
         !name ||
@@ -216,12 +220,14 @@ function validateForm() {
         !price ||
         !quantity ||
         !category ||
-        files.length === 0
+        (imagesContainer.childNodes.length === 0 && files.length === 0)
     ) {
         alert("Please fill in all the fields");
         $("body").toggleClass("loading");
         return false;
     }
+
+    return true;
 }
 
 function deleteProduct() {
@@ -257,7 +263,7 @@ function updateProduct() {
     let description = $("#description").val();
     let price = $("#price").val();
     let quantity = $("#quantity").val();
-    let category = $("#category").val();
+    let category = $("#product_category").val();
 
     var form_data = new FormData();
     form_data.append("name", name);
@@ -265,22 +271,22 @@ function updateProduct() {
     form_data.append("price", price);
     form_data.append("quantity", quantity);
     form_data.append("category", category);
+    
+    // 
+    form_data.append("_method", "PUT");
+    form_data.append("_token", $('meta[name="csrf-token"]').attr("content"));
 
     for (let i = 0; i < files.length; i++) {
         form_data.append("images[]", files[i]);
     }
 
-    $("body").toggleClass("loading");
-
     try {
         axios({
             url: `http://localhost:8000/api/products/${id}`,
-            type: "PUT",
+            method: "POST",
             data: form_data,
             headers: {
-                "Content-Type": "multipart/form-data",
                 "Authorization ": `Bearer ${token}`,
-                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
             },
         })
             .then(function (response) {

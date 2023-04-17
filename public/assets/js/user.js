@@ -1,5 +1,5 @@
-// const pathArray = window.location.pathname.split("/");
-// const user_id = pathArray[pathArray.length - 1];
+const pathArray = window.location.pathname.split("/");
+const user_id = pathArray[pathArray.length - 1];
 //    const url = window.location.href;
 //    const user_id = url.substring(url.lastIndexOf("/") + 1);
 const token = localStorage.getItem("access_token");
@@ -9,6 +9,7 @@ window.onload = function start() {
     getAllUsers(function (users) {
         renderUsers();
     });
+    getUserById();
 };
 
 async function getAllUsers(callback) {
@@ -22,7 +23,11 @@ async function getAllUsers(callback) {
         .then(function (response) {
             users = response.data;
             console.log(users.data);
-          
+            users.data.map(function (user) {
+                if (user.id === user_id) {
+                    document.getElementById("user_name").value = user.full_name;
+                }
+            });
             //    return users
         })
         .then(callback)
@@ -37,6 +42,9 @@ async function renderUsers() {
    
 
     var listUserBlock = document.querySelector("#tables-user");
+
+    if (!listUserBlock) return;
+
     var htmls = users.data.map(function (user) {
         return `<tr>
                   <td>${user.id}</td>
@@ -96,7 +104,7 @@ async function renderUsers() {
 //         let is_admin = false;
 //         if (role === 1) return (is_admin = true);
 //         // Check if the form is for updating or creating a new product
-       
+
 //             await axios({
 //                 url: `http://localhost:8000/api/users/${id}`,
 //                 method: "put",
@@ -122,6 +130,6 @@ async function renderUsers() {
 
 //                     $("body").toggleClass("loading");
 //                 });
-        
+
 //     });
 // });
