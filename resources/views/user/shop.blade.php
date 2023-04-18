@@ -23,7 +23,7 @@
         <div class="row" id='product-area'>
             <!-- Single Product Area -->
 
-            <div class="col-6 col-sm-4 col-md-6 col-xl-4">
+            {{-- <div class="col-6 col-sm-4 col-md-6 col-xl-4">
                 <div class="single-product-wrapper">
                     <!-- Product Image -->
                     <div class="product-img">
@@ -55,7 +55,7 @@
                 </div>
 
 
-            </div>
+            </div> --}}
 
 
         </div>
@@ -64,22 +64,18 @@
             <div class="col-12">
                 <!-- Pagination -->
                 <nav aria-label="navigation">
-                    <ul class="pagination justify-content-end mt-50">
+                    <ul class="pagination justify-content-end mt-50" id="pagination-link">
                         {{-- <?php
                                 $total_pages = ceil(count($result) / 10);
                                 for ($i = 1; $i <= $total_pages; $i++) {
-                                ?>
-                                   <li class="page-item <?php
-                                                        if ($i == $page) {
-                                                            echo 'active';
-                                                        }
-                                                        ?>">
-                                        <a class="page-link" href="<?php printf('%s?page=%s', 'shop.php',  $i) ?>">
-                                             <?php echo $i ?></a>
-                                   </li>
-                              <?php
-                                }
                                 ?> --}}
+                                   {{-- <li class="page-item active;
+                                                        
+                                                        ">
+                                        <a class="page-link" href="">
+                                            1</a>
+                                   </li> --}}
+                         
                     </ul>
                 </nav>
             </div>

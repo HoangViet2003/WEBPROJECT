@@ -30,7 +30,7 @@ Route::get('/profile', function () {
 Route::get('/order', function () {
     return view('user.orderTracking');
 });
-Route::get('/shop', function () {
+Route::get('/shop/{page}', function () {
     return view('user.shop');
 });
 Route::get('/signup', function () {
