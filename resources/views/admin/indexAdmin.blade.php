@@ -2,10 +2,10 @@
 @section('main-content')
 <!-- Product Catagories Area Start -->
 {{-- <?php
-// get all orders
-$orders = $order->getAllOrders();
+      // get all orders
+      $orders = $order->getAllOrders();
 
-?> --}}
+      ?> --}}
 <div class="dashboard-table-area section-padding-100">
   <div>
     <div>
@@ -26,19 +26,19 @@ $orders = $order->getAllOrders();
           </thead>
           <tbody>
             {{-- <!-- <?php
-            if ($orders) {
-              foreach ($orders as $order) {
-            ?> --> --}}
-                <tr>
-                  <td>card_id</td>
-                  <td>total</td>
-                  <td>comfirmed</td>
-                  <td>create at</td>
-                </tr>
+                      if ($orders) {
+                        foreach ($orders as $order) {
+                      ?> --> --}}
+            <tr>
+              <td>card_id</td>
+              <td>total</td>
+              <td>comfirmed</td>
+              <td>create at</td>
+            </tr>
             {{-- <!-- <?php
-              }
-            }
-            ?> --> --}}
+                        }
+                      }
+                      ?> --> --}}
           </tbody>
         </table>
       </div>
@@ -49,4 +49,4 @@ $orders = $order->getAllOrders();
 <!-- Product Catagories Area End -->
 
 <script src='http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js'></script>;
-@stop
+@endsection

@@ -1,35 +1,5 @@
 @extends('layouts.mainAdmin')
 @section('main-content')
-{{-- <!-- <?php
-            // User need to log in to view this page
-            if (!isset($_SESSION['useremail'])) {
-                $_SESSION['product_url'] = $_SERVER['REQUEST_URI'];
-            ?>
- <script>
-  alert("Please login to view your profile!");
-  window.location.href = "login.php";
- </script>;
-<?php
-            } else {
-                // Get user details from db
-                $user_details = $user->getUser($_SESSION['useremail']);
-            }
-
-            if ($_POST["id"]) {
-                $id = $_POST["id"];
-                $email = $_POST["email"];
-                $full_name = $_POST["fullname"];
-                $result = $user->updateUser($id, $email, $full_name);
-                if ($result) {
-                    $_SESSION["useremail"] = $email;
-
-                    echo "<script>alert('Profile updated successfully!');</script>";
-                    echo "<script>window.location.href = 'profile.php';</script>";
-                } else {
-                    echo "<script>alert('Failed to update profile!');</script>";
-                }
-            }
-?> --> --}}
 
 <div class="cart-table-area section-padding-100">
     <div class="container-fluid">
@@ -81,16 +51,12 @@
                                 </div>
                             </form>
                         </div>
-
-
                     </div>
                 </div>
-
             </div>
-
         </div>
     </div>
 </div>
 </div>
 <!-- ##### Main Content Wrapper End ##### -->
-@stop
+@endsection

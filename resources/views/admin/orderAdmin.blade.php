@@ -21,17 +21,6 @@
             </tr>
           </thead>
           <tbody id="tables-order"></tbody>
-          <!-- <tbody>
-
-           
-            <tr>
-              <td>1</td>
-           
-              <td>100</td>
-              <td>Confirmed></td>
-              <td>created_at</td>
-            </tr>
-          </tbody> -->
         </table>
       </div>
     </div>
@@ -40,6 +29,8 @@
 </div>
 <!-- Product Catagories Area End -->
 
-{{-- <script src="{{ asset('assets/js/order.js') }}"></script> --}}
+<script src="{{ asset('assets/js/order.js') }}"></script>
+
 <script src='http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js'></script>;
-@stop
+
+@endsection

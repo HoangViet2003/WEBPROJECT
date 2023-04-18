@@ -56,30 +56,7 @@
               </tr>
             </thead>
             <tbody>
-            <tbody id="tables-product">
-              <tr></tr>
-              <td class="cart_product_img">
-                <a href="#"><img src="{{asset('assets/img/product-img/product1.jpg')}}" alt="Product" /></a>
-              </td>
-              <td class="cart_product_desc">
-                <h5>name</h5>
-              </td>
-              <td class="price">
-                <span>price</span>
-              </td>
-              <td class="qty">
-                <div class="qty-btn d-flex">
-                  <p>Qty</p>
-                  <div class="quantity">
-                    <span style="margin-right: 4px" class="qty-minus"><i class="fa fa-minus" aria-hidden="true"></i></span>
-                    <input type="number" class="qty-text" id="qty" step="1" min="1" max="300" name="quantity" />
-                    <span class="qty-plus"><i class="fa fa-plus" aria-hidden="true"></i></span>
-                  </div>
-                </div>
-              </td>
-              </tr>
-
-            </tbody>
+            <tbody id="tables-cart-product"></tbody>
           </table>
         </div>
       </div>
@@ -106,5 +83,5 @@
 </div>
 </div>
 <!-- ##### Main Content Wrapper End ##### -->
-@stop
 <script src="{{asset('assets/js/api/User/cart.js')}}"></script>
+@stop

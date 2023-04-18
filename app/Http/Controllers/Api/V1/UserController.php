@@ -131,7 +131,9 @@ class UserController extends Controller
                 ], 403);
             }
 
-            if ($request->email != auth()->user()->email) {
+            $user = User::findorfail($id);
+
+            if ($request->email != $user->email) {
                 $request->validate([
                     'email' => 'required|email|unique:users',
                 ]);
@@ -147,8 +149,12 @@ class UserController extends Controller
             // get the user
             $user = User::findorfail($id);
 
-            // Only update the fields that are actually passed
-            $user->fill($request->all());
+            // Only admin can update the is_admin field, else ignore it, ignore not validated fields
+            if (auth()->user()->is_admin) {
+                $user->fill($request->all())->save();
+            } else {
+                $user->fill($request->only(['full_name', 'email']))->save();
+            }
 
             return response()->json($user);
         } catch (ValidationException $e) {

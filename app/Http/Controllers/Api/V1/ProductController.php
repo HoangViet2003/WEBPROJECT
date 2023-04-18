@@ -288,8 +288,4 @@ class ProductController extends Controller
             return response()->json($e->getMessage());
         }
     }
-    public function addToCart(Request $request){
-        return "hello world";
-    }
 }
-

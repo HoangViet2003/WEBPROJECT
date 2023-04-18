@@ -1,4 +1,4 @@
-const { default: axios } = require("axios");
+// const { default: axios } = require("axios");
 
 var listProduct = document.querySelector("#single-product-area");
 
@@ -27,7 +27,11 @@ function renderProduct(products) {
         var html = `
             <div class="single-products-catagory clearfix" >
                 <a href="/products/${product.id}">
-                    <img src=${product?.images.length > 0 ? product?.images[0].image_url : "../../../assets/img/product-img/product1.jpg"} alt="">
+                    <img src=${
+                        product?.images.length > 0
+                            ? product?.images[0].image_url
+                            : "../../../assets/img/product-img/product1.jpg"
+                    } alt="">
 
                     <div class="hover-content">
                         <div class="line"></div>
@@ -42,9 +46,7 @@ function renderProduct(products) {
     }
 }
 
-function searchProduct(){
-    
-}
+function searchProduct() {}
 
 // function addToCart(product){
 //     var productItem = $(product).closest('.product')

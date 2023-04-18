@@ -1,3 +1,8 @@
+if (!localStorage.getItem("access_token")) {
+    // Show logout button
+    alert("You are not logged in. Please login to continue.");
+    window.location.href = "http://localhost:8000/login";
+}
 // const token = localStorage.getItem('access-token')
 
 $(document).ready(function () {
@@ -40,45 +45,40 @@ $(document).ready(function () {
                 alert("order not found");
             }
         }
-    } 
+    }
 });
 
- async function confirmOrder() {
-    
-        $("body").toggleClass("loading");
-        const url = window.location.href;
-        const id = url.substring(url.lastIndexOf("/") + 1);
-       
-     
+async function confirmOrder() {
+    $("body").toggleClass("loading");
+    const url = window.location.href;
+    const id = url.substring(url.lastIndexOf("/") + 1);
 
-        await axios({
-            url: `http://localhost:8000/api/orders/${id}`,
-            method: "put",
-            data: JSON.stringify({
-              
-                is_confirmed: true
-            }),
+    await axios({
+        url: `http://localhost:8000/api/orders/${id}`,
+        method: "put",
+        data: JSON.stringify({
+            is_confirmed: true,
+        }),
 
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization ": `Bearer ${token}`,
-                 "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
-            },
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization ": `Bearer ${token}`,
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+    })
+        .then(function (response) {
+            $("body").toggleClass("loading");
+            // redirect to order page
+            console.log(response);
+            // window.location.href = "/users-admin";
         })
-            .then(function (response) {
-                $("body").toggleClass("loading");
-                // redirect to order page
-                console.log(response);
-                // window.location.href = "/users-admin";
-            })
-            .catch(function (error) {
-                console.log(error);
+        .catch(function (error) {
+            console.log(error);
 
-                $("body").toggleClass("loading");
-            });
-    };
+            $("body").toggleClass("loading");
+        });
+}
 
-    
 function renderOrder(orders) {
     var listOrderBlock = document.querySelector("#tables-order");
 

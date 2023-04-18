@@ -1,53 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
-<<<<<<< HEAD
-=======
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="description" content="" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta
-            name="viewport"
-            content="width=device-width, initial-scale=1, shrink-to-fit=no"
-        />
-        <meta name="csrf-token" content="{{ csrf_token() }}" />
-
-        <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
->>>>>>> bc79a1f633ebeff5e6fa37524d5719a93d1b4929
 
 <head>
     <meta charset="UTF-8" />
     <meta name="description" content="" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
 
-    <!-- Title  -->
-    <title>Amado - Furniture Ecommerce</title>
 
-    <!-- Favicon  -->
-    <link rel="icon" href="img/core-img/favicon.ico" />
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="description" content="" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-    <!-- Core Style CSS -->
-    <link rel="stylesheet" href="{{ asset('assets/css/core-style.css') }}" />
-    <!-- <link rel="stylesheet" href="{{asset('assets/css/style.css')}}" /> -->
-    <link rel="stylesheet" type="text/css" href="{{
+        <!-- Title  -->
+        <title>Amado - Furniture Ecommerce</title>
+
+        <!-- Favicon  -->
+        <link rel="icon" href="img/core-img/favicon.ico" />
+
+        <!-- Core Style CSS -->
+        <link rel="stylesheet" href="{{ asset('assets/css/core-style.css') }}" />
+        <!-- <link rel="stylesheet" href="{{asset('assets/css/style.css')}}" /> -->
+        <link rel="stylesheet" type="text/css" href="{{
                 asset(
                     'assets/DataTables/DataTables-1.12.1/css/jquery.dataTables.min.css'
                 )
             }}" />
-    <link rel="stylesheet" type="text/css" href="{{
+        <link rel="stylesheet" type="text/css" href="{{
                 asset(
                     'assets/DataTables/DataTables-1.12.1/css/dataTables.bootstrap.min.css'
                 )
             }}" />
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/order-tracking.css')
+        <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/order-tracking.css')
             }}" />
-    
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/DataTables/button.dataTables.min.css') }}" />
 
-    <script src="{{ asset('assets/js/enterKeyDownPress.js') }}" defer></script>
-</head>
+        <link rel="stylesheet" type="text/css" href="{{ asset('assets/DataTables/button.dataTables.min.css') }}" />
+
+        <script src="{{ asset('assets/js/enterKeyDownPress.js') }}" defer></script>
+    </head>
 
 <body>
     <!-- Search Wrapper Area Start -->
@@ -107,19 +101,19 @@
             <!-- Amado Nav -->
             <nav class="amado-nav">
                 <ul>
-                    <li class="@php if ($current_page == 'localhost:8000') : echo 'active'; else : echo ''; endif; @endphp">
-                        <a href="/product-admin">Products</a>
+                    <li class="@php if ($current_page == 'product-admin') : echo 'active'; else : echo ''; endif; @endphp">
+                        <a href="{{ url('product-admin') }}">Products</a>
                     </li>
-                    <li class="@php if ($current_page == 'shop') : echo 'active'; else : echo ''; endif; @endphp">
-                        <a href="./order-admin">Orders</a>
+                    <li class="@php if ($current_page == 'order-admin') : echo 'active'; else : echo ''; endif; @endphp">
+                        <a href="{{ url('order-admin') }}">Orders</a>
                     </li>
 
-                    <li class="@php if ($current_page == 'cart') : echo 'active'; else : echo ''; endif; @endphp">
-                        <a href="./users-admin">Users</a>
+                    <li class="@php if ($current_page == 'users-admin') : echo 'active'; else : echo ''; endif; @endphp">
+                        <a href="{{ url('users-admin') }}">Users</a>
                     </li>
 
                     <li class="@php if ($current_page == 'profile') : echo 'active'; else : echo ''; endif; @endphp" id="profile">
-                        <a href="./profile">My profile</a>
+                        <a href="{{ url('profile') }}">My profile</a>
                     </li>
 
                     <li id="logout">
@@ -198,13 +192,13 @@
                                 <div class="collapse navbar-collapse" id="footerNavContent">
                                     <ul class="navbar-nav ml-auto">
                                         <li class="nav-item active">
-                                            <a class="nav-link" href="/">Products</a>
+                                            <a class="nav-link" href="products-admin">Products</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="./shop">Orders</a>
+                                            <a class="nav-link" href="orders-admin">Orders</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="./cart">Users</a>
+                                            <a class="nav-link" href="users-admin">Users</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -241,21 +235,12 @@
                 asset('assets/DataTables/datatables.min.js')
             }}"></script>
 
-    <script src="{{ asset('assets/js/product-details.js') }}"></script>
 
     <script src="{{ asset('assets/js/access_token.js') }}"></script>
-
-    <script src="{{
-                asset('assets/js/api/Admin/productsAdmin.js')
-            }}"></script>
-
-    <script src="{{ asset('assets/js/order.js') }}"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
 
     <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
 
@@ -279,7 +264,7 @@
                     scrollY: "300px",
                     scrollX: true,
                     scrollCollapse: true,
-                    // paging: true,
+                    paging: true,
                     dom: "Bfrtip",
                     buttons: ["excel", "pdf"],
                     order: [],
@@ -302,27 +287,31 @@
 
             $("#myTable tbody").on("dblclick", "tr", function() {
                 var data = table.row(this).data();
-
                 // Get the path name of the current page
                 var path = window.location.pathname;
                 // Get the last part of the path name
                 var page = path.split("/").pop();
 
-                // Redirect to details page
-                if (page == "product-admin") {
-                    window.location.href =
-                        "product-detail-admin/" + data[0];
-                } else if (page == "ordersAdmin.php") {
-                    window.location.href = "orderDetails.php?id=" + data[0];
-                } else if (page == "user-admin") {
-                    window.location.href = "user-detail-admin/" + data[0];
-                } else if (page == "indexAdmin.php") {
-                    window.location.href =
-                        "order-detail-admin.php?id=" + data[0];
+                if (data) {
+                    // Redirect to details page
+                    if (page == "product-admin") {
+                        window.location.href =
+                            "product-detail-admin/" + data[0];
+                    } else if (page == "ordersAdmin.php") {
+                        window.location.href = "orderDetails.php?id=" + data[0];
+                    } else if (page == "users-admin") {
+                        window.location.href = "user-detail-admin/" + data[0];
+                    } else if (page == "indexAdmin.php") {
+                        window.location.href =
+                            "order-detail-admin.php?id=" + data[0];
+                    }
+                } else {
+                    console.log("No data available in row");
                 }
             });
-        });
+        })
     </script>
+
 </body>
 
 </html>

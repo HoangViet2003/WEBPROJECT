@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('user.index');
 });
-Route::get('/product-detail', function () {
+Route::get('/product-detail/{id}', function () {
     return view('user.product-detail');
 });
 Route::get('/cart', function () {

@@ -2,8 +2,6 @@
 <!-- <link rel="stylesheet" href="./css/order-tracking.css" /> -->
 <!-- Product Catagories Area Start -->
 
-
-
 <div class="dashboard-table-area section-padding-100">
   <div>
     <div>
@@ -63,5 +61,5 @@
 <!-- <script src='./js/confirmOrder.js'></script> -->
 <script src="{{ asset('assets/js/api/Admin/orderDetail.js') }}" defer></script>
 <!-- Product Catagories Area End -->
-@stop
+@endsection
 <script src='http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js'></script>;

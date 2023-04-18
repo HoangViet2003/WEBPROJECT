@@ -1,4 +1,8 @@
-var listProduct = document.querySelector("#tables-product");
+if (!localStorage.getItem("access_token")) {
+    // Show logout button
+    alert("You are not logged in. Please login to continue.");
+    window.location.href = "http://localhost:8000/login";
+}
 
 function start() {
     getProduct(function (products) {
@@ -32,16 +36,4 @@ function renderProduct(products) {
 
         listProductBlock.innerHTML = htmls.join("");
     }
-}
-
-async function searchProduct() {
-    await axios({
-        url: "http://localhost:8000/api/productSearch?name=test&page=1",
-        method: "search",
-        headers: {
-            name: "test",
-        },
-    });
-    let name = document.getElementById("name").value;
-    searchProduct(name);
 }

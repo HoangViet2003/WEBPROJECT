@@ -1,3 +1,9 @@
+if (!localStorage.getItem("access_token")) {
+    // Show logout button
+    alert("You are not logged in. Please login to continue.");
+    window.location.href = "http://localhost:8000/login";
+}
+
 var files = [];
 var imagesInput = document.getElementById("images-input");
 var imagesContainer = document.getElementById("images-container");
@@ -271,8 +277,8 @@ function updateProduct() {
     form_data.append("price", price);
     form_data.append("quantity", quantity);
     form_data.append("category", category);
-    
-    // 
+
+    //
     form_data.append("_method", "PUT");
     form_data.append("_token", $('meta[name="csrf-token"]').attr("content"));
 

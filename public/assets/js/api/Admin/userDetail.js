@@ -1,54 +1,65 @@
+if (!localStorage.getItem("access_token")) {
+    // Show logout button
+    alert("You are not logged in. Please login to continue.");
+    window.location.href = "http://localhost:8000/login";
+}
 
-$(document).ready(function () {
-    // Get the id of the product from the url
-    const url = window.location.href;
-    const id = url.substring(url.lastIndexOf("/") + 1);
+token = localStorage.getItem("access_token");
 
-    // If the id exists, get the product from the api
-    if (id && id !== "user-detail-admin") {
+// Get the id of the product from the url
+const url = window.location.href;
+const id = url.substring(url.lastIndexOf("/") + 1);
+
+// If the id exists, get the product from the api
+if (id && id !== "user-detail-admin") {
+    $("body").toggleClass("loading");
+    try {
+        axios
+            .get(`http://localhost:8000/api/users/${id}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            })
+            .then((response) => {
+                const user = response.data;
+
+                if (user.is_admin === true) {
+                    // Set attribute selected for the admin option using child nodes
+                    $("#admin option:nth-child(1)").attr(
+                        "selected",
+                        "selected"
+                    );
+                } else {
+                    // Set attribute selected for the user option using child nodes
+                    $("#admin option:nth-child(2)").attr(
+                        "selected",
+                        "selected"
+                    );
+                }
+                // Set the values of the input fields
+                $("#user_name").val(user.full_name);
+                $("#email").val(user.email);
+
+                // window.location.href = "users-admin";
+                $("body").toggleClass("loading");
+            })
+            .catch((error) => {
+                $("body").toggleClass("loading");
+
+                if (error.response?.status === 404) {
+                    alert("user not found");
+                    window.location.href = "/users-admin";
+                } else {
+                    console.log("error", error);
+                }
+            });
+    } catch (error) {
+        // if error code is 404, alert the user
         $("body").toggleClass("loading");
-        try {
-            axios
-                .get(`http://localhost:8000/api/users/${id}`, {
-                    headers: {
-                        "Authorization ": `Bearer ${token}`,
-                    },
-                })
-                .then((response) => {
-                    const user = response.data;
-                    console.log(response);
-                    if (user.is_admin === true) {
-                        $("#admin").val(1);
-                    } else {
-                        $("#admin").val(0);
-                    }
-                    // Set the values of the input fields
 
-                    $("#user_name").val(user.full_name);
-                    $("#email").val(user.email);
-
-                    // window.location.href = "users-admin";
-                    $("body").toggleClass("loading");
-                })
-                .catch((error) => {
-                    $("body").toggleClass("loading");
-
-                    if (error.response?.status === 404) {
-                        alert("user not found");
-                        window.location.href = "/users-admin";
-                    } else {
-                        console.log(error);
-                    }
-                });
-        } catch (error) {
-            // if error code is 404, alert the user
-            $("body").toggleClass("loading");
-            if (error.response.status === 404) {
-                alert("user not found");
-            }
-        }
-    } 
-});
+        console.log("error", error);
+    }
+}
 
 $(document).ready(function (e) {
     $("#userform").on("submit", async function (e) {
@@ -59,38 +70,30 @@ $(document).ready(function (e) {
         // Get form inputs
         let name = $("#user_name").val();
         let email = $("#email").val();
-        let role = $("#admin").val();
-        let is_admin = false;
-        if (role === 1) {
-            is_admin = true;
-        }
-        // Check if the form is for updating or creating a new user
+        let is_admin = $("#admin").val();
 
+        // Call api using x-www-form-urlencoded
         await axios({
             url: `http://localhost:8000/api/users/${id}`,
-            method: "put",
-            data: JSON.stringify({
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+                "Authorization ": `Bearer ${token}`,
+            },
+            data: {
                 full_name: name,
                 email: email,
                 is_admin: is_admin,
-            }),
-
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization ": `Bearer ${token}`,
-                 "X-CSRF-TOKEN": "test",
             },
         })
             .then(function (response) {
                 $("body").toggleClass("loading");
-                // redirect to products page
-                console.log(response);
-                // window.location.href = "/users-admin";
+                alert("User updated successfully");
             })
             .catch(function (error) {
-                console.log(error);
-
                 $("body").toggleClass("loading");
+
+                console.log(error);
             });
     });
 });

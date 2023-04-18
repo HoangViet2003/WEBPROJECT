@@ -225,8 +225,6 @@
 
   <script src="{{ asset('assets/DataTables/datatables.min.js') }}"></script>
 
-  <script src="{{ asset('assets/js/product-details.js') }}"></script>
-
   <script src="{{ asset('assets/js/user.js') }}"></script>
 
   <script src="{{ asset('assets/js/access_token.js') }}"></script>

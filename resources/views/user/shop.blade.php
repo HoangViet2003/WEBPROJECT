@@ -1,31 +1,5 @@
 @extends('layouts.main')
 @section('main-content')
-{{--<?php
-    if ($_GET['page']) {
-        $page = $_GET['page'];
-    } else {
-        $page = 1;
-    }
-
-    if ($_GET['search']) {
-        $search = $_GET['search'];
-        $result = $product->searchProducts($search);
-    } else {
-        $result = $product->searchProducts();
-    }
-
-    $start = ($page - 1) * 10 == 0 ? 1 : ($page - 1) * 10;
-    $end = $page * 10;
-
-    if (count($result) < $end) {
-        $end = count($result);
-    }
-
-    $url .= $_SERVER['REQUEST_URI'];
-    $url_components = parse_url($url);
-
-    parse_str($url_components['query'], $params);
-    ?>--}}
 
 <div class="amado_product_area section-padding-100">
     <div class="container-fluid">
@@ -46,7 +20,7 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="row" id='product-area'>
             <!-- Single Product Area -->
 
             <div class="col-6 col-sm-4 col-md-6 col-xl-4">
@@ -74,11 +48,13 @@
 
                             </div>
                             <div class="cart">
-                                <a href="cart.php" data-toggle="tooltip" data-placement="left" title="Add to Cart"><img src="img/core-img/cart.png" alt="" /></a>
+                                <a href="cart.php" data-toggle="tooltip" data-placement="left" title="Add to Cart"><img src="{{asset('assets/img/core-img/cart.png')}}" alt="" /></a>
                             </div>
                         </div>
                     </div>
                 </div>
+
+
             </div>
 
 
@@ -112,6 +88,7 @@
 </div>
 </div>
 <!-- ##### Main Content Wrapper End ##### -->
+<script src="{{ asset('assets/js/api/User/shop.js') }}"></script>
 <script src='http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js'></script>;
 <script>
     $(function() {
