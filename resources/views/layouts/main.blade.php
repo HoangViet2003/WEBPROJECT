@@ -90,7 +90,7 @@
           <li class="@php if ($current_page == 'shop') : echo 'active';
                           else : echo '';
                           endif; @endphp">
-            <a href="./shop">Shop</a>
+            <a href="./shop/1">Shop</a>
           </li>
 
           <li class="@php if ($current_page == 'cart') : echo 'active';
