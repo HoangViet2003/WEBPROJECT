@@ -70,25 +70,38 @@ $(document).ready(function (e) {
         // Get form inputs
         let name = $("#user_name").val();
         let email = $("#email").val();
-        let is_admin = $("#admin").val();
+        let role = $("#admin").val();
+        let is_admin = false;
+        if (role === 1) {
+            is_admin = true;
+        }
+        // Check if the form is for updating or creating a new product
 
         // Call api using x-www-form-urlencoded
         await axios({
             url: `http://localhost:8000/api/users/${id}`,
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded",
-                "Authorization ": `Bearer ${token}`,
-            },
-            data: {
+            method: "POST",
+            data: JSON.stringify({
                 full_name: name,
                 email: email,
+
                 is_admin: is_admin,
+                _method: "PUT",
+                _token: $('meta[name="csrf-token"]').attr("content")
+            }),
+
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization ": `Bearer ${token}`,
+                 "X-CSRF-TOKEN": "test",
             },
         })
             .then(function (response) {
                 $("body").toggleClass("loading");
-                alert("User updated successfully");
+                // redirect to products page
+                console.log(response);
+                // window.location.href = "/users-admin";
+                // window.location.href = "/users-admin";
             })
             .catch(function (error) {
                 $("body").toggleClass("loading");
