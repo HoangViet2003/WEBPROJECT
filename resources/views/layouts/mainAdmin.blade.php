@@ -40,6 +40,7 @@
 
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/DataTables/button.dataTables.min.css') }}" />
 
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
         <script src="{{ asset('assets/js/enterKeyDownPress.js') }}" defer></script>
     </head>
 

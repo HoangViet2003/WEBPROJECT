@@ -9,13 +9,15 @@ function start() {
 start();
 
 async function getAllOrder(callback) {
-   fetch("https://localhost:8000/api/orders",{
-        headers: {
-            Authorization: `Bearer ${token}`,
-        },
+    await axios({
+        url:`https://localhost:8000/api/orders`,
+        method: 'GET',
+        Headers: {
+            "Authorization": `Bearer ${token}`,
+        }
     })
-        .then(function (response) {
-           return response.json();
+        .then((response) =>{
+           console.log(response)
         })
         .then(callback)
         .catch(function (error) {
