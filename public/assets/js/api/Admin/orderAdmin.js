@@ -1,27 +1,21 @@
-// const { default: axios } = require("axios");
-
 const token = localStorage.getItem("access_token");
-let orders = [];
 
-// window.onload = function start() {
-//     getAllOrder(function (orders) {
-//         renderOrders();
-//     });
-// };
+function start() {
+    getAllOrder(function (orders) {
+        renderOrders(orders);
+    });
+};
 
-getAllOrder()
+start();
 
 async function getAllOrder(callback) {
-    await axios({
-        url: "https://localhost:8000/api/orders",
-        method: "GET",
+   fetch("https://localhost:8000/api/orders",{
         headers: {
             Authorization: `Bearer ${token}`,
         },
     })
         .then(function (response) {
-            orders = response.data;
-            console.log(orders.data);
+           return response.json();
         })
         .then(callback)
         .catch(function (error) {
@@ -34,7 +28,7 @@ async function renderOrders() {
 
     if (!listOrderBlock) return;
 
-    var htmls = orders.data.map(function (order) {
+    var htmls = orders.map(function (order) {
         return ` <tr>
                   <td style="width: auto">${order.id}</td>
                   <td>${order.total}</td>
@@ -44,3 +38,4 @@ async function renderOrders() {
     });
     listOrderBlock.innerHTML = htmls.join("");
 }
+

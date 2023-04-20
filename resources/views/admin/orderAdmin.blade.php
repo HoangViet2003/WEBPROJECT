@@ -29,7 +29,7 @@
 </div>
 <!-- Product Catagories Area End -->
 
-<script src="{{ asset('assets/js/order.js') }}"></script>
+<script src="{{ asset('assets/js/api/Admin/orderAdmin.js') }}"></script>
 
 <script src='http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js'></script>;
 

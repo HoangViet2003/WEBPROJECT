@@ -42,7 +42,7 @@
 
                             </div>
                             <div class="cart">
-                                <a href="cart.php" data-toggle="tooltip" data-placement="left" title="Add to Cart"><img src="{{asset('assets/img/core-img/cart.png')}}" alt="" /></a>
+                                <a href="cart" data-toggle="tooltip" data-placement="left" title="Add to Cart"><img src="{{asset('assets/img/core-img/cart.png')}}" alt="" /></a>
                             </div>
                         </div>
                     </div>
@@ -59,16 +59,7 @@
                 <!-- Pagination -->
                 <nav aria-label="navigation">
                     <ul class="pagination justify-content-end mt-50" id="pagination-link">
-                        {{-- <?php
-                                $total_pages = ceil(count($result) / 10);
-                                for ($i = 1; $i <= $total_pages; $i++) {
-                                ?> --}}
-                                   {{-- <li class="page-item active;
-                                                        
-                                                        ">
-                                        <a class="page-link" href="">
-                                            1</a>
-                                   </li> --}}
+                       
                          
                     </ul>
                 </nav>

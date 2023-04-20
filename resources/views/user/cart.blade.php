@@ -97,7 +97,7 @@
             </li>
           </ul>
           <div class="cart-btn mt-100">
-            <a onclick="checkout()" class="btn amado-btn w-100">Checkout</a>
+            <a onclick="checkout()" href="/checkout" class="btn amado-btn w-100">Checkout</a>
           </div>
         </form>
       </div>

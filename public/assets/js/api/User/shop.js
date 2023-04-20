@@ -56,7 +56,7 @@ function getAllproduct() {
                       
                             </div>
                             <div class="cart">
-                                <a href="cart.php" data-toggle="tooltip" data-placement="left" title="Add to Cart"><img src="${"../../../assets/img/core-img/cart.png"}" alt="" /></a>
+                                <a href="/cart" data-toggle="tooltip" data-placement="left" title="Add to Cart"><img src="${"../../../assets/img/core-img/cart.png"}" alt="" /></a>
                             </div>
                         </div>
                     </div>
