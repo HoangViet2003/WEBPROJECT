@@ -8,13 +8,7 @@
                 <div class="product-topbar d-xl-flex align-items-end justify-content-between">
                     <!-- Total Products -->
                     <div class="total-products">
-                        {{-- <?php
-                                if ($result == 0) {
-                                    echo "<p>No results found</p>";
-                                } else {
-                                    echo "<p>Showing " . $start . " - " . $end . " of " . count($result) . " results</p>";
-                                }
-                                ?> --}}
+                       
                     </div>
                 </div>
             </div>

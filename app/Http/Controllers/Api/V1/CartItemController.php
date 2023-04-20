@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Models\CartItem;
+use App\Models\ProductImage;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -18,6 +19,10 @@ class CartItemController extends Controller
     {
         try {
             $cartItem = CartItem::all();
+
+            foreach ($cartItem as $item) {
+                $item->product_image = ProductImage::where('product_id', $item->product_id)->get();
+            }
             return response()->json($cartItem);
         } catch (\Exception $e) {
             return response()->json($e->getMessage());

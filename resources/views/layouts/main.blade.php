@@ -42,9 +42,9 @@
       <div class="row">
         <div class="col-12">
           <div class="search-content">
-            <form action="shop.php" method="get" name="searchInput">
+            <form name="searchInput">
               <input type="search" name="search" id="search" placeholder="Type your keyword..." />
-              <button type="submit">
+              <button type="submit" onclick="search()">
                 <img src="{{asset('assets/img/core-img/search.png')}}" alt="" />
               </button>
             </form>
@@ -87,7 +87,7 @@
           endif; @endphp">
             <a href="/">Home</a>
           </li>
-          <li class="@php if ($current_page == 'shop') : echo 'active';
+          <li class="@php if ($current_page == 'shop/1') : echo 'active';
                           else : echo '';
                           endif; @endphp">
             <a href="./shop/1">Shop</a>

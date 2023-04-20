@@ -4,10 +4,13 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
+use App\Models\Product;
+use App\Models\ProductImage;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Exceptions\HttpResponseException;
+
 
 class CartController extends Controller
 {
@@ -18,6 +21,10 @@ class CartController extends Controller
     {
         try {
             $cart = Cart::all();
+
+          
+
+
             return response()->json($cart);
         } catch (\Exception $e) {
             return response()->json($e->getMessage());
@@ -34,7 +41,7 @@ class CartController extends Controller
             // Validate the request...
             $request->validate([
                 'user_id' => 'required||integer',
-                'total' => 'required||numeric',
+                'total' => 'numeric',
             ]);
 
             $cart = Cart::create($request->all());

@@ -1,32 +1,28 @@
-// const { default: axios } = require("axios");
-
 var listProduct = document.querySelector("#single-product-area");
 
 function start() {
-    getProduct(function (products) {
-        renderProduct(products.data);
-    });
+    getProduct();
 }
 
 window.onload = start();
 
-async function getProduct(callback) {
-    await fetch("http://localhost:8000/api/products?page=5")
-        .then(function (response) {
-            return response.json();
-        })
-        .then(callback);
-}
+async function getProduct() {
+    try {
+        const result = await axios.get(
+            "http://localhost:8000/api/products?page=1"
+        );
+        const products = result.data.data;
+        console.log(products)
+        
+        //
+        var listProductBlock = document.querySelector(".amado-pro-catagory");
 
-function renderProduct(products) {
-    var listProductBlock = document.querySelector(".amado-pro-catagory");
+        for (var i = 0; i < products.length; i++) {
+            var product = products[i];
 
-    for (var i = 0; i < products.length; i++) {
-        var product = products[i];
-
-        var html = `
+            var html = `
             <div class="single-products-catagory clearfix" >
-                <a href="/products/${product.id}">
+                <a href="/product-detail/${product.id}">
                     <img src=${
                         product?.images.length > 0
                             ? product?.images[0].image_url
@@ -41,8 +37,12 @@ function renderProduct(products) {
                 </a>
            </div>
             `;
+              listProductBlock.innerHTML += html;
+        }
 
-        listProductBlock.innerHTML += html;
+      
+    } catch (error) {
+        console.log("error", error);
     }
 }
 

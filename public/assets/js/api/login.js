@@ -32,6 +32,7 @@ document.getElementById("login-form").addEventListener("submit", function (e) {
             localStorage.setItem("email", response.data.email);
             localStorage.setItem("user_id", response.data.user_id);
             localStorage.setItem("is_admin", response.data.is_admin);
+            localStorage.setItem("cart_id",response.data.cart_id);
             localStorage.setItem(
                 "expires_at",
                 Date.now() + response.data.expires_in * 1000

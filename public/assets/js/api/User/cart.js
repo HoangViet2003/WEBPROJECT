@@ -1,66 +1,46 @@
-
-function start() {
-  getProduct(function (carts) {
-      renderProduct(carts.data);
-  });
+if(!localStorage.getItem("access_token")){
+    alert("Please login to access");
+    window.location.href = "http://localhost:8080/login";
 }
 
-window.onload = start();
 
-async function getProduct(callback) {
-  await axios({
-    url: 'http://localhost:8000/api/carts',
-    method: 'GET',
-    Headers: {
-      'Authorization': 'Bearer ' 
+window.onload = getAllCart();
+
+var productName = document.querySelector("#product-name");
+var productPrice = document.querySelector("#product-price");
+var productImg = document.querySelector("#product-img");
+var quantity = document.querySelector("#product-quantity");
+var cart;
+
+function getAllCart() {
+    try{
+        axios
+        .get(`https://localhost:8000/api/cartItem`)
+        .then((response) =>{
+            cart = response.data;
+            console.log(cart);
+
+            productName.innerHTML = cart.Name
+            productPrice.innerHTML = cart.Price
+            productImg.innerHTML = cart.Img
+
+        })
+    }catch(error){
+        console.log(error)
     }
-  })
-      .then(function (response) {
-          return response.json();
-      })
-      .then(callback);
 }
 
-function renderCart(carts) {
 
-  for (var i = 0; i < carts.length; i++) {
-    var listProductBlock = document.querySelector("#tables-cart-product")
-      var htmls = carts.map(function (cart) {
-        return ` <tr>
-                  <td>${
-                    cart.images.length > 0
-                        ? cart?.images[0].image_url
-                        : "../../../assets/img/product-img/product1.jpg"
-                }</td>
-                  <td>${cart.name}</td>
-                  <td>${cart.price}</td>
-                  <td>${cart.quantity}</td>
-                </tr>`;
-    });
-    listProductBlock.innerHTML = htmls.join("");
-}}
-
-// async function getProduct(callback) {
-//     await fetch({url:`http://localhost:8000/api/carts`, method: "GET", headers: {
-//                     "Authorization ": `Bearer ${token}`,
-//                 },})
-//         .then(function (response) {
-//             console.log(response)
-//             return response.json();
-//         })
-//         .then(callback);
-// }
-
-// function renderProduct(products) {  
-//     var listProductBlock = document.querySelector('tables-product');
-//     var htmls = products.map(function (product) {
-//         return ` <tr>
-//                   <td style="width: auto">${product.id}</td>
-//                   <td>${product.img}</td>
-//                   <td>${product.name}</td>
-//                   <td>${product.price}</td>
-//                   <td>${product.quantity}</td>
-//                 </tr>`;
-//     });
-//     listProductBlock.innerHTML = htmls.join("");
-// }
+function getCartById() {
+    try {
+        axios
+            .get({ url: `http://localhost:8000/api/carts/1`, header: {
+                Authorization: 'Bearer ' + localStorage.getItem('access_token'),
+            } })
+            .then((response) => {
+                console.log(response);
+            });
+    } catch (error) {
+        console.log(error);
+    }
+}

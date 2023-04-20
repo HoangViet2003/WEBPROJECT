@@ -67,6 +67,10 @@ Route::get('/order-detail-admin', function () {
     return view('admin.order-detail-admin');
 });
 
+Route::get('/profile-admin', function () {
+    return view('admin.profileAdmin');
+});
+
 Route::get('/order-detail-admin/{id}', function () {
     return view('admin.order-detail-admin');
 });

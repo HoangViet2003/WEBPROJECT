@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Models\Cart;
 use App\Models\User;
 use JWTAuth;
 use Illuminate\Support\Facades\Hash;
@@ -31,13 +32,16 @@ class AuthenticationController extends Controller
                 ], 401);
             }
 
+            // find cart_id of the cart that has user_id is euqal to the user.id
+            $cart_id = Cart::where('user_id', $user->id)->value('id');
+
             // generate the token
             $token = auth()->attempt([
                 'email' => $request->email,
                 'password' => $request->password
             ]);
 
-            return $this->respondWithToken($user, $token);
+            return $this->respondWithToken($user, $cart_id, $token);
         } catch (\Throwable $th) {
             return response()->json([
                 'message' => $th->getMessage()
@@ -67,12 +71,19 @@ class AuthenticationController extends Controller
             // get the token
             $token = auth()->login($user);
 
+            // Create a new cart
+            $cart_id = Cart::create([
+                'user_id' => $user->id,
+            ]);
+
+
             return response()->json([
                 'full_name' => $user->full_name,
                 'email' => $user->email,
                 'is_admin' => $user->is_admin,
                 'created_at' => $user->created_at,
                 'updated_at' => $user->updated_at,
+                'cart_id' => $cart_id,
                 'access_token' => $token,
                 'token_type' => 'bearer',
                 'expires_in' => auth()->factory()->getTTL() * 60
@@ -100,10 +111,11 @@ class AuthenticationController extends Controller
     }
 
     // Get the token array structure
-    protected function respondWithToken($user, $token)
+    protected function respondWithToken($user, $cart_id, $token)
     {
         return response()->json([
             'user_id' => $user->id,
+            'cart_id' => $cart_id,
             'name' => $user->full_name,
             'email' => $user->email,
             'is_admin' => $user->is_admin,

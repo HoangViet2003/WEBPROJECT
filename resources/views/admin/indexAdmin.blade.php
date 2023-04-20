@@ -1,11 +1,6 @@
 @extends('layouts.mainAdmin')
 @section('main-content')
 <!-- Product Catagories Area Start -->
-{{-- <?php
-      // get all orders
-      $orders = $order->getAllOrders();
-
-      ?> --}}
 <div class="dashboard-table-area section-padding-100">
   <div>
     <div>
@@ -25,20 +20,12 @@
             </tr>
           </thead>
           <tbody>
-            {{-- <!-- <?php
-                      if ($orders) {
-                        foreach ($orders as $order) {
-                      ?> --> --}}
             <tr>
               <td>card_id</td>
               <td>total</td>
               <td>comfirmed</td>
               <td>create at</td>
             </tr>
-            {{-- <!-- <?php
-                        }
-                      }
-                      ?> --> --}}
           </tbody>
         </table>
       </div>

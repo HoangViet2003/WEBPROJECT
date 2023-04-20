@@ -301,7 +301,9 @@
                         window.location.href = "orderDetails.php?id=" + data[0];
                     } else if (page == "users-admin") {
                         window.location.href = "user-detail-admin/" + data[0];
-                    } else if (page == "indexAdmin.php") {
+                    }else if(page == "cart"){
+                        window.location.href = "cart/" + data[0];
+                    }else if (page == "indexAdmin.php") {
                         window.location.href =
                             "order-detail-admin.php?id=" + data[0];
                     }
