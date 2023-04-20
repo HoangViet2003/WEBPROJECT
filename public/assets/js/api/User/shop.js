@@ -41,7 +41,7 @@ function getAllproduct() {
                         <div class="product-meta-data">
                             <div class="line"></div>
                             <p class="product-price">$${product.price}</p>
-                            <a href="./product-detail/${product.id}">
+                            <a href="http://localhost:8000/product-detail/${product.id}">
                                 <h6>${product.name}</h6>
                             </a>
                         </div>

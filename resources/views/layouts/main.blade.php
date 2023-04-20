@@ -90,32 +90,32 @@
           <li class="@php if ($current_page == 'shop/1') : echo 'active';
                           else : echo '';
                           endif; @endphp">
-            <a href="./shop/1">Shop</a>
+            <a href="http://localhost:8000/shop/1">Shop</a>
           </li>
 
           <li class="@php if ($current_page == 'cart') : echo 'active';
                     else : echo '';
                     endif; @endphp">
-            <a href="./cart">Cart</a>
+            <a href="http://localhost:8000/cart">Cart</a>
           </li>
 
             <li class="@php if ($current_page == 'profile') : echo 'active';
                 else : echo '';
                 endif; @endphp" id="profile">
-              <a href="./profile">My profile</a>
+              <a href="http://localhost:8000/profile">My profile</a>
             </li>
 
             <li id="logout"> 
-              <a href="./login" onclick="logout();">Logout</a>
+              <a href="http://localhost:8000/login" onclick="logout();">Logout</a>
             </li>
 
             <li class="@php if ($current_page == 'login') : echo 'active'; else: echo ''; endif; @endphp" id="login">
-              <a href="./login">Login / Signup</a>
+              <a href="http://localhost:8000/login">Login / Signup</a>
             </li>
         </ul>
       </nav>
       <div class="cart-fav-search mb-100">
-        <a href="./cart" class="cart-nav"><img src="{{asset('assets/img/core-img/cart.png')}}" alt="" /> Cart
+        <a href="http://localhost:8000/cart"" class="cart-nav"><img src="{{asset('assets/img/core-img/cart.png')}}" alt="" /> Cart
         <a href="#" class="search-nav"><img src="{{asset('assets/img/core-img/search.png')}}" alt="" /> Search</a>
       </div>
       <!-- Social Button -->

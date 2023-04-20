@@ -4,7 +4,7 @@ if (!localStorage.getItem("access_token")) {
     window.location.href = "http://localhost:8000/login";
 }
 
-token = localStorage.getItem("access_token");
+const token = localStorage.getItem("access_token");
 
 // Get the id of the product from the url
 const url = window.location.href;
@@ -22,7 +22,7 @@ if (id && id !== "user-detail-admin") {
             })
             .then((response) => {
                 const user = response.data;
-
+console.log(response)
                 if (user.is_admin === true) {
                     // Set attribute selected for the admin option using child nodes
                     $("#admin option:nth-child(1)").attr(

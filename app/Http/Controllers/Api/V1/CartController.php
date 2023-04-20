@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
+use App\Models\CartItem;
 use App\Models\Product;
 use App\Models\ProductImage;
 use Illuminate\Http\Request;
@@ -21,9 +22,6 @@ class CartController extends Controller
     {
         try {
             $cart = Cart::all();
-
-          
-
 
             return response()->json($cart);
         } catch (\Exception $e) {
@@ -58,6 +56,40 @@ class CartController extends Controller
     {
         try {
             $cart = Cart::find($id);
+
+            // Get all cart items from Cart Item
+            $cartItems = CartItem::where('cart_id', $id)->get();
+
+            // Get all the products related to the cart items
+            $products = Product::whereIn('id', $cartItems->pluck('product_id'))->get();
+
+            // Get all the images related to the products
+            $images = ProductImage::whereIn('product_id', $products->pluck('id'))->get();
+
+            // Get the category of the product
+            $products->map(function ($product) {
+                $product->category = $product->category;
+            });
+
+            // Add the images to the products
+            $products->map(function ($product) use ($images) {
+                $product->images = $images->where('product_id', $product->id);
+            });
+
+            // Merge the product with the cart item object
+            $cartItems->map(function ($cartItem) use ($products) {
+                $cartItem->product = $products->where('id', $cartItem->product_id)->first();
+            });
+
+            // Add the cart items to the cart
+            $cart->items = $cartItems;
+
+            // Calculate the total based on the product price and the cart item quantity
+            $cart->total = $cartItems->sum(function ($cartItem) {
+                return $cartItem->product->price * $cartItem->quantity;
+            });
+
+
             return response()->json($cart);
         } catch (\Exception $e) {
             return response()->json($e->getMessage());
@@ -72,8 +104,8 @@ class CartController extends Controller
         try {
             $request->validate([
                 'user_id' => 'required',
-                'total' => 'required',
             ]);
+
             $cart = Cart::findorfail($id);
 
             // only update the fields that are actually passed

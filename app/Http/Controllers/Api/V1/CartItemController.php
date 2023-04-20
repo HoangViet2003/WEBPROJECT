@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Models\CartItem;
+use App\Models\Product;
 use App\Models\ProductImage;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
@@ -54,6 +55,10 @@ class CartItemController extends Controller
     {
         try {
             $cartItem = CartItem::findorfail($id);
+           
+            $cartItem->product_name = Product::where('id',$cartItem->product_id)->find();
+            $cartItem->product_image = ProductImage::where('product_id', $cartItem->product_id)->get();
+           
             return response()->json($cartItem);
         } catch (\Exception $e) {
             return response()->json($e->getMessage());

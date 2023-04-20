@@ -62,18 +62,18 @@ function updateProductQuantity(event) {
 
 function updateCartDB(cartItemId, updatedQuantity, scope) {
   let updateItemJson = {
-    cartItemId: cartItemId,
+    cartItemId: localStorage.getItem("cart_id"),
     quantity: updatedQuantity.value,
     scope: scope,
   };
 
-  $.ajax({
-    url: "http://localhost:8000/api/carts",
-    type: "POST",
+  axios({
+    url: "http://localhost:8000/api/carts/23",
+    method: "PUT",
     data: updateItemJson,
-    success: function (response) {
-      console.log(response);
-    },
+    headers:{
+      Authorization: "Bearer " + localStorage.getItem("access_token")
+    }
   });
 }
 

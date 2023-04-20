@@ -38,7 +38,7 @@
                             </ol>
 
 
-                            <div class="carousel-inner"  id="product-image">
+                            <div class="carousel-inner" id="product-image">
                                 {{-- <?php
               $images = json_decode($result['images']);
 
@@ -90,7 +90,7 @@
                                 </div>
                             </div>
                             <!-- Avaiable -->
-                            <p  id="product-status">
+                            <p id="product-status">
                                 {{-- <i class="fa fa-circle"></i> --}}
                                 {{-- <?php
                                 if ($result['status'] == 'in_stock'):
@@ -111,42 +111,32 @@
                         </div>
 
                         <!-- Add to Cart Form -->
-                        <form action="" class="cart clearfix" >
-                            {{-- <?php
-            if ($result['status'] !== 'out_of_stock') {
-            ?> --}}
-                            <div class="cart-btn d-flex mb-50" id="quantity-selection">
+                        <form action="" class="cart clearfix" id="cart">
+
+                            <div class="cart-btn d-flex mb-50" >
                                 <p>Qty</p>
+
                                 <div class="quantity">
                                     <span class="qty-minus"
                                         onclick="var effect = document.getElementById('qty'); var qty = effect.value; if( !isNaN( qty ) &amp;&amp; qty &gt; 1 ) effect.value--;return false;"><i
                                             class="fa fa-caret-down" aria-hidden="true"></i></span>
                                     <input type="number" class="qty-text" id="qty" step="1" min="1"
-                                         name="quantity"  value="1"/>
+                                        name="quantity" value="1" id="quantity-selection"/>
                                     <span class="qty-plus"
                                         onclick="var effect = document.getElementById('qty'); var qty = effect.value; if( !isNaN( qty )) effect.value++;return false;"><i
                                             class="fa fa-caret-up" aria-hidden="true"></i></span>
                                 </div>
                             </div>
 
-                            {{-- <?php
-            }
-            ?> --}}
-                            {{-- <?php
-            if ($result['status'] !== 'out_of_stock') {
-            ?> --}}
-                            <button  class="btn amado-btn" id="btn-add" onclick="addToCart()" >
+                            <button class="btn amado-btn" id="btn-add" onclick="addToCart()">
                                 Add to cart
                             </button>
-                            {{-- <?php } else { ?> --}}
-                            <button type="button" name="addtocart" class="btn" disabled id="btn-out-of-order" >
+
+                            <button type="button" name="addtocart" class="btn" disabled id="btn-out-of-order">
                                 Out of order
                             </button>
-                            {{-- <?php } ?> --}}
-                         
                         </form>
-                       
-                       
+                      
                     </div>
                 </div>
             </div>

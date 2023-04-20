@@ -3,11 +3,13 @@
 const token = localStorage.getItem("access_token");
 let orders = [];
 
-window.onload = function start() {
-    getAllOrder(function (orders) {
-        renderOrders();
-    });
-};
+// window.onload = function start() {
+//     getAllOrder(function (orders) {
+//         renderOrders();
+//     });
+// };
+
+getAllOrder()
 
 async function getAllOrder(callback) {
     await axios({

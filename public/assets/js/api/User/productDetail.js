@@ -1,7 +1,7 @@
 const url = window.location.href;
 const id = url.substring(url.lastIndexOf("/") + 1);
 
-window.onload = getProductById(id);
+getProductById(id);
 
 var productPrice = document.querySelector("#product-price");
 var productImg = document.querySelector("#product-img");
@@ -10,13 +10,14 @@ var productName = document.querySelector("#product-name");
 var productTitle = document.querySelector("#product-title");
 var productStatus = document.querySelector("#product-status");
 var ratingStar = document.querySelector("#rating-star");
-var quantitySelection = document.getElementById("#quantity-selection");
+var quantitySelection = document.querySelector("#quantity-selection");
 var productImage = document.querySelector("#product-image");
 var productImageSlide = document.querySelector("#product-image-slide");
 var btnAdd = document.querySelector("#btn-add");
 var btnOutOfOrder = document.querySelector("#btn-out-of-order");
 var productCategory = document.querySelector("#product-category");
 var quantity = document.querySelector("#qty");
+// const parentElement = quantitySelection.parentNode;
 
 var product;
 
@@ -68,7 +69,8 @@ function getProductById(id) {
                     productStatus.classList.toggle("outstock");
                     productStatus.innerHTML = ` <i class="fa fa-circle"></i> Out of Stock`;
                     btnAdd.style.display = "none";
-                    quantitySelection.remove();
+
+                    // $("#quantity-selection").disabled = true;
                 } else {
                     productStatus.classList.toggle("runninglow");
                     productStatus.innerHTML = ` <i class="fa fa-circle"></i> Running Low - ${product.quantity} products available`;

@@ -56,10 +56,10 @@
               </tr>
             </thead>
             
-        <tbody>
-        <tr ></tr>
+        <tbody id="cart-item-section">
+        <!-- <tr ></tr>
          <td class="cart_product_img">
-          <a href="#" id="product-img"><img  alt="Product" /></a>
+          <a href="#" id="product-img"><img src="{{asset('assets/img/product-img/product1.jpg')}}" alt="Product" /></a>
          </td>
          <td class="cart_product_desc">
           <h5 id="product-name">name</h5>
@@ -77,7 +77,7 @@
            </div>
           </div>
          </td>
-        </tr> 
+        </tr>  -->
         </tbody>
         </table>
       
@@ -89,11 +89,11 @@
           <ul class="summary-table">
             <li>
               <span>subtotal :</span>
-              <span id="sub-total-price" class="number-separator">0</span>
+              <span id="sub-total-price" class="number-separator"></span>
             </li>
             <li><span>delivery :</span> <span>Free</span></li>
             <li>
-              <span>total :</span> <span id="total-price" class="number-separator">0</span>
+              <span>total :</span> <span id="total-price" class="number-separator"></span>
             </li>
           </ul>
           <div class="cart-btn mt-100">
@@ -108,4 +108,5 @@
 <!-- ##### Main Content Wrapper End ##### -->
 <!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script> -->
 <script src="{{asset('assets/js/api/User/cart.js')}}"></script>
+<script src="{{asset('assets/js/cart.js')}}"></script>
 @endsection
