@@ -53,7 +53,7 @@ Route::group([
     Route::post('users', [UserController::class, 'store']);
     Route::delete('users/{id}', [UserController::class, 'destroy']);
 
-    Route::get('orders', [UserController::class, 'index']);
+    // Route::get('orders', [UserController::class, 'index']);
 
     Route::post('products', [ProductController::class, 'store'])->middleware('upload.multiple.images');
     Route::put('products/{id}', [ProductController::class, 'update'])->middleware('upload.multiple.images');
