@@ -42,7 +42,6 @@ class OrderController extends Controller
         try {
             // Validate the request...
             $request->validate([
-
                 'user_id' => 'required||integer',
                 'total' => 'required||numeric',
             ]);
@@ -50,7 +49,7 @@ class OrderController extends Controller
             $order = Order::create($request->all());
             return response()->json($order);
             //catch the exception
-        }  catch (ValidationException $e) {
+        } catch (ValidationException $e) {
             throw new HttpResponseException(response()->json(['errors' => $e->errors()], 400));
         }
     }
