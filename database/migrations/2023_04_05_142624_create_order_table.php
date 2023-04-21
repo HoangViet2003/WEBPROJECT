@@ -16,7 +16,11 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id')->nullable(false);
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->decimal('total')->default(0);
-            $table->boolean('is_confirmed');
+            $table->string('address')->nullable(false);
+            $table->string('notes')->nullable(false);
+            $table->unsignedBigInteger('cart_id')->nullable(false);
+            $table->foreign('cart_id')->references('id')->on('cart');
+            $table->boolean('is_confirmed')->default(false);
             $table->timestamps();
         });
     }
