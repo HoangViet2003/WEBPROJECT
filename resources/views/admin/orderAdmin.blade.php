@@ -20,7 +20,7 @@
               <th>Created at</th>
             </tr>
           </thead>
-          <tbody id="tables-order"></tbody>
+          <tbody id="tables-order"> </tbody>
         </table>
       </div>
     </div>

@@ -7,7 +7,7 @@
             <div class="col-12">
                 <div class="product-topbar d-xl-flex align-items-end justify-content-between">
                     <!-- Total Products -->
-                    <div class="total-products">
+                    <div class="total-products" id="total-product">
                        
                     </div>
                 </div>

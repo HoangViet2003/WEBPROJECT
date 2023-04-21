@@ -115,7 +115,7 @@
                             <a href="/">Home</a>
                         </li>
                         <li
-                            class="@php if ($current_page == 'shop/1') : echo 'active'; else : echo ''; endif; @endphp"
+                            class="@php if ($current_page == `shop`) : echo 'active'; else : echo ''; endif; @endphp"
                         >
                             <a href="http://localhost:8000/shop/1">Shop</a>
                         </li>

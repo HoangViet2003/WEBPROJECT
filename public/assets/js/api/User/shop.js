@@ -5,6 +5,7 @@ window.onload = getAllproduct();
 
 var productCardContainer = document.querySelector("#product-area");
 var paginationLink = document.querySelector("#pagination-link");
+var totalProduct = document.querySelector("#total-product");
 
 function getAllproduct() {
     try {
@@ -12,7 +13,12 @@ function getAllproduct() {
             .get(`http://localhost:8000/api/products?page=${page}`)
             .then((response) => {
                 const products = response.data.data;
-            
+                
+                if(products.length === 0) {
+                    totalProduct.innerHTML = "<p>No results</p>"
+                }else{
+                    totalProduct.innerHTML = `<p>Showing 1 - ${response.data.totalLength}  of  ${products.length}  results</p>`;
+                }
 
                 console.log(response);
                 for (let i = 0; i < products.length; i++) {

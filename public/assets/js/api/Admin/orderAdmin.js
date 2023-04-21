@@ -1,5 +1,5 @@
 const token = localStorage.getItem("access_token");
-
+console.log("ttt")
 // function start() {
 //     getAllOrder(function (orders) {
 //         renderOrders(orders);
@@ -25,7 +25,7 @@ async function getAllOrder() {
                 var htmls =  `<tr>
                    <td style="width: auto">${orders[i].id}</td>
                    <td>${orders[i].total}</td>
-                   <td>${orders[i].status}</td>
+                   <td>${orders[i].status === true ? 'confirmed' : 'not confirmed'}</td>
                    <td>${orders[i].created_at}</td>
                </tr>`
 
