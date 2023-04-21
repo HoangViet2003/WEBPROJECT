@@ -92,7 +92,7 @@ class CartItemController extends Controller
     public function destroy(string $id)
     {
         try {
-            $cartItem = CartItem::find($id);
+            $cartItem = CartItem::findorfail($id);
             $cartItem->delete();
             return response()->json("The cart item has been deleted");
         } catch (ModelNotFoundException $e) {

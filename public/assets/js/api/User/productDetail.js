@@ -20,7 +20,7 @@ var quantity = document.querySelector("#qty");
 // const parentElement = quantitySelection.parentNode;
 
 var product;
-
+console.log(quantity.value);
 function getProductById(id) {
     try {
         axios
@@ -28,8 +28,9 @@ function getProductById(id) {
             .then((response) => {
                 //   $("body").toggleClass("loading");
                 product = response.data;
-                console.log(product);
+                // console.log(product);
                 quantity.setAttribute("max", product.quantity);
+
                 for (let i = 0; i < product.images.length; i++) {
                     productImageSlide.innerHTML += `<li class="${
                         i === 0 ? "active" : ""
@@ -87,26 +88,44 @@ function getProductById(id) {
     }
 }
 
-function addToCart(e) {
-    try {
-        e.preventDefault();
-        axios({
-            url: "http://localhost:8000/api/cartItem",
-            method: "POST",
-            data: JSON.stringify({
-                cart_id: localStorage.getItem("cart_id"),
-                product_id: product.id,
-                quantity: 20,
-            }),
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: "Bearer " + localStorage.getItem("access_token"),
-            },
-        }).then((response) => {
-            alert("Add to cart successfully");
-            console.log(response);
-        });
-    } catch (error) {
-        console.log(error);
-    }
-}
+document
+    .querySelector("#add-cart-form")
+    .addEventListener("submit", function (e) {
+        try {
+            $("body").toggleClass("loading");
+
+            e.preventDefault();
+
+            // Check if the quantity input exceeds the quantity of the product
+            if (quantity.value > product.quantity) {
+                alert(
+                    "The quantity of the product has exceeded the quantity of the product"
+                );
+            }
+
+            axios
+                .post({
+                    url: "http://localhost:8000/api/cartItem",
+                    method: "POST",
+                    data: JSON.stringify({
+                        cart_id: localStorage.getItem("cart_id"),
+                        product_id: id,
+                        quantity: quantity.value,
+                    }),
+                    headers: {
+                        Authorization:
+                            "Bearer " + localStorage.getItem("access_token"),
+                    },
+                })
+                .then((response) => {
+                    alert("Add to cart successfully");
+
+                    $("body").toggleClass("loading");
+
+                    console.log(response);
+                });
+        } catch (error) {
+            console.log(error);
+            $("body").toggleClass("loading");
+        }
+    });

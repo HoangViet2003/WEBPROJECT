@@ -1,13 +1,16 @@
 const token = localStorage.getItem("access_token");
 
-getCartById();
-
 var cartItemSection = document.querySelector("#cart-item-section");
 // let subTotalPrice = document.querySelector("#sub-total-price");
 // let totalPrice = document.querySelector("#total-price");
+let subTotalPrice = document.querySelector("#sub-total-price");
+let totalPrice = document.querySelector("#total-price");
 var quantity = document.querySelector("#qty");
 var cart;
 var cartItems;
+// let cartItem_id;
+
+getCartById();
 
 async function getCartById() {
     try {
@@ -22,9 +25,9 @@ async function getCartById() {
         }).then((response) => {
             cart = response.data;
             cartItems = response.data.items;
-            console.log(cartItems);
+            // console.log(test)
             for (let i = 0; i < cartItems.length; i++) {
-                var html = `<tr ></tr>
+                var html = `<tr id="${cartItems[i].id}">
          <td class="cart_product_img">
           <a href="#" id="product-img"><img src="${
               cartItems[i].product.images[0]?.image_url
@@ -51,20 +54,23 @@ async function getCartById() {
           </div>
          </td>
         </tr> `;
-
                 cartItemSection.innerHTML += html;
             }
 
             totalPrice.innerHTML = cart.total;
             subTotalPrice.innerHTML = cart.total;
+            // const cartItems_id = cartItems.id;
+            // console.log(cartItems_id);
         });
+        // .then(response => {
+        //     const cartItems_id = data
+        //     console.log(cartItems_id)
+        //
+        // });
     } catch (error) {
         console.log(error);
     }
 }
-
-let subTotalPrice = document.querySelector("#sub-total-price");
-let totalPrice = document.querySelector("#total-price");
 
 window.onload = onLoad;
 
@@ -83,12 +89,12 @@ function onLoad() {
     subTotalPrice.innerHTML = totalPrice.innerHTML;
 }
 
-function updateProductQuantity(event) {
+function updateProductQuantity(event, cartItems_id) {
     let currentRow =
         event.target.parentElement.parentElement.parentElement.parentElement
             .parentElement;
     let currentRowId = currentRow.id;
-
+    console.log(currentRowId);
     const currentItemPrice = currentRow.children
         .item(2)
         .children.item(0).innerHTML;
@@ -113,8 +119,15 @@ function updateProductQuantity(event) {
             );
 
             if (confirmDelete) {
+                axios({
+                    url: `http://localhost:8000/api/cartItem/${currentRowId}`,
+                    method: "DELETE",
+                    headers: {
+                        Authorization:
+                            "Bearer " + localStorage.getItem("access_token"),
+                    },
+                });
                 currentRow.remove();
-                updateCartDB(currentRowId, 0, "remove");
             }
         } else if (currentItemQuantity.value > 1) {
             currentItemQuantity.value--;
