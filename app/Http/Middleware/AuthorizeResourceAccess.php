@@ -21,7 +21,12 @@ class AuthorizeResourceAccess
             // print out user details in json format
             $user = response()->json(Auth::user());
             $is_admin = $user->original['is_admin'];
-            $cart_id = Cart::where('user_id', $user->original['id'])->first()->id;
+
+            $cart_id = Cart::where('user_id', $user->original['id'])->first();
+
+            if ($cart_id) {
+                $cart_id = $cart_id->id;
+            }
 
             if ($is_admin || $user->original['id'] == $request->route('id') || $cart_id == $request->cart_id) {
                 return $next($request);

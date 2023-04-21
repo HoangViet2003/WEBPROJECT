@@ -6,6 +6,10 @@ if (localStorage.getItem("access_token")) {
     document.getElementById("logout").style.display = "none";
 }
 
+// Get the current path and save to local storage
+const path = window.location.pathname;
+localStorage.setItem("path", path);
+
 function logout() {
     // Empty the local storage
     localStorage.clear();
