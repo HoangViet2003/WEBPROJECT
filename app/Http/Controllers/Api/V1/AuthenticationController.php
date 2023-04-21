@@ -74,8 +74,7 @@ class AuthenticationController extends Controller
             // Create a new cart
             $cart_id = Cart::create([
                 'user_id' => $user->id,
-            ]);
-
+            ])->id;
 
             return response()->json([
                 'full_name' => $user->full_name,

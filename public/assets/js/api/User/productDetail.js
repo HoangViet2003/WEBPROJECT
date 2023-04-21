@@ -20,7 +20,7 @@ var quantity = document.querySelector("#qty");
 // const parentElement = quantitySelection.parentNode;
 
 var product;
-console.log(quantity.value);
+
 function getProductById(id) {
     try {
         axios
@@ -104,25 +104,30 @@ document
             }
 
             axios
-                .post({
-                    url: "http://localhost:8000/api/cartItem",
-                    method: "POST",
-                    data: JSON.stringify({
+                .post(
+                    "http://localhost:8000/api/cartItem",
+                    {
                         cart_id: localStorage.getItem("cart_id"),
                         product_id: id,
                         quantity: quantity.value,
-                    }),
-                    headers: {
-                        Authorization:
-                            "Bearer " + localStorage.getItem("access_token"),
                     },
-                })
+                    {
+                        headers: {
+                            Authorization:
+                                "Bearer " +
+                                localStorage.getItem("access_token"),
+                        },
+                    }
+                )
                 .then((response) => {
-                    alert("Add to cart successfully");
+                    console.log(response);
 
                     $("body").toggleClass("loading");
-
-                    console.log(response);
+                    // window.location.href = "/cart";
+                })
+                .catch((error) => {
+                    $("body").toggleClass("loading");
+                    console.log(error.response);
                 });
         } catch (error) {
             console.log(error);
