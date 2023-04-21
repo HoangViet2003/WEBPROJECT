@@ -92,9 +92,9 @@ document
     .querySelector("#add-cart-form")
     .addEventListener("submit", function (e) {
         try {
-            $("body").toggleClass("loading");
-
             e.preventDefault();
+
+            $("body").toggleClass("loading");
 
             // Check if the quantity input exceeds the quantity of the product
             if (quantity.value > product.quantity) {
@@ -120,10 +120,11 @@ document
                     }
                 )
                 .then((response) => {
-                    console.log(response);
-
                     $("body").toggleClass("loading");
-                    // window.location.href = "/cart";
+
+                    console.log(response);
+                    // Alert the message
+                    alert("Add to cart successfully");
                 })
                 .catch((error) => {
                     $("body").toggleClass("loading");

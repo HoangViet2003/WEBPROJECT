@@ -60,4 +60,5 @@ Route::group([
     Route::delete('products/{id}', [ProductController::class, 'destroy']);
 
     Route::get("carts", [CartController::class, 'index']);
+    Route::get("carts/{id}", [CartController::class, 'show']);
 });
