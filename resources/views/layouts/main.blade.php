@@ -13,9 +13,12 @@
         <!-- Title  -->
         <title>Amado - Furniture Ecommerce</title>
 
-  <!-- Favicon  -->
-  
-  <link rel="icon" href="{{ asset('assets/img/core-img/favicon.ico') }}" />
+        <!-- Favicon  -->
+
+        <link
+            rel="icon"
+            href="{{ asset('assets/img/core-img/favicon.ico') }}"
+        />
 
         <!-- Core Style CSS -->
         <link
@@ -154,11 +157,6 @@
                     </ul>
                 </nav>
                 <div class="cart-fav-search mb-100">
-                    <a href="http://localhost:8000/cart"" class="cart-nav"><img
-                        src="{{ asset('assets/img/core-img/cart.png') }}"
-                        alt=""
-                    />
-                    Cart
                     <a href="#" class="search-nav"
                         ><img
                             src="{{ asset('assets/img/core-img/search.png') }}"

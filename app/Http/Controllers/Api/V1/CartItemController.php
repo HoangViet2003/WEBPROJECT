@@ -41,7 +41,9 @@ class CartItemController extends Controller
                 'product_id' => 'required|integer',
                 'quantity' => 'required||integer',
             ]);
+
             $cartItem = CartItem::create($request->all());
+
             return response()->json($cartItem);
         } catch (ValidationException $e) {
             throw new HttpResponseException(response()->json(['errors' => $e->errors()], 400));
@@ -55,10 +57,10 @@ class CartItemController extends Controller
     {
         try {
             $cartItem = CartItem::findorfail($id);
-           
-            $cartItem->product_name = Product::where('id',$cartItem->product_id)->find();
+
+            $cartItem->product_name = Product::where('id', $cartItem->product_id)->find();
             $cartItem->product_image = ProductImage::where('product_id', $cartItem->product_id)->get();
-           
+
             return response()->json($cartItem);
         } catch (\Exception $e) {
             return response()->json($e->getMessage());
@@ -73,10 +75,15 @@ class CartItemController extends Controller
     {
         try {
             $request->validate([
-                'cart_id' => 'required||integer',
-                'product_id' => 'required|integer',
-                'quantity' => 'required||integer',
+                'quantity' => 'required|integer',
             ]);
+
+            // Check if the quantity is greater than the available quantity
+            $product = Product::findorfail($request->product_id);
+            if ($request->quantity > $product->quantity) {
+                return response()->json(['error' => 'The quantity is greater than the available quantity'], 400);
+            }
+
             $cartItem = CartItem::findorfail($id);
             $cartItem->fill($request->all());
             $cartItem->save();

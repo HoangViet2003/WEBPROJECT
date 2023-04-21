@@ -18,7 +18,6 @@ class CartFactory extends Factory
     {
         return [
             'user_id' => 1,
-            'total' => $this->faker->numberBetween(100, 500),
         ];
     }
 }
