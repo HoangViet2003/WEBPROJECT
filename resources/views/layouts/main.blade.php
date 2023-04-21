@@ -12,6 +12,7 @@
   <title>Amado - Furniture Ecommerce</title>
 
   <!-- Favicon  -->
+  
   <link rel="icon" href="{{ asset('assets/img/core-img/favicon.ico') }}" />
 
   <!-- Core Style CSS -->

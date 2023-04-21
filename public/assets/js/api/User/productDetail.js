@@ -87,8 +87,9 @@ function getProductById(id) {
     }
 }
 
-function addToCart() {
+function addToCart(e) {
     try {
+        e.preventDefault();
         axios({
             url: "http://localhost:8000/api/cartItem",
             method: "POST",

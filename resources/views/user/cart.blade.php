@@ -108,5 +108,5 @@
 <!-- ##### Main Content Wrapper End ##### -->
 <!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script> -->
 <script src="{{asset('assets/js/api/User/cart.js')}}"></script>
-<script src="{{asset('assets/js/cart.js')}}"></script>
+{{-- <script src="{{asset('assets/js/cart.js')}}"></script> --}}
 @endsection
