@@ -23,27 +23,6 @@
                             </thead>
 
                             <tbody id="cart-item-section">
-                                <!-- <tr ></tr>
-             <td class="cart_product_img">
-              <a href="#" id="product-img"><img src="{{ asset('assets/img/product-img/product1.jpg') }}" alt="Product" /></a>
-             </td>
-             <td class="cart_product_desc">
-              <h5 id="product-name">name</h5>
-             </td>
-             <td class="price">
-              <span id="product-price">price</span>
-             </td>
-             <td class="qty">
-              <div class="qty-btn d-flex">
-               <p id="product-quantity">Qty</p>
-               <div class="quantity">
-                <span style="margin-right: 4px" class="qty-minus"><i class="fa fa-minus" aria-hidden="true"></i></span>
-                <input type="number" class="qty-text" id="qty" step="1" min="1" max="300" name="quantity"  />
-                <span class="qty-plus"><i class="fa fa-plus" aria-hidden="true"></i></span>
-               </div>
-              </div>
-             </td>
-            </tr>  -->
                             </tbody>
                         </table>
 

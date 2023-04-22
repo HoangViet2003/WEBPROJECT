@@ -151,11 +151,17 @@ class OrderController extends Controller
         }
     }
 
-
     public function getOrderByCartId(string $cart_id)
     {
         try {
-            $order = Order::where('cart_id', $cart_id)->first();
+            $order = Order::where('cart_id', $cart_id)->orderBy('created_at', 'desc')->first();
+
+            if (!$order) {
+                return response()->json('No order found');
+            } // If order is confirmed and user is not admin, return {} 
+            else if ($order->is_confirmed == 1 && auth()->user()->is_admin == 0) {
+                return response()->json('Order is confirmed');
+            }
 
             // Get all order items for the order
             $order_items = OrderItem::where('order_id', $order->id)->get();
@@ -172,6 +178,7 @@ class OrderController extends Controller
 
             // Add order items to order
             $order->order_items = $order_items;
+
 
             return response()->json($order);
         } catch (\Exception $e) {

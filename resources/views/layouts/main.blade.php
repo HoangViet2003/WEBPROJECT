@@ -153,15 +153,23 @@
                     <a href="http://localhost:8000/cart" class="cart-nav"
                         ><img
                             src="{{ asset('assets/img/core-img/cart.png') }}"
-                            alt=""
-                        />
+                            alt="" />
                         Cart
                         <span
                             id="cart-count"
                             class="badge badge-pill badge-warning"
-                            ></span
-                        ></a
-                    >
+                        ></span
+                    ></a>
+                    <a href="http://localhost:8000/orderTracking" class="order-nav"
+                        ><img
+                            src="{{ asset('assets/img/core-img/cart.png') }}"
+                            alt="" />
+                        Order
+                        <span
+                            id="cart-count"
+                            class="badge badge-pill badge-warning"
+                        ></span
+                    ></a>
                     <a href="#" class="search-nav"
                         ><img
                             src="{{ asset('assets/img/core-img/search.png') }}"
