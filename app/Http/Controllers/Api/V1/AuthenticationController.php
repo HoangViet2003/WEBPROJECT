@@ -77,6 +77,7 @@ class AuthenticationController extends Controller
             ])->id;
 
             return response()->json([
+                'user_id' => $user->id,
                 'full_name' => $user->full_name,
                 'email' => $user->email,
                 'is_admin' => $user->is_admin,

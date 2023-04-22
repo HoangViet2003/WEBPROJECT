@@ -42,8 +42,9 @@ class OrderController extends Controller
         try {
             // Validate the request...
             $request->validate([
-                'user_id' => 'required||integer',
-                'total' => 'required||numeric',
+                'address' => 'required',
+                'user_id' => 'required|integer',
+                'total' => 'required|numeric',
             ]);
 
             $order = Order::create($request->all());

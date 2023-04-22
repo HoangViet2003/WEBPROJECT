@@ -94,6 +94,14 @@ document
         try {
             e.preventDefault();
 
+            if (!localStorage.getItem("access_token")) {
+                // Show logout button
+                alert(
+                    "You are not logged in. Please login to add product to cart"
+                );
+                window.location.href = "http://localhost:8000/login";
+            }
+
             $("body").toggleClass("loading");
 
             // Check if the quantity input exceeds the quantity of the product
@@ -129,6 +137,11 @@ document
                     const currentQuantity = parseInt(
                         document.getElementById("cart-count").innerHTML
                     );
+
+                    if (!currentQuantity) {
+                        document.getElementById("cart-count").innerHTML = 1;
+                        return;
+                    }
 
                     document.getElementById("cart-count").innerHTML =
                         currentQuantity + 1;
