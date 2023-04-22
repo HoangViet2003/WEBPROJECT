@@ -146,6 +146,12 @@ class UserController extends Controller
                 ]);
             }
 
+            if ($request->is_admin || auth()->user()->is_admin) {
+                $request->validate([
+                    'is_admin' => 'required'
+                ]);
+            }
+
             // get the user
             $user = User::findorfail($id);
 

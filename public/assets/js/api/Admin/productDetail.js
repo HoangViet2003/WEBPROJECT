@@ -69,8 +69,8 @@ $(document).ready(function () {
                     $("#quantity").val(product.quantity);
                     $("#description").val(product.description);
 
-                    // Set the selected value of the category dropdown for option
-                    $("#product_category").val(product.category);
+                    document.querySelector(".nice-select span").innerHTML =
+                        product.category;
 
                     // Display the images of the product
                     const images = product.images;

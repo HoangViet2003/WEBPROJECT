@@ -22,19 +22,14 @@ if (id && id !== "user-detail-admin") {
             })
             .then((response) => {
                 const user = response.data;
-console.log(response)
-                if (user.is_admin === true) {
+                if (user.is_admin) {
                     // Set attribute selected for the admin option using child nodes
-                    $("#admin option:nth-child(1)").attr(
-                        "selected",
-                        "selected"
-                    );
+                    document.querySelector(".nice-select span").innerHTML =
+                        "Admin";
                 } else {
                     // Set attribute selected for the user option using child nodes
-                    $("#admin option:nth-child(2)").attr(
-                        "selected",
-                        "selected"
-                    );
+                    document.querySelector(".nice-select span").innerHTML =
+                        "User";
                 }
                 // Set the values of the input fields
                 $("#user_name").val(user.full_name);
@@ -67,15 +62,11 @@ $(document).ready(function (e) {
         $("body").toggleClass("loading");
         const url = window.location.href;
         const id = url.substring(url.lastIndexOf("/") + 1);
+
         // Get form inputs
         let name = $("#user_name").val();
         let email = $("#email").val();
         let role = $("#admin").val();
-        let is_admin = false;
-        if (role === 1) {
-            is_admin = true;
-        }
-        // Check if the form is for updating or creating a new product
 
         // Call api using x-www-form-urlencoded
         await axios({
@@ -84,24 +75,21 @@ $(document).ready(function (e) {
             data: JSON.stringify({
                 full_name: name,
                 email: email,
-
-                is_admin: is_admin,
+                is_admin: role,
                 _method: "PUT",
-                _token: $('meta[name="csrf-token"]').attr("content")
             }),
 
             headers: {
                 "Content-Type": "application/json",
                 "Authorization ": `Bearer ${token}`,
-                 "X-CSRF-TOKEN": "test",
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
             },
         })
             .then(function (response) {
                 $("body").toggleClass("loading");
                 // redirect to products page
                 console.log(response);
-                // window.location.href = "/users-admin";
-                // window.location.href = "/users-admin";
+                alert("User updated successfully");
             })
             .catch(function (error) {
                 $("body").toggleClass("loading");
