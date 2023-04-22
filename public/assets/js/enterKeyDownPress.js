@@ -31,3 +31,42 @@ function getAllproduct() {
         console.log(error);
     }
 }
+
+
+document
+    .querySelector("#search-input")
+    .addEventListener("submit", function (e) {
+        try {
+            e.preventDefault();
+
+            $("body").toggleClass("loading");
+
+
+            axios
+                .get(
+                    `http://localhost:8000/api/productSearch?name=${bed}&page=1`,
+                  
+                    {
+                        headers: {
+                            Authorization:
+                                "Bearer " +
+                                localStorage.getItem("access_token"),
+                        },
+                    }
+                )
+                .then((response) => {
+                    $("body").toggleClass("loading");
+                  console.log("test")
+                    console.log(response);
+                    // Alert the message
+                   
+                })
+                .catch((error) => {
+                    $("body").toggleClass("loading");
+                    console.log(error.response);
+                });
+        } catch (error) {
+            console.log(error);
+            $("body").toggleClass("loading");
+        }
+    });

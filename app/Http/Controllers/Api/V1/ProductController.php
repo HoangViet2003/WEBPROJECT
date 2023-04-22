@@ -269,7 +269,7 @@ class ProductController extends Controller
                 ->where('price', '>=', $priceMin ?? 0)
                 ->where('price', '<=', $priceMax ?? 999999999)
                 ->where('category_id', 'like', '%' . $category_id . '%')
-                ->paginate(10, ['*'], 'page', $page);
+                ->paginate(9, ['*'], 'page', $page);
 
             // Get the images of the product from table image
             foreach ($product as $item) {

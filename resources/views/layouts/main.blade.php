@@ -52,7 +52,7 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="search-content">
-                            <form name="searchInput">
+                            <form name="searchInput" id="search-input">
                                 <input
                                     type="search"
                                     name="search"

@@ -4,5 +4,5 @@
 </div>
 <!-- Product Catagories Area End -->
 
-<script src="{{ asset('assets/js/api/User/product.js') }}" defer></script>
+<script src="{{ asset('assets/js/api/User/product.js') }}" ></script>
 @endsection
