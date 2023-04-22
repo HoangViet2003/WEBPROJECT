@@ -8,45 +8,48 @@ async function getOrderByCartId(id) {
             },
         })
         .then((response) => {
-            console.log(response);
-            document.getElementById("orderId").innerHTML = response.data.id;
-
-            let estimatedDate = new Date(response.data.created_at);
-            estimatedDate.setDate(estimatedDate.getDate() + 7);
-
-            // Format the date to dd/mm/yyyy
-            estimatedDate = estimatedDate.toLocaleDateString("en-GB");
-
-            document.getElementById("estimateDate").innerHTML = estimatedDate;
-
-            document.getElementById("address").innerHTML =
-                response.data.address;
-
-            document.getElementById("total").innerHTML =
-                response.data.total.toLocaleString();
-
-            if (response.data.is_confirmed == 0) {
-                document.getElementById("status").innerHTML = "Pending";
-
-                const track = document.getElementById("track");
-                track.innerHTML = `<div class="step">
-                <span class="icon"> <i class="fa fa-check"></i> </span>
-                <span class="text">Order confirmed</span>
-            </div>
-            <div class="step">
-                <span class="icon"> <i class="fa fa-truck"></i> </span>
-                <span class="text">Order shipped</span>
-            </div>
-            <div class="step">
-                <span class="icon"> <i class="fa fa-archive"></i> </span>
-                <span class="text">Order delivered</span>
-            </div>`;
+            if (response.data == "Order is confirmed") {
+                window.location.href = "http://localhost:8000/cart";
             } else {
-                document.getElementById("status").innerHTML = "Confirmed";
+                document.getElementById("orderId").innerHTML = response.data.id;
 
-                const track = document.getElementById("track");
+                let estimatedDate = new Date(response.data.created_at);
+                estimatedDate.setDate(estimatedDate.getDate() + 7);
 
-                track.innerHTML = `            <div class="step active">
+                // Format the date to dd/mm/yyyy
+                estimatedDate = estimatedDate.toLocaleDateString("en-GB");
+
+                document.getElementById("estimateDate").innerHTML =
+                    estimatedDate;
+
+                document.getElementById("address").innerHTML =
+                    response.data.address;
+
+                document.getElementById("total").innerHTML =
+                    response.data.total.toLocaleString();
+
+                if (response.data.is_confirmed == 0) {
+                    document.getElementById("status").innerHTML = "Pending";
+
+                    const track = document.getElementById("track");
+                    track.innerHTML = `<div class="step">
+                <span class="icon"> <i class="fa fa-check"></i> </span>
+                <span class="text">Order confirmed</span>
+            </div>
+            <div class="step">
+                <span class="icon"> <i class="fa fa-truck"></i> </span>
+                <span class="text">Order shipped</span>
+            </div>
+            <div class="step">
+                <span class="icon"> <i class="fa fa-archive"></i> </span>
+                <span class="text">Order delivered</span>
+            </div>`;
+                } else {
+                    document.getElementById("status").innerHTML = "Confirmed";
+
+                    const track = document.getElementById("track");
+
+                    track.innerHTML = `            <div class="step active">
                 <span class="icon"> <i class="fa fa-check"></i> </span>
                 <span class="text">Order confirmed</span>
             </div>
@@ -58,21 +61,21 @@ async function getOrderByCartId(id) {
                 <span class="icon"> <i class="fa fa-archive"></i> </span>
                 <span class="text">Order delivered</span>
             </div>`;
-            }
+                }
 
-            // For loop the order items to display the product
-            const orderItems = response.data.order_items;
+                // For loop the order items to display the product
+                const orderItems = response.data.order_items;
 
-            for (let i = 0; i < orderItems.length; i++) {
-                const orderItem = orderItems[i];
+                for (let i = 0; i < orderItems.length; i++) {
+                    const orderItem = orderItems[i];
 
-                const product = orderItem.product;
+                    const product = orderItem.product;
 
-                const productItemsContainer = document.getElementById(
-                    "productItemsContainer"
-                );
+                    const productItemsContainer = document.getElementById(
+                        "productItemsContainer"
+                    );
 
-                const productItemHtml = `
+                    const productItemHtml = `
                 <li class="col-md-4">
                 <figure class="itemside mb-3">
                     <div>
@@ -88,21 +91,23 @@ async function getOrderByCartId(id) {
                     <figcaption class="info align-self-center">
                         <p class="title">${product.name}</p>
                         <span class="text-muted">$ ${product.price.toLocaleString()} * ${
-                    orderItem.quantity
-                } = ${(
-                    product.price * orderItem.quantity
-                ).toLocaleString()}</span>
+                        orderItem.quantity
+                    } = ${(
+                        product.price * orderItem.quantity
+                    ).toLocaleString()}</span>
                         <span> </span>
                     </figcaption>
                 </figure>
             </li>
                 `;
 
-                productItemsContainer.innerHTML += productItemHtml;
-            }
+                    productItemsContainer.innerHTML += productItemHtml;
+                }
 
-            $("body").toggleClass("loading");
+                $("body").toggleClass("loading");
+            }
         })
+
         .catch((error) => {
             console.log(error);
             $("body").toggleClass("loading");
