@@ -42,6 +42,8 @@ Route::group([
 
     Route::resource('orders', OrderController::class);
     Route::resource('orderItem', OrderItemController::class);
+
+    Route::get('orders/getByCartId/{id}', [OrderController::class, 'getOrderByCartId']);
 });
 
 

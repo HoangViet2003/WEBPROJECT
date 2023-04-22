@@ -45,7 +45,9 @@ Route::get('/checkout', function () {
 Route::get('searchResult', function () {
     return view('user.searchResult');
 });
-
+Route::get('orderTracking', function () {
+    return view('user.orderTracking');
+});
 
 
 // Admin routes
