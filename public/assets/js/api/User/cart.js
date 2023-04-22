@@ -60,14 +60,7 @@ async function getCartById() {
 
                 totalPrice.innerHTML = cart.total;
                 subTotalPrice.innerHTML = cart.total;
-                // const cartItems_id = cartItems.id;
-                // console.log(cartItems_id);
             });
-        // .then(response => {
-        //     const cartItems_id = data
-        //     console.log(cartItems_id)
-        //
-        // });
     } catch (error) {
         console.log(error);
     }
@@ -130,6 +123,14 @@ function updateProductQuantity(event, cartItems_id) {
                     },
                 });
                 currentRow.remove();
+
+                // Update the cart count
+                const currentQuantity = parseInt(
+                    document.getElementById("cart-count").innerHTML
+                );
+
+                document.getElementById("cart-count").innerHTML =
+                    currentQuantity - 1;
             }
         } else if (currentItemQuantity.value > 1) {
             currentItemQuantity.value--;

@@ -1,5 +1,6 @@
 const urlParams = new URLSearchParams(window.location.search);
 const keyword = urlParams.get("keyword");
+const page = urlParams.get("page") ? urlParams.get("page") : 1;
 var productCardContainer = document.querySelector("#product-area");
 var paginationLink = document.querySelector("#pagination-link");
 var totalProduct = document.querySelector("#total-product");
@@ -11,24 +12,25 @@ function getSearchResult() {
         $("body").toggleClass("loading");
         axios
             .get(
-                `http://localhost:8000/api/productSearch?name=${keyword}&page=1`
+                `http://localhost:8000/api/productSearch?name=${keyword}&page=${page}`
             )
             .then((response) => {
                 $("body").toggleClass("loading");
-                console.log(response);
+
                 const products = response.data.data;
                 const totalLength = response.data.totalLength;
-                // const start = (page - 1) * 9 == 0 ? 1 : (page - 1) * 9;
-                // const end =
-                //     (page - 1) * 9 + 9 > totalLength
-                //         ? totalLength
-                //         : (page - 1) * 9 + 9;
-                // console.log(response);
-                // if (products.length === 0) {
-                //     totalProduct.innerHTML = "<p>No results</p>";
-                // } else {
-                //     totalProduct.innerHTML = `<p>Showing ${start} - ${end} of ${totalLength} results</p>`;
-                // }
+
+                const start = (page - 1) * 9 == 0 ? 1 : (page - 1) * 9;
+                const end =
+                    (page - 1) * 9 + 9 > totalLength
+                        ? totalLength
+                        : (page - 1) * 9 + 9;
+
+                if (products.length === 0) {
+                    totalProduct.innerHTML = `<p>No results found for the keyword: ${keyword} </p>`;
+                } else {
+                    totalProduct.innerHTML = `<p>Showing ${start} - ${end} of ${totalLength} results</p>`;
+                }
 
                 for (let i = 0; i < products.length; i++) {
                     var product = products[i];
@@ -81,6 +83,10 @@ function getSearchResult() {
                 </div>`;
 
                     productCardContainer.innerHTML += htmls;
+                }
+
+                if (response.data.totalPage === 1) {
+                    return;
                 }
 
                 for (var i = 1; i <= response.data.totalPage; i++) {

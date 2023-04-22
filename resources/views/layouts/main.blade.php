@@ -55,7 +55,6 @@
                             <form name="searchInput" id="search-input">
                                 <input
                                     type="search"
-                                  
                                     id="search"
                                     placeholder="Type your keyword..."
                                 />
@@ -124,12 +123,6 @@
                         </li>
 
                         <li
-                            class="@php if ($current_page == 'cart') : echo 'active'; else : echo ''; endif; @endphp"
-                        >
-                            <a href="http://localhost:8000/cart">Cart</a>
-                        </li>
-
-                        <li
                             class="@php if ($current_page == 'profile') : echo 'active'; else : echo ''; endif; @endphp"
                             id="profile"
                         >
@@ -157,6 +150,18 @@
                     </ul>
                 </nav>
                 <div class="cart-fav-search mb-100">
+                    <a href="http://localhost:8000/cart" class="cart-nav"
+                        ><img
+                            src="{{ asset('assets/img/core-img/cart.png') }}"
+                            alt=""
+                        />
+                        Cart
+                        <span
+                            id="cart-count"
+                            class="badge badge-pill badge-warning"
+                            ></span
+                        ></a
+                    >
                     <a href="#" class="search-nav"
                         ><img
                             src="{{ asset('assets/img/core-img/search.png') }}"

@@ -122,9 +122,16 @@ document
                 .then((response) => {
                     $("body").toggleClass("loading");
 
-                    console.log(response);
                     // Alert the message
                     alert("Add to cart successfully");
+
+                    // Update the cart count
+                    const currentQuantity = parseInt(
+                        document.getElementById("cart-count").innerHTML
+                    );
+
+                    document.getElementById("cart-count").innerHTML =
+                        currentQuantity + 1;
                 })
                 .catch((error) => {
                     $("body").toggleClass("loading");

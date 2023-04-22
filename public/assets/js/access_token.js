@@ -47,3 +47,32 @@ window.addEventListener("beforeunload", function () {
         clearTimeout(timerId);
     }
 });
+
+// Check how many cart items are there in the user cart
+function checkCartItems() {
+    const access_token = localStorage.getItem("access_token");
+
+    axios
+        .get(
+            "http://localhost:8000/api/carts/" +
+                localStorage.getItem("cart_id"),
+            {
+                headers: {
+                    Authorization: `Bearer ${access_token}`,
+                },
+            }
+        )
+        .then((response) => {
+            const cartItems = response.data.items;
+
+            if (cartItems.length > 0) {
+                document.getElementById("cart-count").innerHTML =
+                    cartItems.length;
+            }
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+}
+
+checkCartItems();
