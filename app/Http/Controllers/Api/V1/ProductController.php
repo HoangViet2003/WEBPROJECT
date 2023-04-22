@@ -25,24 +25,26 @@ class ProductController extends Controller
             $page = $request->query('page');
 
             // Paginate the results (sort the result by created at)
-            $product = Product::orderBy('created_at', 'desc')->paginate(10, ['*'], 'page', $page);
+            $products = Product::orderBy('created_at', 'desc');
+
+            $data = $products->paginate(9, ['*'], 'page', $page);
 
             // Get the images of the products from table image
-            foreach ($product as $item) {
+            foreach ($data as $item) {
                 $item->images = ProductImage::where('product_id', $item->id)->get();
             }
 
             // Get the product category
-            foreach ($product as $item) {
+            foreach ($data as $item) {
                 $item->category = Category::find($item->category_id)->name;
             }
 
             // Customize the response to include the total number of pages
             $response = [
-                'totalLength' => $product->total(),
-                'totalPage' => $product->lastPage(),
-                'currentPage' => $product->currentPage(),
-                'data' => $product->items(),
+                'totalLength' => $products->count(),
+                'totalPage' => $data->lastPage(),
+                'currentPage' => $data->currentPage(),
+                'data' => $data->items(),
             ];
 
             // Return the response to the client

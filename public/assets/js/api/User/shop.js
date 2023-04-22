@@ -13,14 +13,19 @@ function getAllproduct() {
             .get(`http://localhost:8000/api/products?page=${page}`)
             .then((response) => {
                 const products = response.data.data;
-                
-                if(products.length === 0) {
-                    totalProduct.innerHTML = "<p>No results</p>"
-                }else{
-                    totalProduct.innerHTML = `<p>Showing 1 - ${response.data.totalLength}  of  ${products.length}  results</p>`;
+                const totalLength = response.data.totalLength;
+                const start = (page - 1) * 9 == 0 ? 1 : (page - 1) * 9;
+                const end =
+                    (page - 1) * 9 + 9 > totalLength
+                        ? totalLength
+                        : (page - 1) * 9 + 9;
+console.log(response)
+                if (products.length === 0) {
+                    totalProduct.innerHTML = "<p>No results</p>";
+                } else {
+                    totalProduct.innerHTML = `<p>Showing ${start} - ${end} of ${totalLength} results</p>`;
                 }
 
-                console.log(response);
                 for (let i = 0; i < products.length; i++) {
                     var product = products[i];
 
@@ -47,7 +52,9 @@ function getAllproduct() {
                         <div class="product-meta-data">
                             <div class="line"></div>
                             <p class="product-price">$${product.price}</p>
-                            <a href="http://localhost:8000/product-detail/${product.id}">
+                            <a href="http://localhost:8000/product-detail/${
+                                product.id
+                            }">
                                 <h6>${product.name}</h6>
                             </a>
                         </div>

@@ -16,7 +16,7 @@
                         color: white;
                         margin-bottom: 15px;" onclick="window.location.href = 'product-detail-admin'">
                     Add product
-                </button>
+                 </button>
             </div>
 
             <table class=" stripe row-border order-column" id="myTable" style="width: 100%">

@@ -78,13 +78,15 @@ class CartItemController extends Controller
                 'quantity' => 'required|integer',
             ]);
 
+            $cartItem = CartItem::findorfail($id);
+
             // Check if the quantity is greater than the available quantity
-            $product = Product::findorfail($request->product_id);
+            $product = Product::findorfail($cartItem->product_id);
+
             if ($request->quantity > $product->quantity) {
                 return response()->json(['error' => 'The quantity is greater than the available quantity'], 400);
             }
 
-            $cartItem = CartItem::findorfail($id);
             $cartItem->fill($request->all());
             $cartItem->save();
             return response()->json($cartItem);

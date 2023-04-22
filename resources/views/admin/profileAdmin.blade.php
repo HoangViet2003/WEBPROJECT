@@ -10,7 +10,7 @@
                 </div>
 
 
-                <div class="row" style="height: 100%">
+                 <div class="row" style="height: 100%">
                     <div class="col-md-3">
                         <div href="#" class="d-inline">
                             <img src="{{asset('assets/img/product-img/product1.jpg')}}" width="130px" style="margin: 0" /><br />
