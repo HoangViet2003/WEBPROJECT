@@ -12,10 +12,9 @@ async function getProduct() {
             "http://localhost:8000/api/products?page=1"
         );
         const products = result.data.data;
-        console.log(products)
-        
+       
         //
-        var listProductBlock = document.querySelector(".amado-pro-catagory");
+        var listProductBlock = document.querySelector(".amado-catagory");
 
         for (var i = 0; i < products.length; i++) {
             var product = products[i];
