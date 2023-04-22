@@ -27,9 +27,7 @@ Route::get('/cart', function () {
 Route::get('/profile', function () {
     return view('user.profile');
 });
-Route::get('/order', function () {
-    return view('user.orderTracking');
-});
+
 Route::get('/shop/{page}', function () {
     return view('user.shop');
 });

@@ -85,20 +85,4 @@ function createOrder(cart_id) {
         $("body").toggleClass("loading");
         console.log(error);
     }
-
-    // clear cart
-
-    // redirect to order success page
-
-    // redirect to order tracking page
-    // window.location.href = "orderTracking.php";
 }
-
-// function validateForm() {
-//     let form = document.getElementById("#checkout-form");
-
-//     if (form.full_name.value === "") {
-//     }
-// }
-
-// validateForm();

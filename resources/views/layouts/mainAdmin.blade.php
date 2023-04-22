@@ -298,8 +298,8 @@
                     if (page == "product-admin") {
                         window.location.href =
                             "product-detail-admin/" + data[0];
-                    } else if (page == "ordersAdmin.php") {
-                        window.location.href = "orderDetails.php?id=" + data[0];
+                    } else if (page == "order-admin") {
+                        window.location.href = "order-detail-admin/" + data[0];
                     } else if (page == "users-admin") {
                         window.location.href = "user-detail-admin/" + data[0];
                     }else if(page == "cart"){

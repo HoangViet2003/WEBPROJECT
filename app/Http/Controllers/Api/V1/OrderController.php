@@ -87,6 +87,23 @@ class OrderController extends Controller
         // find the order by id
         try {
             $order = Order::findorfail($id);
+
+            // Get all order items for the order
+            $order_items = OrderItem::where('order_id', $order->id)->get();
+
+            // Get all products for the order items
+            foreach ($order_items as $order_item) {
+                $order_item->product = Product::find($order_item->product_id);
+            }
+
+            // Get all images for the products
+            foreach ($order_items as $order_item) {
+                $order_item->product->images = ProductImage::where('product_id', $order_item->product_id)->get();
+            }
+
+            // Add order items to order
+            $order->order_items = $order_items;
+
             return response()->json($order);
             //catch the exception
         } catch (\Exception $e) {

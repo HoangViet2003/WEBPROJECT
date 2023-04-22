@@ -1,57 +1,40 @@
 @extends('layouts.mainAdmin') @section('main-content')
-    <!-- <link rel="stylesheet" href="./css/order-tracking.css" /> -->
-    <!-- Product Catagories Area Start -->
+    <link rel="stylesheet" href="{{ asset('assets/css/order-tracking.css') }}" />
 
-    <div class="dashboard-table-area section-padding-100">
-        <div>
-            <div>
-                <div>
-                    <div class="cart-title mt-50">
-                        <h2>Order Details</h2>
+    <div class="cart-table-area section-padding-100">
+        <div class="cart-title mt-50">
+            <h2>Order Tracking</h2>
+        </div>
+        <div class="card-body">
+            <h6>Order ID: <span id="orderId"></span></h6>
+            <article class="card">
+                <div class="card-body row">
+                    <div class="col">
+                        <strong>Estimated delivery date:</strong> <br />
+                        <span id="estimateDate"></span>
                     </div>
-
-                    <div class="card-body">
-                        <h6>Order ID: 1</h6>
-                        <article class="card">
-                            <div class="card-body row">
-                                <div class="col"> <strong>Created at:</strong> <br>
-                                    2/2/3003
-                                </div>
-                                <div class="col"> <strong>Shipping TO:</strong> <br> 123 abc| <i class="fa fa-phone"></i>
-                                    0333333 </div>
-                                <div class="col"> <strong>Total: </strong> <br> $ 100
-                                </div>
-                                <div class="col"> <strong>Status: </strong> <br>confirmed </div>
-                            </div>
-                        </article>
-                        <hr>
-                        <ul class="row">
-
-                            <li class="col-md-4">
-                                <figure class="itemside mb-3">
-                                    <div><img src="" class="img-sm rounded"></div>
-                                    <figcaption class=" info align-self-center">
-                                        <p class="title">chair</p> <span class="text-muted">$ 100 *10 = $ 10000</span>
-                                        <span> </span>
-                                    </figcaption>
-                                </figure>
-                            </li>
-
-                        </ul>
-                        <hr>
-
-                        <button class="btn amado-btn" onclick="confirmOrder()">Confirm Order</button>
+                    <div class="col">
+                        <strong>Shipping TO:</strong> <br />
+                        <span id="address"></span>
+                    </div>
+                    <div class="col">
+                        <strong>Total: </strong> <br />
+                        $ <span id="total"></span>
+                    </div>
+                    <div class="col">
+                        <strong>Status: </strong> <br />
+                        <span id="status"></span>
                     </div>
                 </div>
-            </div>
+            </article>
+            <div class="track" id="track"></div>
+            <hr />
+
+            <ul class="row" id="productItemsContainer"></ul>
+            <hr />
+
+            <button class="btn amado-btn" onclick="confirmOrder()" id="btn-confirm">Confirm Order</button>
         </div>
     </div>
-    </div>
-    <!-- Product Catagories Area End -->
-
-
-    <!-- <script src='./js/confirmOrder.js'></script> -->
-    <script src="{{ asset('assets/js/api/Admin/orderDetail.js') }}" defer></script>
-    <!-- Product Catagories Area End -->
-@endsection
-<script src='http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js'></script>;
+    <script src="{{ asset('assets/js/api/Admin/orderTracking.js') }}" defer></script>
+@stop

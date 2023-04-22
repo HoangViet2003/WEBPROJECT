@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->decimal('total')->default(0);
             $table->string('address')->nullable(false);
+            $table->integer('phone')->nullable(false);
             $table->string('notes')->nullable(false);
             $table->unsignedBigInteger('cart_id')->nullable(false);
             $table->foreign('cart_id')->references('id')->on('cart');

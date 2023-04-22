@@ -1,5 +1,5 @@
 const token = localStorage.getItem("access_token");
-console.log("ttt")
+console.log("ttt");
 // function start() {
 //     getAllOrder(function (orders) {
 //         renderOrders(orders);
@@ -8,29 +8,35 @@ console.log("ttt")
 
 getAllOrder();
 
- var listOrderBlock = document.querySelector("#tables-order");
+var listOrderBlock = document.querySelector("#tables-order");
 
 async function getAllOrder() {
     await axios({
-        url:`http://localhost:8000/api/orders`,
-        method: 'GET',
+        url: `http://localhost:8000/api/orders`,
+        method: "GET",
         headers: {
-            "Authorization": `Bearer ${token}`,
-        }
+            Authorization: `Bearer ${token}`,
+        },
     })
-        .then((response) =>{
+        .then((response) => {
             var orders = response.data;
-           console.log(orders)
-           for(let i = 0;i<orders.length;i++){
-                var htmls =  `<tr>
-                   <td style="width: auto">${orders[i].id}</td>
-                   <td>${orders[i].total}</td>
-                   <td>${orders[i].status === true ? 'confirmed' : 'not confirmed'}</td>
-                   <td>${orders[i].created_at}</td>
-               </tr>`
 
-               listOrderBlock.innerHTML += htmls
-           }
+            for (let i = 0; i < orders.length; i++) {
+                const date = new Date(orders[i].created_at);
+
+                const orderDate = date.toLocaleString();
+
+                var htmls = `<tr>
+                   <td style="width: auto">${orders[i].id}</td>
+                   <td>${(orders[i].total / 1000).toFixed(3)}</td>
+                   <td>${
+                       orders[i].is_confirmed == 1 ? "Confirmed" : "Pending"
+                   }</td>
+                   <td>${orderDate}</td>
+               </tr>`;
+
+                listOrderBlock.innerHTML += htmls;
+            }
         })
         .catch(function (error) {
             console.log(error);
@@ -38,7 +44,7 @@ async function getAllOrder() {
 }
 
 // async function renderOrders() {
-//    
+//
 
 //     if (!listOrderBlock) return;
 
@@ -52,4 +58,3 @@ async function getAllOrder() {
 //     });
 //     listOrderBlock.innerHTML = htmls.join("");
 // }
-

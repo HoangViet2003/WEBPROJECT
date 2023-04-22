@@ -4,6 +4,10 @@ if (!localStorage.getItem("access_token")) {
     window.location.href = "http://localhost:8000/login";
 }
 // const token = localStorage.getItem('access-token')
+var cardBody = document.querySelector("#card-body");
+var productOrder = document.querySelector("#product-order-info");
+
+getCartById()
 
 $(document).ready(function () {
     // Get the id of the ordeer from the url
@@ -17,15 +21,36 @@ $(document).ready(function () {
             axios
                 .get(`http://localhost:8000/api/orders/${id}`, {
                     headers: {
-                        "Authorization ": `Bearer ${token}`,
+                        "Authorization ": `Bearer` + localStorage.getItem("access_token"),
                     },
                 })
                 .then((response) => {
                     const order = response.data;
                     is_confirmed = order.is_confirmed;
-                    console.log(response);
+                      const date = new Date(order.created_at);
+
+                      const orderDate = date.toLocaleString();
+                    // console.log(response);
+
+                    var htmls = ` <div class="col"> <strong>Created at:</strong> <br>
+                                    ${orderDate}
+                                </div>
+                                <div class="col"> <strong>Shipping TO:</strong> <br> ${
+                                    order.address
+                                }| <i class="fa fa-phone"></i>
+                                    0333333 </div>
+                                <div class="col"> <strong>Total: </strong> <br> $ ${(
+                                    order.total / 1000
+                                ).toFixed(3)}
+                                </div>
+                                <div class="col"> <strong>Status: </strong> <br>${
+                                    order.is_confirmed === true
+                                        ? "confirmed"
+                                        : "not confirmed"
+                                } </div>`;
 
                     // window.location.href = "users-admin";
+                    cardBody.innerHTML = htmls
                     $("body").toggleClass("loading");
                 })
                 .catch((error) => {
@@ -48,6 +73,38 @@ $(document).ready(function () {
     }
 });
 
+function getCartById(){
+    try{
+        axios.get(`http://localhost:8000/api/carts/${localStorage.getItem("cart_id")}`,
+            {
+                headers:{
+                    Authorization: "Bearer " + localStorage.getItem("access_token")
+                }
+            }
+        ).then(function(response){
+            cartItem = response.data.items
+            for(var i=0; i<cartItem.length; i++){
+                 var htmls = ` <li class="col-md-4">
+                                <figure class="itemside mb-3">
+                                    <div><img src="${cartItem[i].product.images[1].image_url}" class="img-sm rounded"></div>
+                                    <figcaption class=" info align-self-center">
+                                        <p class="title">${cartItem[i].product.name}</p> <span class="text-muted">$ 100 *10 = $ 10000</span>
+                                        <span> </span>
+                                    </figcaption>
+                                </figure>
+                            </li>`;
+
+                 productOrder.innerHTML += htmls;
+
+            }
+           
+            console.log(cartItem)
+        });
+    }catch(error){
+        console.log(error)
+    }
+}
+
 async function confirmOrder() {
     $("body").toggleClass("loading");
     const url = window.location.href;
@@ -62,7 +119,7 @@ async function confirmOrder() {
 
         headers: {
             "Content-Type": "application/json",
-            "Authorization ": `Bearer ${token}`,
+            "Authorization ": `Bearer` + localStorage.getItem("access_token"),
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
     })
@@ -79,16 +136,16 @@ async function confirmOrder() {
         });
 }
 
-function renderOrder(orders) {
-    var listOrderBlock = document.querySelector("#tables-order");
+// function renderOrder(orders) {
+//     var listOrderBlock = document.querySelector("#tables-order");
 
-    var htmls = orders.map(function (order) {
-        return ` <tr>
-                  <td style="width: auto">${order.id}</td>
-                  <td>${order.address}</td>
-                  <td>${order.total}</td>
-                  <td>${order.status}</td>
-                </tr>`;
-    });
-    listProductBlock.innerHTML = htmls.join("");
-}
+//     var htmls = orders.map(function (order) {
+//         return ` <tr>
+//                   <td style="width: auto">${order.id}</td>
+//                   <td>${order.address}</td>
+//                   <td>${order.total}</td>
+//                   <td>${order.status}</td>
+//                 </tr>`;
+//     });
+//     listProductBlock.innerHTML = htmls.join("");
+// }
