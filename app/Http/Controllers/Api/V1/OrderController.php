@@ -8,6 +8,8 @@ use App\Models\CartItem;
 use App\Models\OrderItem;
 use App\Models\Product;
 use App\Models\ProductImage;
+use App\Models\Cart;
+
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -99,12 +101,25 @@ class OrderController extends Controller
     {
         try {
             //validate the request
-            // $request->validate([
-            //     'user_id' => 'required||integer',
-            //     'total' => 'required||numeric',
-            // ]);
             $order = Order::findorfail($id);
-            // only update the fields that are actually passed
+
+            // if update the order status, delete cart items, and update product quantity
+            if ($request->is_confirmed == 1) {
+                // Delete all cart items
+                $cart_items = CartItem::where('cart_id', $order->cart_id)->get();
+                foreach ($cart_items as $cart_item) {
+                    $cart_item->delete();
+                }
+
+                // Update product quantity
+                $order_items = OrderItem::where('order_id', $order->id)->get();
+                foreach ($order_items as $order_item) {
+                    $product = Product::find($order_item->product_id);
+                    $product->quantity = $product->quantity - $order_item->quantity;
+                    $product->save();
+                }
+            }
+
 
             $order->fill($request->all());
             $order->save();
