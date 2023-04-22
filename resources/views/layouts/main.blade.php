@@ -55,11 +55,11 @@
                             <form name="searchInput" id="search-input">
                                 <input
                                     type="search"
-                                    name="search"
+                                  
                                     id="search"
                                     placeholder="Type your keyword..."
                                 />
-                                <button type="submit" onclick="search()">
+                                <button type="submit">
                                     <img
                                         src="{{
                                             asset(

@@ -15,6 +15,9 @@
             </div>
 
             <div class="row" id='product-area'>
+                <!-- Single Product Area -->
+
+
             </div>
 
             <div class="row">
@@ -32,7 +35,27 @@
     </div>
     </div>
     <!-- ##### Main Content Wrapper End ##### -->
-    <script src="{{ asset('assets/js/api/User/shop.js') }}"></script>
+    <script src="{{ asset('assets/js/api/User/productSearch.js') }}" defer></script>
     <script src='http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js'></script>;
+    <script>
+        $(function() {
+            $("#categories-options li a").on("click", function() {
+                $('#categories-options li .selected').removeClass('selected');
+                $(this).addClass("selected");
 
+                var selected = $(this).text();
+
+                $.ajax({
+                    type: "POST",
+                    url: 'shop.php',
+                    data: {
+                        options: selected
+                    }, // name of the post variable ($_POST['id'])
+                    success: function(data) {
+                        console.log('successfully posted data! response body: ' + data);
+                    }
+                });
+            });
+        });
+    </script>
 @stop

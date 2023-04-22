@@ -42,6 +42,9 @@ Route::get('/login', function () {
 Route::get('/checkout', function () {
     return view('user.checkout');
 });
+Route::get('searchResult', function () {
+    return view('user.searchResult');
+});
 
 
 
