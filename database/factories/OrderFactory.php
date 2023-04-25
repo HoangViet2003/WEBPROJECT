@@ -17,7 +17,7 @@ class OrderFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => $this->faker->numberBetween(1, 10),
+            'user_id' => 1,
             'is_confirmed' => $this->faker->boolean,
             'total' => $this->faker->numberBetween(100, 500),
         ];

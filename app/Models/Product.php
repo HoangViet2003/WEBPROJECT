@@ -18,7 +18,7 @@ class Product extends Model
         'name',
         'price',
         'description',
-        'category',
+        'category_id',
         'rating',
         'quantity',
         'rating',
@@ -41,5 +41,11 @@ class Product extends Model
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
+    }
+
+    // One product can have many product images
+    public function productImage(): HasMany
+    {
+        return $this->hasMany(ProductImage::class);
     }
 }

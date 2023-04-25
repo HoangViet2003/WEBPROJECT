@@ -10,19 +10,20 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Order extends Model
 {
     use HasFactory;
-    protected $table = 'orders';
+    protected $table = 'order';
     protected $primaryKey = 'id';
 
-    protected $fillable = ['user_id', "is_confirmed", 'total'];
-
-    public function orderItem(): HasMany
-    {
-        return $this->hasMany(OrderItem::class);
-    }
+    protected $fillable = ['user_id', "address", "notes", "is_confirmed", 'total', "cart_id"];
 
     // one
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    // one
+    public function cart(): BelongsTo
+    {
+        return $this->belongsTo(Cart::class);
     }
 }

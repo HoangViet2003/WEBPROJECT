@@ -2,6 +2,13 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\V1\AuthenticationController;
+use App\Http\Controllers\Api\V1\CartController;
+use App\Http\Controllers\Api\V1\CartItemController;
+use App\Http\Controllers\Api\V1\OrderController;
+use App\Http\Controllers\Api\V1\OrderItemController;
+use App\Http\Controllers\Api\V1\ProductController;
+use App\Http\Controllers\Api\V1\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +21,46 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+
+Route::post('login', [AuthenticationController::class, 'login']);
+Route::post('register', [AuthenticationController::class, 'register']);
+Route::get('products', [ProductController::class, 'index']);
+Route::get('products/{id}', [ProductController::class, 'show']);
+Route::get('getAllProducts', [ProductController::class, 'getAllProductsWithoutLimit']);
+Route::get('productSearch', [ProductController::class, 'searchProduct']);
+Route::get('getUserOrders', [OrderController::class, 'getAllOrdersByUserId']);
+
+// Route for authorized user
+Route::group([
+    'middleware' => ['jwt.verify', 'auth.resource']
+], function () {
+    Route::get('users/{id}', [UserController::class, 'show']);
+    Route::put('users/{id}', [UserController::class, 'update']);
+
+    Route::resource('carts', CartController::class);
+    Route::resource('cartItem', CartItemController::class);
+
+    Route::resource('orders', OrderController::class);
+    Route::resource('orderItem', OrderItemController::class);
+
+    Route::get('orders/getByCartId/{id}', [OrderController::class, 'getOrderByCartId']);
+});
+
+
+// Route for admin
+Route::group([
+    'middleware' => ['jwt.verify', 'admin'],
+], function () {
+    Route::get('users', [UserController::class, 'index']);
+    Route::post('users', [UserController::class, 'store']);
+    Route::delete('users/{id}', [UserController::class, 'destroy']);
+
+    // Route::get('orders', [UserController::class, 'index']);
+
+    Route::post('products', [ProductController::class, 'store'])->middleware('upload.multiple.images');
+    Route::put('products/{id}', [ProductController::class, 'update'])->middleware('upload.multiple.images');
+    Route::delete('products/{id}', [ProductController::class, 'destroy']);
+
+    Route::get("carts", [CartController::class, 'index']);
+    Route::get("carts/{id}", [CartController::class, 'show']);
 });

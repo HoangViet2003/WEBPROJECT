@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Category extends Model
 {
     use HasFactory;
-    protected $table = 'categories';
+    protected $table = 'category';
     protected $primaryKey = 'id';
 
     protected $fillable = ['name'];
