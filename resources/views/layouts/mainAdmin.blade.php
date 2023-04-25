@@ -118,7 +118,7 @@
                     </li>
 
                     <li id="logout">
-                        <a href="./login" onclick="logout();">Logout</a>
+                        <a href="http://localhost:8000/login" onclick="logout();">Logout</a>
                     </li>
                 </ul>
             </nav>

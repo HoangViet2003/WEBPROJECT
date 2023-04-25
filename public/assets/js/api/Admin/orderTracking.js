@@ -13,6 +13,7 @@ async function getOrderByCartId(id) {
         .then((response) => {
             console.log(response);
             if (response.data == "Order is confirmed") {
+                
                 window.location.href = "http://localhost:8000/cart";
             } else {
                 document.getElementById("orderId").innerHTML = response.data.id;
@@ -91,7 +92,7 @@ async function getOrderByCartId(id) {
                         <img
                             src=${
                                 product.images.length > 0
-                                    ? product.images[0].image
+                                    ? product.images[0].image_url
                                     : "https://via.placeholder.com/100x100"
                             }
                             class="img-sm rounded"

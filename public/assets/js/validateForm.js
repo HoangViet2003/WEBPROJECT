@@ -32,7 +32,7 @@ document
                         response.data.access_token
                     );
 
-                    localStorage.setItem("username", response.data.name);
+                    localStorage.setItem("username", response.data.full_name);
                     localStorage.setItem("email", response.data.email);
                     localStorage.setItem("user_id", response.data.user_id);
                     localStorage.setItem("is_admin", response.data.is_admin);

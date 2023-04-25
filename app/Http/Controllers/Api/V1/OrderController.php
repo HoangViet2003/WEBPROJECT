@@ -33,14 +33,6 @@ class OrderController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
@@ -176,9 +168,9 @@ class OrderController extends Controller
             if (!$order) {
                 return response()->json('No order found');
             } // If order is confirmed and user is not admin, return {} 
-            else if ($order->is_confirmed == 1 && auth()->user()->is_admin == 0) {
-                return response()->json('Order is confirmed');
-            }
+            // else if ($order->is_confirmed == 1 && auth()->user()->is_admin == 0) {
+            //     return response()->json('Order is confirmed');
+            // }
 
             // Get all order items for the order
             $order_items = OrderItem::where('order_id', $order->id)->get();
@@ -201,5 +193,21 @@ class OrderController extends Controller
         } catch (\Exception $e) {
             return response()->json($e->getMessage());
         }
+    }
+
+    public function getAllOrdersByUserId()
+    {
+        try {
+            // require user to be logged in, else return 403
+            if (!auth()->user()) {
+                return response()->json('Unauthorized', 403);
+            }
+
+            $orders = Order::where('user_id', auth()->user()->id)->orderBy('created_at', 'desc')->get();
+
+            return response()->json($orders);
+        } catch (\Exception $e) {
+            return response()->json($e->getMessage());
+        };
     }
 }

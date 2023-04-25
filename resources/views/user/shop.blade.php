@@ -8,22 +8,17 @@
                     <div class="product-topbar d-xl-flex align-items-end justify-content-between">
                         <!-- Total Products -->
                         <div class="total-products" id="total-product">
-
                         </div>
                     </div>
                 </div>
             </div>
-
             <div class="row" id='product-area'>
             </div>
-
             <div class="row">
                 <div class="col-12">
                     <!-- Pagination -->
                     <nav aria-label="navigation">
                         <ul class="pagination justify-content-end mt-50" id="pagination-link">
-
-
                         </ul>
                     </nav>
                 </div>

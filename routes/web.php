@@ -43,7 +43,11 @@ Route::get('/checkout', function () {
 Route::get('searchResult', function () {
     return view('user.searchResult');
 });
-Route::get('orderTracking', function () {
+Route::get('order', function () {
+    return view('user.order');
+});
+
+Route::get('order/{id}', function () {
     return view('user.orderTracking');
 });
 

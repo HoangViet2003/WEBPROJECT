@@ -35,6 +35,17 @@
             src="{{ asset('assets/js/enterKeyDownPress.js') }}"
             defer
         ></script>
+           <link rel="stylesheet" type="text/css" href="{{
+                asset(
+                    'assets/DataTables/DataTables-1.12.1/css/jquery.dataTables.min.css'
+                )
+            }}" />
+        <link rel="stylesheet" type="text/css" href="{{
+                asset(
+                    'assets/DataTables/DataTables-1.12.1/css/dataTables.bootstrap.min.css'
+                )
+            }}" />
+                    <link rel="stylesheet" type="text/css" href="{{ asset('assets/DataTables/button.dataTables.min.css') }}" />
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     </head>
 
@@ -160,7 +171,7 @@
                             class="badge badge-pill badge-warning"
                         ></span
                     ></a>
-                    <a href="http://localhost:8000/orderTracking" class="order-nav"
+                    <a href="http://localhost:8000/order" class="order-nav"
                         ><img
                             src="{{ asset('assets/img/core-img/cart.png') }}"
                             alt="" />
@@ -348,5 +359,66 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
 
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+          <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+
+    <script src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            var table = $("#myTable")
+                .removeAttr("width")
+                .DataTable({
+                    scrollY: "300px",
+                    scrollX: true,
+                    scrollCollapse: true,
+                    paging: true,
+                    dom: "Bfrtip",
+                    buttons: ["excel", "pdf"],
+                    order: [],
+
+                    columnDefs: [{
+                            width: 80,
+                            targets: 0,
+                        },
+                        {
+                            className: "dt-center",
+                            targets: "_all",
+                        },
+                        {
+                            className: "dt-head-center",
+                            targets: "_all",
+                        },
+                    ],
+                    fixedColumns: true,
+                });
+
+            $("#myTable tbody").on("dblclick", "tr", function() {
+                var data = table.row(this).data();
+                // Get the path name of the current page
+                var path = window.location.pathname;
+                // Get the last part of the path name
+                var page = path.split("/").pop();
+
+                if (data) {
+                    // Redirect to details page
+                    if (page == "order") {
+                        window.location.href =
+                            "order/" + data[0];
+                    } else if (page == "order-admin") {
+                        window.location.href = "order-detail-admin/" + data[0];
+                    } else if (page == "users-admin") {
+                        window.location.href = "user-detail-admin/" + data[0];
+                    }else if(page == "cart"){
+                        window.location.href = "cart/" + data[0];
+                    }else if (page == "indexAdmin.php") {
+                        window.location.href =
+                            "order-detail-admin.php?id=" + data[0];
+                    }
+                } else {
+                    console.log("No data available in row");
+                }
+            });
+        })
+    </script>
     </body>
 </html>

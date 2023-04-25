@@ -6,33 +6,6 @@ if (localStorage.getItem("access_token")) {
     document.getElementById("logout").style.display = "none";
 }
 
-// Check if user has any order
-async function checkOrder() {
-    // Call the API to get the user order
-    const cart_id = localStorage.getItem("cart_id");
-
-    await axios
-        .get(`http://localhost:8000/api/orders/getByCartId/${cart_id}`, {
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-            },
-        })
-        .then((response) => {
-            if (response.data == "Order is confirmed") {
-                document.querySelector(".cart-nav").style.display = "block";
-                document.querySelector(".order-nav").style.display = "none";
-            } else {
-                document.querySelector(".order-nav").style.display = "block";
-                document.querySelector(".cart-nav").style.display = "none";
-            }
-        })
-        .catch((err) => {
-            console.log(err);
-        });
-}
-
-checkOrder();
-
 // Get the current path and save to local storage
 const path = window.location.pathname;
 localStorage.setItem("path", path);
@@ -55,6 +28,7 @@ function checkTokenExpiration() {
             // Token has expired, log the user out
             alert("Your session has expired! Please login again!");
             localStorage.clear();
+
             window.location.href = "http://localhost:8000/login";
         } else {
             // Token is still valid, set the timer to check again in 1 second

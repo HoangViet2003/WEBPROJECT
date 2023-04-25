@@ -28,7 +28,7 @@ Route::get('products', [ProductController::class, 'index']);
 Route::get('products/{id}', [ProductController::class, 'show']);
 Route::get('getAllProducts', [ProductController::class, 'getAllProductsWithoutLimit']);
 Route::get('productSearch', [ProductController::class, 'searchProduct']);
-
+Route::get('getUserOrders', [OrderController::class, 'getAllOrdersByUserId']);
 
 // Route for authorized user
 Route::group([

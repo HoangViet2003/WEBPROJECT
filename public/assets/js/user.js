@@ -18,7 +18,7 @@ async function getAllUsers(callback) {
     })
         .then(function (response) {
             users = response.data;
-            // console.log(users.data);
+            // console.log(users.data);F
         })
         .then(callback)
         .catch(function (error) {
